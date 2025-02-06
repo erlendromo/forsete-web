@@ -17,6 +17,7 @@ with gr.Blocks() as demo:
     with gr.Row():
         # Left column
         with gr.Column():
+            gr.Markdown("## Input") 
             input=gr.Image()
             # Bottom part of column
             with gr.Row():
@@ -24,6 +25,7 @@ with gr.Blocks() as demo:
                 submit = buttonCreator("Submit", "secondary", None)
         # Right column
         with gr.Column():
+            gr.Markdown("## Output") 
             output=gr.JSON()
             # Bottom part of column
             with gr.Row():
