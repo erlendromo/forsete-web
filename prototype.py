@@ -1,4 +1,5 @@
 import gradio as gr
+from pdfgenerator import PDFGenerator
 import subprocess
 import os
 
@@ -34,7 +35,7 @@ def callHtrFlow(image_path):
 
     # returning filepath to be used in output
     filename_no_ext = formatImagePath(image_path)
-    txt_path = f"outputs/{filename_no_ext}.json"
+    txt_path = f"outputs/{filename_no_ext}.txt"
     print(txt_path)
     # Reading the file
     with open(txt_path, "r") as f:
@@ -66,5 +67,9 @@ with gr.Blocks() as demo:
                 PDF = buttonCreator("PDF", "huggingface", "pdficon.svg")
 
     submit.click(fn=callHtrFlow, inputs=input, outputs=output)
+    # Link the "PDF" button to generate a PDF from the recognized text
+    pdf_gen = PDFGenerator()
+    text = output
+    PDF.click(fn=pdf_gen.create_pdf_from_text, inputs=text, outputs=[])
     
 demo.launch()
