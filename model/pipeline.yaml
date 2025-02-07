@@ -8,7 +8,7 @@ steps:
   settings:
     model: TrOCR
     model_settings:
-      model: Riksarkivet/trocr-base-handwritten-hist-swe-2
+      model: Sprakbanken/TrOCR-norhand-v3
 - step: OrderLines
 - step: Export
   settings:
