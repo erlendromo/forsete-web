@@ -14,31 +14,42 @@ class PDFGenerator:
         self.orientation = orientation
         self.unit = unit
         self.format = format
-
-    def generate_pdf(self, text_content, output_path):
+    
+    @staticmethod
+    def generate_pdf(text_content, output_path, font='Arial', font_size=12, orientation='P', unit='mm', format='A4'):
         """
         Generates a PDF file from the input text_content.
 
         :param text_content: The content that you want to place in the PDF.
         :param output_path: Where to save the resulting PDF file.
+        :param font: Font family (default: Arial)
+        :param font_size: Font size (default: 12)
+        :param orientation: Page orientation ('P' or 'L')
+        :param unit: Measurement unit ('mm', 'cm', 'in')
+        :param format: Page format ('A4', 'Letter', etc.)
         :return: The path to the generated PDF.
         """
-        pdf = FPDF(self.orientation, self.unit, self.format)
+        pdf = FPDF(orientation, unit, format)
         pdf.add_page()
-        pdf.set_font(self.font, size=self.font_size)
+        pdf.set_font(font, size=font_size)
+
 
         # Split by lines and add each line to PDF
         lines = text_content.split("\n")
         for line in lines:
             pdf.multi_cell(0, 10, line)
             pdf.ln(2)
+        
+        return pdf.output(f"{output_path}.pdf")
 
-        pdf.output(output_path)
-        return output_path
-    
-    def create_pdf_from_text(self, text):
-        self.generate_pdf(text, "outputs/output.pdf")
-        return None
+        #pdf.output(f"outputs/pdf/{output_path}.pdf")
+        #print(f"PDF saved at: outputs/{output_path}")
+
+
+
+    # def create_pdf_from_text(self, text):
+      #  self.generate_pdf(text, "outputs/output.pdf")
+       # return None
 
     
     

@@ -25,16 +25,16 @@ def formatImagePath(path):
     print(last_two)
     return last_two
 
-def callHtrFlow(image_path):
+def callHtrFlow(image):
     """
-    Calls: htrflow pipeline <pipeline_path> <image_path>
+    Calls: htrflow pipeline <pipeline_path> <image>
     """
-    command = ["htrflow", "pipeline", "model/pipeline.yaml", image_path]
+    command = ["htrflow", "pipeline", "model/pipeline.yaml", image]
     print(f"Executing: {' '.join(command)}")
     subprocess.run(command, check=True)
 
     # returning filepath to be used in output
-    filename_no_ext = formatImagePath(image_path)
+    filename_no_ext = formatImagePath(image)
     txt_path = f"outputs/{filename_no_ext}.txt"
     print(txt_path)
     # Reading the file
@@ -64,12 +64,15 @@ with gr.Blocks() as demo:
             with gr.Row():
                 cancel = buttonCreator("Cancel", "stop", None)
                 save = buttonCreator("Save", "secondary", None)
-                PDF = buttonCreator("PDF", "huggingface", "pdficon.svg")
-
+                PDF = gr.DownloadButton(
+                    label="PDF",
+                    icon="pdficon.svg")
     submit.click(fn=callHtrFlow, inputs=input, outputs=output)
     # Link the "PDF" button to generate a PDF from the recognized text
-    pdf_gen = PDFGenerator()
     text = output
-    PDF.click(fn=pdf_gen.create_pdf_from_text, inputs=text, outputs=[])
+    #img_name = formatImagePath(input)
+    PDF.click(fn=lambda text: PDFGenerator.generate_pdf(text, "output"), 
+              inputs=[text], 
+              outputs=[PDF])
     
 demo.launch()
