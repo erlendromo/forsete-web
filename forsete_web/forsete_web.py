@@ -1,4 +1,4 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
+"""Homepage for the FORSETE Application"""
 
 import reflex as rx
 
@@ -12,20 +12,29 @@ class State(rx.State):
 
 
 def index() -> rx.Component:
-    # Welcome Page (Index)
+    # Home page (index)
     return rx.container(
         
         navbar_searchbar(),
         rx.color_mode.button(position="top-right"),
+        # Vertical stack
         rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
+            rx.heading("Last opp fil/er.", size="9"),
+            # File uploader
+            rx.center(
+                rx.upload(
+                    rx.vstack(
+                        rx.button("Select File")
+                    ),
+                    width="fit-content",    
+                    border_radius="10px",    # rounded corners
+                    justify="center",
+                    align="center",
+                )
             ),
             spacing="5",
             justify="center",
+            align="center",
             min_height="85vh",
         ),
     )
@@ -79,6 +88,27 @@ def navbar_searchbar() -> rx.Component:
         # z_index="5",
         width="100%",
     )
+
+@rx.event
+async def handle_upload(
+    self, files: list[rx.UploadFile]):
+    """Handle the upload of file(s).
+
+    Args:
+        files: The uploaded files.
+    """
+    for file in files:
+        upload_data = await file.read()
+        # Joins the directory
+        outfile = rx.get_upload_dir() / file.filename
+        # Save the file.
+        with outfile.open("wb") as file_object:
+            file_object.write(upload_data)
+
+        # Update the img var.
+        self.img.append(file.filename)
+
+
 
 app = rx.App()
 app.add_page(index)
