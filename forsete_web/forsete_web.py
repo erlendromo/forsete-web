@@ -1,4 +1,4 @@
-"""Homepage for the FORSETE Application"""
+"""Homepage for the FORSETE"""
 
 import reflex as rx
 
@@ -13,7 +13,7 @@ class State(rx.State):
 
 def index() -> rx.Component:
     # Home page (index)
-    return rx.container(
+    return rx.box(
         
         navbar_searchbar(),
         rx.color_mode.button(position="top-right"),
