@@ -30,8 +30,10 @@ def index() -> rx.Component:
                     border_radius="10px",    # rounded corners
                     justify="center",
                     align="center",
-                )
+                    id="upload"
+                ),
             ),
+            submit_and_cancel_button(),
             spacing="5",
             justify="center",
             align="center",
@@ -108,7 +110,17 @@ async def handle_upload(
         # Update the img var.
         self.img.append(file.filename)
 
+def submit_and_cancel_button():
+    return rx.hstack(
+         # Clear button
+        rx.button("Clear",
+              color_scheme="red",
+              on_click=rx.clear_selected_files("upload")),
 
+        # Submit button
+        rx.button("Submit",
+              color_scheme="green",)
+    )
 
 app = rx.App()
 app.add_page(index)
