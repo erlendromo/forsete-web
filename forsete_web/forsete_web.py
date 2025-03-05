@@ -33,7 +33,7 @@ def index() -> rx.Component:
                     id="upload"
                 ),
             ),
-            submit_and_cancel_button(),
+            inputButtons(),
             spacing="5",
             justify="center",
             align="center",
@@ -110,16 +110,26 @@ async def handle_upload(
         # Update the img var.
         self.img.append(file.filename)
 
-def submit_and_cancel_button():
-    return rx.hstack(
-         # Clear button
-        rx.button("Clear",
-              color_scheme="red",
-              on_click=rx.clear_selected_files("upload")),
+def buttonCreator(name: str, color: str, onclick) -> rx.Component:
+    """Function for creating button.
 
-        # Submit button
-        rx.button("Submit",
-              color_scheme="green",)
+    Args:
+        name: the name of the button.
+        color: the color of the button.
+        onclick: the action of the button.
+    """
+    return rx.button(
+        name,
+        color_scheme=color,
+        on_click=onclick
+    )
+
+def inputButtons() -> rx.Component:
+    """Function for organizing submit and cancel button.
+    """
+    return rx.hstack(
+        buttonCreator(name="Submit", color="green", onclick=rx.clear_selected_files("upload")),
+        buttonCreator(name="Clear", color="red", onclick=rx.clear_selected_files("upload"))
     )
 
 app = rx.App()
