@@ -7,9 +7,26 @@ from rxconfig import config
 
 class State(rx.State):
     """The app state."""
-
+    
+    # The file
+    file: str
     ...
 
+    @rx.event
+    async def handle_upload(self, files: list[rx.UploadFile]):
+        """
+            Handle the upload of file(s).
+            Args:
+            files: The uploaded files.
+        """
+        current_file = files[0]
+        upload_data = await current_file.read()
+        outfile = rx.get_upload_dir() / current_file.filename
+        # save the file: write binary
+        with outfile.open("wb") as file_object:
+            file_object.write(upload_data)
+        # update the file var
+        self.file = current_file.filename
 
 def index() -> rx.Component:
     # Home page (index)
@@ -91,25 +108,6 @@ def navbar_searchbar() -> rx.Component:
         width="100%",
     )
 
-@rx.event
-async def handle_upload(
-    self, files: list[rx.UploadFile]):
-    """Handle the upload of file(s).
-
-    Args:
-        files: The uploaded files.
-    """
-    for file in files:
-        upload_data = await file.read()
-        # Joins the directory
-        outfile = rx.get_upload_dir() / file.filename
-        # Save the file.
-        with outfile.open("wb") as file_object:
-            file_object.write(upload_data)
-
-        # Update the img var.
-        self.img.append(file.filename)
-
 def buttonCreator(name: str, color: str, onclick) -> rx.Component:
     """Function for creating button.
 
@@ -128,7 +126,8 @@ def inputButtons() -> rx.Component:
     """Function for organizing submit and cancel button.
     """
     return rx.hstack(
-        buttonCreator(name="Submit", color="green", onclick=rx.clear_selected_files("upload")),
+        buttonCreator(name="Submit", color="green", onclick=State.handle_upload(
+                rx.upload_files(upload_id="upload"))),
         buttonCreator(name="Clear", color="red", onclick=rx.clear_selected_files("upload"))
     )
 
