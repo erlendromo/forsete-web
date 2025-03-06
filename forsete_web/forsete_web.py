@@ -4,13 +4,19 @@ import reflex as rx
 
 from rxconfig import config
 
+uploadId: str = "uploadID"
+# MIME type (Multipurpose Internet Mail Extensions)
+supportedFileTypes: str={
+    "application/pdf": [".pdf"],
+    "image/png": [".png"], 
+    "image/jpeg": [".jpg", ".jpeg"]     
+}
 
 class State(rx.State):
     """The app state."""
     
     # The file
     file: str
-    ...
 
     @rx.event
     async def handle_upload(self, files: list[rx.UploadFile]):
@@ -47,7 +53,8 @@ def index() -> rx.Component:
                     border_radius="10px",    # rounded corners
                     justify="center",
                     align="center",
-                    id="upload"
+                    id=uploadId,
+                    accept=supportedFileTypes
                 ),
             ),
             inputButtons(),
@@ -127,8 +134,8 @@ def inputButtons() -> rx.Component:
     """
     return rx.hstack(
         buttonCreator(name="Submit", color="green", onclick=State.handle_upload(
-                rx.upload_files(upload_id="upload"))),
-        buttonCreator(name="Clear", color="red", onclick=rx.clear_selected_files("upload"))
+                rx.upload_files(upload_id=uploadId))),
+        buttonCreator(name="Clear", color="red", onclick=rx.clear_selected_files(uploadId))
     )
 
 app = rx.App()
