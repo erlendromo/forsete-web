@@ -6,24 +6,25 @@ from rxconfig import config
 
 uploadId: str = "uploadID"
 # MIME type (Multipurpose Internet Mail Extensions)
-supportedFileTypes: str={
+supportedFileTypes: dict = {
     "application/pdf": [".pdf"],
-    "image/png": [".png"], 
-    "image/jpeg": [".jpg", ".jpeg"]     
+    "image/png": [".png"],
+    "image/jpeg": [".jpg", ".jpeg"],
 }
+
 
 class State(rx.State):
     """The app state."""
-    
+
     # The file
     file: str
 
     @rx.event
     async def handle_upload(self, files: list[rx.UploadFile]):
         """
-            Handle the upload of file(s).
-            Args:
-            files: The uploaded files.
+        Handle the upload of file(s).
+        Args:
+        files: The uploaded files.
         """
         current_file = files[0]
         upload_data = await current_file.read()
@@ -34,29 +35,17 @@ class State(rx.State):
         # update the file var
         self.file = current_file.filename
 
+
 def index() -> rx.Component:
     # Home page (index)
     return rx.box(
-        
         navbar_searchbar(),
         rx.color_mode.button(position="top-right"),
         # Vertical stack
         rx.vstack(
             rx.heading("Last opp fil/er.", size="9"),
             # File uploader
-            rx.center(
-                rx.upload(
-                    rx.vstack(
-                        rx.button("Select File")
-                    ),
-                    width="fit-content",    
-                    border_radius="10px",    # rounded corners
-                    justify="center",
-                    align="center",
-                    id=uploadId,
-                    accept=supportedFileTypes
-                ),
-            ),
+            rx.center(uploaderArea()),
             inputButtons(),
             spacing="5",
             justify="center",
@@ -65,15 +54,14 @@ def index() -> rx.Component:
         ),
     )
 
+
 def navbar_searchbar() -> rx.Component:
     return rx.box(
         rx.desktop_only(
             rx.hstack(
                 rx.hstack(
                     # Heading
-                    rx.heading(
-                        "FORSETE", size="7", weight="bold"
-                    ),
+                    rx.heading("FORSETE", size="7", weight="bold"),
                     align_items="center",
                 ),
                 # Search area
@@ -91,9 +79,7 @@ def navbar_searchbar() -> rx.Component:
         rx.mobile_and_tablet(
             rx.hstack(
                 rx.hstack(
-                    rx.heading(
-                        "FORSETE", size="6", weight="bold"
-                    ),
+                    rx.heading("FORSETE", size="6", weight="bold"),
                     align_items="center",
                 ),
                 rx.input(
@@ -115,6 +101,7 @@ def navbar_searchbar() -> rx.Component:
         width="100%",
     )
 
+
 def buttonCreator(name: str, color: str, onclick) -> rx.Component:
     """Function for creating button.
 
@@ -123,20 +110,43 @@ def buttonCreator(name: str, color: str, onclick) -> rx.Component:
         color: the color of the button.
         onclick: the action of the button.
     """
-    return rx.button(
-        name,
-        color_scheme=color,
-        on_click=onclick
-    )
+    return rx.button(name, color_scheme=color, on_click=onclick)
+
 
 def inputButtons() -> rx.Component:
-    """Function for organizing submit and cancel button.
-    """
-    return rx.hstack(
-        buttonCreator(name="Submit", color="green", onclick=State.handle_upload(
-                rx.upload_files(upload_id=uploadId))),
-        buttonCreator(name="Clear", color="red", onclick=rx.clear_selected_files(uploadId))
+    """Function for organizing submit and cancel button."""
+    return rx.cond(
+        rx.selected_files(uploadId),  # Only show buttons if files are selected
+        rx.hstack(
+            buttonCreator(
+                name="Submit",
+                color="green",
+                onclick=State.handle_upload(rx.upload_files(upload_id=uploadId)),
+            ),
+            buttonCreator(
+                name="Clear", 
+                color="red", 
+                onclick=rx.clear_selected_files(uploadId)
+            ),
+        ),
+        # Return None when no files selected
+        None,
     )
+
+
+def uploaderArea() -> rx.Component:
+    """Function for organizing upload area."""
+    return rx.upload(
+        rx.vstack(rx.button("Select File")),
+        width="fit-content",
+        border_radius="10px",  # rounded corners
+        justify="center",
+        align="center",
+        id=uploadId,
+        accept=supportedFileTypes,
+        multiple=False,
+    )
+
 
 app = rx.App()
 app.add_page(index)
