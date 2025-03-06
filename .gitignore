@@ -4,5 +4,8 @@ assets/external/
 .web
 *.py[cod]
 .states
-.venv/*
+# Virtual enviroment for local development
+.venv/
 build/start
+# File uploader 
+uploaded_files
