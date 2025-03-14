@@ -7,5 +7,5 @@ assets/external/
 # Virtual enviroment for local development
 .venv/
 build/start
-# File uploader 
+# File uploader
 uploaded_files
