@@ -5,7 +5,12 @@ assets/external/
 *.py[cod]
 .states
 # Virtual enviroment for local development
-.venv/
+venv/
 build/start
 # File uploader
 uploaded_files
+
+# Unneccesary
+node_modules/
+.svelte-kit
+.svelte-kit/*

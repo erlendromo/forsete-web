@@ -1,2 +1,2 @@
-python==3.12
+# python==3.12.1
 reflex==0.7.0
