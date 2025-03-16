@@ -1,3 +1,6 @@
+# Running tailwind
+npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
