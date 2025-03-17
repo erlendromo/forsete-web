@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ids from the index.html
     const uploadBtn = document.getElementById("uploadBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
     const inputDoc = document.getElementById("inputDocument");
   
     uploadBtn.addEventListener("click", () => {
@@ -32,6 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Upload failed (check console for details).");
         });
     });
-  });
+
+    cancelBtn.addEventListener("click", () => {
+      inputDocument.value = "";
+      console.log("Cancel button clicked. File input reset.");
+    });
+  })
   
   
