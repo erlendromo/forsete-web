@@ -1,0 +1,47 @@
+/* styles.css */
+@import "tailwindcss";
+
+.file-uploader {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-uploader.dragover {
+    background-color: #f0f0f0;
+    border-color: #007bff;
+  }
+  
+  .file-uploader input[type='file'] {
+    display: none;
+  }
+  
+  .upload-progress {
+    margin-top: 20px;
+  }
+  
+  .progress-bar {
+    background-color: #007bff;
+    height: 24px;
+    margin-bottom: 8px;
+    color: #fff;
+    line-height: 24px;
+    padding: 0 12px;
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .progress-bar.upload-complete {
+    background-color: #28a745;
+  }
+  
+  .progress-bar.upload-error {
+    background-color: #dc3545;
+  }
+  
