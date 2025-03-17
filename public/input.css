@@ -45,3 +45,148 @@
     background-color: #dc3545;
   }
   
+
+  @use "../abstracts" as *;
+/* All elements for the navbar*/
+/* Elements to the navbar*/
+.navbar {
+    width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    padding: 2.5em;
+    align-items: center;
+    overflow: hidden;
+    justify-content: space-between;
+    position: relative;
+    display: flex;
+}
+    /* Sets the elements vertical in navbar*/
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* Consistent spacing between items */
+    }
+        /* Company logo*/
+        .logo {
+            cursor: pointer;
+            border-radius: 1em;
+            position: relative;
+            max-width: 5em;
+            height: auto;
+
+        }
+
+        /* Making the elements "hover-able"*/
+        .item {
+            position: relative;
+            display: inline-block;
+        }
+
+            /* Styling of all the anchor items elements*/
+            .item a {
+                text-decoration: none;
+                color: #fff;
+                position: relative;
+                @include hover-underline-gradient()
+            }
+        /* Separator styling for navigation element */
+        .separator {
+            color: white;
+            font-size: 16px;
+        }
+
+/* For the active link */
+.active::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    height: 5px;
+    border-radius: 2px;
+    @include colorGradient;
+}
+
+/* off-screen-menu */
+.off-screen-menu {
+    background-color:  rgb(34, 37, 49);
+    height: 100vh;
+    width: 100%;
+    max-width: 450px;
+    position: fixed;
+    top: 0;
+    right: -450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    font-size: 3rem;
+    transition: .3s ease;
+    z-index: 3;
+}
+
+.off-screen-menu.active {
+    right: 0;
+    gap: 5em !important;
+}
+
+/* ham menu */
+.ham-menu {
+    cursor: pointer;
+    height: 50px;
+    width: 40px;
+    margin-left: auto;
+    position: relative;
+    display: flex;
+    z-index: 4;
+}
+
+.ham-menu span {
+    height: 5px;
+    width: 100%;
+    background-color: white;
+    border-radius: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: .3s ease;
+}
+.ham-menu span:nth-child(1) {
+    top: 25%;
+}
+.ham-menu span:nth-child(3) {
+    top: 75%;
+}
+.ham-menu.active span  {
+    background-color: white;
+}
+.ham-menu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.ham-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+.ham-menu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Media query for properly switching between hamburger menu
+ and normal menu for bigger screens. */
+@media screen and (max-width: 700px) {
+    .row {
+        display: flex; /* Hide the regular navbar on small screens */
+    }
+    .ham-menu {
+        display: flex; /* Show the hamburger menu on small screens */
+
+    }
+}
+
+.vertical-spacer {
+   gap: 1.5em;
+}
