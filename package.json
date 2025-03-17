@@ -4,7 +4,9 @@
   "description": "Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tailwind": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
+    "server": "node server.js",
+    "dev": "concurrently \"npm run tailwind\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/erlendromo/forsete-web#readme",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "tailwindcss": "^4.0.14"
   },
   "dependencies": {
