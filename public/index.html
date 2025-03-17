@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <title>Custom File Uploader</title>
-    <link rel="stylesheet" href="src/output.css" />
-    <link href="src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/output.css" />
+    <link href="/output.css" rel="stylesheet">
   </head>
-  <script src="src/js/filehandler.js" defer></script>
+  <script src="/js/filehandler.js" defer></script>
   <body>
 
     <nav class="flex justify-center space-x-4">  <a href="/dashboard" 
@@ -22,8 +22,8 @@
         class="w-full text-gray-500 font-medium text-lg bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded" />
     </div>
 
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" 
-    onclick="SaveFile(document.getElementById('inputDocument'))">
+    <button id='uploadBtn' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" 
+    onclick="handleSubmit(document.getElementById('inputDocument'))">
 Upload Document
 </button>
   </body>
