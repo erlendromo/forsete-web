@@ -1,7 +1,7 @@
 {
   "name": "forsete-web",
   "version": "1.0.0",
-  "description": "Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).",
+  "description": "Frontend for bachelor thesis",
   "main": "index.js",
   "scripts": {
     "tailwind": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
