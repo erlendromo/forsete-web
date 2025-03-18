@@ -21,23 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         body: formData,
       })
-        .then((response) => {
-          if (response.ok) {
-            alert("File uploaded successfully!");
-            // Redirecting to results.html
-            window.location.href = "/results.html";
-          } else {
-            alert("Upload failed.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-          alert("Upload failed (check console for details).");
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Upload failed.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const filename = data.filename;
+        alert("File uploaded successfully!");
+        // Redirecting to results.html and filename as query parameter
+        window.location.href = `results.html?file=${encodeURIComponent(filename)}`;
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+        alert("Upload failed (check console for details).");
+      });
     });
 
     cancelBtn.addEventListener("click", () => {
-      inputDocument.value = "";
+      inputDoc.value = "";
       console.log("Cancel button clicked. File input reset.");
     });
   })
