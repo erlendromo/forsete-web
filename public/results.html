@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Custom File Uploader</title>
+  <title>Results</title>
   <link rel="stylesheet" href="/output.css" />
 </head>
 <script src="js/ham-menu.js" defer></script>
-<script src="/js/filehandler.js" defer></script>
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
     <a href="index.html">
@@ -22,7 +21,18 @@
   <main class="min-h-screen flex flex-col items-center justify-center">
     <div class="space-y-8 font-sans max-w-md mx-auto">
       <div class="flex flex-row items-center justify-center font-sans max-w-md mx-auto space-x-4">
-        <img class="h-auto max-w-lg rounded-lg" src="/images/imgPlaceholder.jpg" alt="image description">
+        <img id=dynamicImage class="h-auto max-w-lg rounded-lg" src="" alt="image result">
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const filename = params.get('file');
+            if (filename) {
+              document.getElementById("dynamicImage").src = `/uploads/${filename}`;
+            } else {
+              console.error("No 'file' query parameter found.");
+            }
+          });
+        </script>
         <textarea id="jsonOutput" name="jsonOutput" rows="4" cols="50">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare ac purus eu sagittis. Proin eget mi sed magna imperdiet venenatis vitae non nisl. In vulputate cursus tristique. Integer massa quam, lacinia at egestas et, condimentum eget nisi. Phasellus tortor lectus, vestibulum a risus eu, consectetur congue velit. Donec tristique purus mauris, eget mollis est venenatis ut. Ut faucibus nec ipsum id pulvinar. Donec tincidunt eget metus ultrices efficitur. Praesent ac libero lacinia, dignissim est at, aliquam est. In dictum non justo eget euismod. Suspendisse id ligula sit amet tellus sollicitudin pretium nec consequat est. Fusce varius efficitur mollis. 
         </textarea>
