@@ -1,3 +1,7 @@
+# Running project
+npm install concurrently --save-dev
+npm run dev
+
 # Running tailwind
 npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
 
