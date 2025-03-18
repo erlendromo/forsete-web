@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((response) => {
           if (response.ok) {
             alert("File uploaded successfully!");
+            // Redirecting to results.html
+            window.location.href = "/results.html";
           } else {
             alert("Upload failed.");
           }
