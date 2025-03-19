@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Custom File Uploader</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon_io/favicon.ico">
+  <link rel="stylesheet" href="/output.css" />
+</head>
+<script src="js/ham-menu.js" defer></script>
+<script src="js/filehandler.js" defer></script>
+<body class="bg-gray-900 text-white">
+  <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
+    <a href="index.html">
+      <h1 class="text-4xl font-bold">FORSETE</h1>
+    </a>
+    <div class="ham-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  
+  <main class="min-h-screen flex flex-col items-center justify-center">
+    <div class="space-y-8 font-sans max-w-md mx-auto">
+      <input
+        id="inputDocument"
+        type="file"
+        class="grid place-items-center w-full text-gray-500 font-medium text-lg bg-gray-100 
+               file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 
+               file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded"
+      />
+    </div>
+    <div class="flex flex-row space-x-4 mt-8">
+      <button
+        id="uploadBtn"
+        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer"
+        onclick="handleSubmit(document.getElementById('inputDocument'))">
+        Upload Document
+      </button>
+      <button
+        id="cancelBtn"
+        class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
+        Cancel
+      </button>
+    </div>
+  </main>
+</body>
+</html>
