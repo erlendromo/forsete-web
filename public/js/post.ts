@@ -41,21 +41,9 @@ export async function sendATRRequest(
     
     // Store both the original and current version
     const originalResponse = JSON.parse(JSON.stringify(response.data));
-    //let currentResponse = JSON.parse(JSON.stringify(response.data));
     
     return {
       original: originalResponse,
-      //current: currentResponse,
-      // Helper function to revert to original
-      revertToOriginal: () => {
-        //currentResponse = JSON.parse(JSON.stringify(originalResponse));
-       // return currentResponse;
-      },
-      // Helper function to modify the current response
-      updateResponse: (transformer: (data: any) => any) => {
-        //currentResponse = transformer(JSON.parse(JSON.stringify(currentResponse)));
-      //  return currentResponse;
-      }
     };
   } catch (error) {
     console.error('Error:', error);

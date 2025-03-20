@@ -78,20 +78,8 @@ function sendATRRequest(url_1, imagePath_1, models_1) {
                 case 2:
                     response = _a.sent();
                     originalResponse = JSON.parse(JSON.stringify(response.data));
-                    //let currentResponse = JSON.parse(JSON.stringify(response.data));
                     return [2 /*return*/, {
                             original: originalResponse,
-                            //current: currentResponse,
-                            // Helper function to revert to original
-                            revertToOriginal: function () {
-                                //currentResponse = JSON.parse(JSON.stringify(originalResponse));
-                                // return currentResponse;
-                            },
-                            // Helper function to modify the current response
-                            updateResponse: function (transformer) {
-                                //currentResponse = transformer(JSON.parse(JSON.stringify(currentResponse)));
-                                //  return currentResponse;
-                            }
                         }];
                 case 3:
                     error_1 = _a.sent();
