@@ -3,12 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Results</title>
   <link rel="icon" type="image/x-icon" href="images/favicon_io/favicon.ico">
   <link rel="stylesheet" href="/output.css" />
 </head>
 <script src="js/ham-menu.js" defer></script>
 <script src="js/queryreader.js" defer></script>
+<script src="js/jsonLoader.js" defer></script>
 
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
@@ -25,32 +28,16 @@
   <main class="min-h-screen flex flex-col items-center justify-center">
     <div class="space-y-8 font-sans max-w-md mx-auto">
       <div class="flex flex-row items-center justify-center font-sans max-w-md mx-auto space-x-4">
-        <img id=dynamicImage class="h-auto max-w-lg rounded-lg" src="" alt="image result">
-        <textarea id="jsonOutput" name="jsonOutput" rows="4" cols="50">
-        </textarea>
-        <script>
-          async function main() {
-            const data = await getData();
-            const textArea = document.getElementById('jsonOutput');
-            // Join only the values, separated by newlines.
-            textArea.value = Object.values(data).join('\n');
-          }
-
-          async function getData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const fileParam = urlParams.get('file');
-            try {
-              const res = await fetch("uploads/"+ fileParam +".json");
-              const jsonData = await res.json();
-              return jsonData;
-            } catch (error) {
-              console.error("Error fetching JSON data:", error);
-              return {};
-            }
-          }
-
-          main();
-        </script>
+        <img id="dynamicImage" class="h-auto max-w-lg rounded-lg" src="" alt="image result">
+        <div class="flex flex-col space-y-2">
+          <label for="jsonOutput" class="text-sm font-medium text-gray-700">
+            JSON Output:
+          </label>
+          <textarea id="jsonOutput" name="jsonOutput" rows="4" cols="50" title="Output"
+            placeholder="Your JSON data here"
+            class="block w-[50ch] p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+        </div>
+      </div>
       </div>
 
       <div class="flex justify-end">

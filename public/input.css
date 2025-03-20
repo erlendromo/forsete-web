@@ -189,3 +189,21 @@
 .vertical-spacer {
    gap: 1.5em;
 }
+
+@layer base {
+    html,
+    :host {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%; /* For older webkit browsers */
+    text-size-adjust: 100%;         /* For modern browsers */
+  }
+
+/* Use a more specific selector to override any other rules */
+textarea#jsonOutput {
+    width: 500px !important;
+  }
