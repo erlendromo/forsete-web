@@ -7,7 +7,7 @@ const { extractTextMapping } = require('./public/js/jsonFormatter.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const URL = 'http://localhost:8080/forsete-atr/v1/atr/basic-documents/';
+const URL = 'http://10.212.170.96:8080/forsete-atr/v1/atr/basic-documents/';
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
 const uploadDir = "uploads";

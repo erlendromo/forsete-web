@@ -36,7 +36,7 @@
     "express": "^4.21.2",
     "filepond": "^4.32.7",
     "form-data": "^4.0.2",
-    "multer": "^1.4.5-lts.1",
-    "pdfjs-dist": "^5.0.375"
+    "jspdf": "^3.0.1",
+    "multer": "^1.4.5-lts.1"
   }
 }
