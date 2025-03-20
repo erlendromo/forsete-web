@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Results</title>
@@ -8,6 +9,7 @@
 </head>
 <script src="js/ham-menu.js" defer></script>
 <script src="js/queryreader.js" defer></script>
+
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
     <a href="index.html">
@@ -25,16 +27,36 @@
       <div class="flex flex-row items-center justify-center font-sans max-w-md mx-auto space-x-4">
         <img id=dynamicImage class="h-auto max-w-lg rounded-lg" src="" alt="image result">
         <textarea id="jsonOutput" name="jsonOutput" rows="4" cols="50">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare ac purus eu sagittis. Proin eget mi sed magna imperdiet venenatis vitae non nisl. In vulputate cursus tristique. Integer massa quam, lacinia at egestas et, condimentum eget nisi. Phasellus tortor lectus, vestibulum a risus eu, consectetur congue velit. Donec tristique purus mauris, eget mollis est venenatis ut. Ut faucibus nec ipsum id pulvinar. Donec tincidunt eget metus ultrices efficitur. Praesent ac libero lacinia, dignissim est at, aliquam est. In dictum non justo eget euismod. Suspendisse id ligula sit amet tellus sollicitudin pretium nec consequat est. Fusce varius efficitur mollis. 
         </textarea>
+        <script>
+          async function main() {
+            const data = await getData();
+            const textArea = document.getElementById('jsonOutput');
+            // Join only the values, separated by newlines.
+            textArea.value = Object.values(data).join('\n');
+          }
+        
+          async function getData() {
+            try {
+              const res = await fetch("uploads/eecbfeaa7699f6e63c999dac12bb2c50.json");
+              const jsonData = await res.json();
+              return jsonData;
+            } catch (error) {
+              console.error("Error fetching JSON data:", error);
+              return {};
+            }
+          }
+        
+          main();
+        </script>
       </div>
 
-    <div class="flex justify-end">
-      <button id="confirmBtn"
-        class="inline-block justify-end bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-        Confirm
-      </button>
-    </div>
+      <div class="flex justify-end">
+        <button id="confirmBtn"
+          class="inline-block justify-end bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
+          Confirm
+        </button>
+      </div>
 
       <div class="flex justify-between space-x-4 mt-8">
         <button id="cancelBtn"
@@ -49,4 +71,5 @@
     </div>
   </main>
 </body>
+
 </html>
