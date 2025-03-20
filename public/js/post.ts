@@ -1,5 +1,5 @@
 import axios from 'axios';
-import FormData from 'form-data';
+import * as FormData from 'form-data';
 import * as fs from 'fs';
 
 
@@ -41,20 +41,20 @@ export async function sendATRRequest(
     
     // Store both the original and current version
     const originalResponse = JSON.parse(JSON.stringify(response.data));
-    let currentResponse = JSON.parse(JSON.stringify(response.data));
+    //let currentResponse = JSON.parse(JSON.stringify(response.data));
     
     return {
       original: originalResponse,
-      current: currentResponse,
+      //current: currentResponse,
       // Helper function to revert to original
       revertToOriginal: () => {
-        currentResponse = JSON.parse(JSON.stringify(originalResponse));
-        return currentResponse;
+        //currentResponse = JSON.parse(JSON.stringify(originalResponse));
+       // return currentResponse;
       },
       // Helper function to modify the current response
       updateResponse: (transformer: (data: any) => any) => {
-        currentResponse = transformer(JSON.parse(JSON.stringify(currentResponse)));
-        return currentResponse;
+        //currentResponse = transformer(JSON.parse(JSON.stringify(currentResponse)));
+      //  return currentResponse;
       }
     };
   } catch (error) {
