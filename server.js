@@ -7,6 +7,7 @@ const { extractTextMapping } = require('./public/js/jsonFormatter.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const URL = 'http://10.212.171.118:8080/forsete-atr/v1/atr/basic-documents/';
 
 // Serves the public folder and views
 app.use(express.static("public"));
@@ -54,7 +55,7 @@ app.post('/transcribe', express.json(), async (req, res) => {
     };
     
     const result = await sendATRRequest(
-      'http://localhost:8080/forsete-atr/v1/atr/basic-documents/',
+      URL,
       filePath,
       models
     );
