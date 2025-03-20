@@ -35,10 +35,12 @@
             // Join only the values, separated by newlines.
             textArea.value = Object.values(data).join('\n');
           }
-        
+
           async function getData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileParam = urlParams.get('file');
             try {
-              const res = await fetch("uploads/eecbfeaa7699f6e63c999dac12bb2c50.json");
+              const res = await fetch("uploads/"+ fileParam +".json");
               const jsonData = await res.json();
               return jsonData;
             } catch (error) {
@@ -46,7 +48,7 @@
               return {};
             }
           }
-        
+
           main();
         </script>
       </div>
