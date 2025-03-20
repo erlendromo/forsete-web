@@ -9,7 +9,7 @@ import FormData from 'form-data';
 /**
  * Processes an image using the specified models and saves the result to a temporary file
  */
-async function processImage(options: ATRPiplineConfig): Promise<ATRPiplineProcessResult> {
+export async function processImage(options: ATRPiplineConfig): Promise<ATRPiplineProcessResult> {
   const {
     imagePath,
     models,
