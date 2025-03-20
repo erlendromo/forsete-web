@@ -20,6 +20,9 @@ function extractTextMapping(data) {
             }
             // Continue traversing any other keys in the current object
             Object.keys(node).forEach(function (key) {
+                // Skip already processed property
+                if (key === 'text_result')
+                    return;
                 traverse(node[key]);
             });
         }
