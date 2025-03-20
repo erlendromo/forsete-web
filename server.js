@@ -7,18 +7,28 @@ const { extractTextMapping } = require('./public/js/jsonFormatter.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const URL = 'http://10.212.171.118:8080/forsete-atr/v1/atr/basic-documents/';
+const URL = 'http://localhost:8080/forsete-atr/v1/atr/basic-documents/';
+const lineModel = 'yolov9-lines-within-regions-1';
+const textModel = 'TrOCR-norhand-v3';
+const uploadDir = "uploads";
+const publicDir = "public";
+const viewDir = "views";
+
+// Endpoint
+const transcribeEndpoint = "/transcribe";
+const statusEndpoint = "/status";
+const uploadEndpoint = "/upload";
 
 // Serves the public folder and views
-app.use(express.static("public"));
-app.use(express.static("public/views"))
+app.use(express.static(publicDir));
+app.use(express.static(publicDir+"/"+ viewDir))
 
 // Configure multer to store in 'uploads/'
-const upload = multer({ dest: "uploads/" });
-app.use("/uploads", express.static("uploads"));
+const upload = multer({ dest: uploadDir + "/" });
+app.use("/"+uploadDir, express.static(uploadDir));
 
 // Status endpoint
-app.get("/status", (request, response) => {
+app.get(statusEndpoint, (request, response) => {
   const status = {
     "Status": "Running"
   };
@@ -26,7 +36,7 @@ response.send(status);
 });
 
 // Create a POST endpoint that matches the fetch("/upload")
-app.post("/upload", upload.single("document"), (req, res) => {
+app.post(uploadEndpoint, upload.single("document"), (req, res) => {
   // Logs the submitted file
   console.log("Submitted file info:", req.file);
   // Sending back to front-end
@@ -39,7 +49,7 @@ app.post("/upload", upload.single("document"), (req, res) => {
 
 // Transcribe endpoint.
 // Sends to the atr-endpoint
-app.post('/transcribe', express.json(), async (req, res) => {
+app.post(transcribeEndpoint, express.json(), async (req, res) => {
   console.log("Sent to atr:", req.file);
 
   try {
@@ -48,10 +58,10 @@ app.post('/transcribe', express.json(), async (req, res) => {
       return res.status(400).json({ error: 'No filename provided' });
     }
     
-    const filePath = path.join(__dirname, 'uploads', filename);
+    const filePath = path.join(__dirname, uploadDir, filename);
     const models = {
-      lineSegmentationModel: 'yolov9-lines-within-regions-1',
-      textRecognitionModel: 'TrOCR-norhand-v3'
+      lineSegmentationModel: lineModel,
+      textRecognitionModel: textModel
     };
     
     const result = await sendATRRequest(
@@ -69,7 +79,7 @@ app.post('/transcribe', express.json(), async (req, res) => {
     saveJsonToFile(extractTextMapping(result), filePath + ".json")
 
   } catch (error) {
-    console.error("Error in /transcribe:", error);
+    console.error("Error in"+ transcribeEndpoint +":", error);
     res.status(500).json({ error: "Something went wrong during transcription." });
   }
 });
