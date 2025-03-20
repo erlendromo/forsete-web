@@ -2,6 +2,9 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { sendATRRequest } = require('./public/js/post.js');
+const { saveJsonToFile } = require('./public/js/jsonFormatter.js');
+const { extractTextMapping } = require('./public/js/jsonFormatter.js');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -61,6 +64,9 @@ app.post('/transcribe', express.json(), async (req, res) => {
       atrResult: result.current
     });
     console.log("ATR Response Body:", JSON.stringify(result, null, 2));
+    // Extracting the important data
+    saveJsonToFile(extractTextMapping(result), filePath + ".json")
+
   } catch (error) {
     console.error("Error in /transcribe:", error);
     res.status(500).json({ error: "Something went wrong during transcription." });

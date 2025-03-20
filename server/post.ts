@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as FormData from 'form-data';
+import FormData from 'form-data';
 import * as fs from 'fs';
 
 
@@ -52,7 +52,7 @@ export async function sendATRRequest(
         return currentResponse;
       },
       // Helper function to modify the current response
-      updateResponse: (transformer) => {
+      updateResponse: (transformer: (data: any) => any) => {
         currentResponse = transformer(JSON.parse(JSON.stringify(currentResponse)));
         return currentResponse;
       }

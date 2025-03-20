@@ -46,7 +46,6 @@
   }
   
 
-  @use "../abstracts" as *;
 /* All elements for the navbar*/
 /* Elements to the navbar*/
 .navbar {
@@ -88,7 +87,7 @@
                 text-decoration: none;
                 color: #fff;
                 position: relative;
-                @include hover-underline-gradient()
+                /*@include hover-underline-gradient()*/
             }
         /* Separator styling for navigation element */
         .separator {
@@ -105,7 +104,7 @@
     left: 0;
     height: 5px;
     border-radius: 2px;
-    @include colorGradient;
+    /* @include colorGradient; */
 }
 
 /* off-screen-menu */
