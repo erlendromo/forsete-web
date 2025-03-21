@@ -5,7 +5,7 @@ run:
 
 # Build docker image
 build:
-	@docker build -t forsete-web .
+	@docker build --no-cache -t forsete-web .
 .PHONY: build
 
 # Test the application
