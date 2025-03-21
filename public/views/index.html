@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Custom File Uploader</title>
+  <title>FORSETE: ATR</title>
   <link rel="icon" type="image/x-icon" href="images/favicon_io/favicon.ico">
   <link rel="stylesheet" href="/output.css" />
 </head>
 <script src="js/ham-menu.js" defer></script>
 <script src="js/filehandler.js" defer></script>
+
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
     <a href="index.html">
@@ -19,30 +21,45 @@
       <span></span>
     </div>
   </nav>
-  
+
   <main class="min-h-screen flex flex-col items-center justify-center">
-    <div class="space-y-8 font-sans max-w-md mx-auto">
-      <input
-        id="inputDocument"
-        type="file"
-        class="grid place-items-center w-full text-gray-500 font-medium text-lg bg-gray-100 
-               file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 
-               file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded"
-      />
+    <div class="flex items-center justify-center w-full">
+      <label for="inputDocument"
+        class="flex flex-col items-center justify-center w-1/2 h-80 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+          <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 20 16">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+          </svg>
+          <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <span class="font-semibold">Click to upload</span> or drag and drop
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or PDF</p>
+  
+          <!-- Filename display -->
+          <p id="fileName" class="mt-4 text-sm text-blue-500 dark:text-blue-300">No file chosen</p>
+        </div>
+        <input type="file" id="inputDocument" class="hidden">
+      </label>
     </div>
+    <script>
+      document.getElementById('inputDocument').addEventListener('change', function () {
+        document.getElementById('fileName').textContent = this.files[0]?.name || 'No file chosen';
+      });
+    </script>
     <div class="flex flex-row space-x-4 mt-8">
-      <button
-        id="uploadBtn"
-        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer"
-        onclick="handleSubmit(document.getElementById('inputDocument'))">
-        Upload Document
-      </button>
-      <button
-        id="cancelBtn"
+      <button id="cancelBtn"
         class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
         Cancel
+      </button>
+      <button id="uploadBtn"
+        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer"
+        onclick="handleSubmit(document.getElementById('inputDocument'))">
+        Submit
       </button>
     </div>
   </main>
 </body>
+
 </html>
