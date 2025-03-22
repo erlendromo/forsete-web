@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelBtn: document.getElementById("cancelBtn"),
     inputDoc: document.getElementById("inputDocument"),
     fileNameID: document.getElementById("fileName"),
-    loadingBtn: document.getElementById("loaderBtn"),
+    spinnerId: document.getElementById("spinnerId"),
     uploadArea: document.getElementById("uploadArea")
   };
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hide loader and remove blur effect
   const initalLoad = () => {
-    elements.loadingBtn.style.display = 'none';
+    elements.spinnerId.style.display = 'none';
     hideButton(elements.cancelBtn);
     hideButton(elements.submitBtn);
   };
@@ -47,7 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     hideButton(elements.uploadArea);
     hideButton(elements.submitBtn);
     enableButton(elements.cancelBtn);
-    elements.loadingBtn.style.remove = 'none';
+    elements.spinnerId.classList.remove('hidden');
+    elements.spinnerId.style.display = 'flex';
   }
 
   // Hide the loader on initial load
@@ -129,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.fileNameID.textContent = "No file chosen";
     hideButton(elements.cancelBtn);
     hideButton(elements.submitBtn);
-    elements.loadingBtn.style.display = 'none';
+    elements.spinnerId.style.display = 'none';
     enableButton(elements.uploadArea);
     console.log("Cancel button clicked. File input reset.");
   };
