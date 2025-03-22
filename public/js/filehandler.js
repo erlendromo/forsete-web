@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelBtn: document.getElementById("cancelBtn"),
     inputDoc: document.getElementById("inputDocument"),
     fileNameID: document.getElementById("fileName"),
-    loaderBtn: document.getElementById("loaderBtn"),
+    loadingBtn: document.getElementById("loaderBtn"),
     uploadArea: document.getElementById("uploadArea")
   };
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.uploadArea.classList.add('blur-sm'); // Blur the upload area
     elements.uploadArea.classList.add('pointer-events-none');
     // pointer-events-none
-    elements.submitBtn.disabled = disabled;
+   // elements.submitBtn.disabled = disabled;
     
     // Disable the submit button and apply blur
     elements.submitBtn.disabled = true;
@@ -24,22 +24,34 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.cancelBtn.disabled = false;
   };
 
-  const hideButton = () => {
-    elements.submitBtn.classList.remove('blur-sm');
-
-  }
-
   // Hide loader and remove blur effect
-  const hideLoader = () => {
-    elements.loaderBtn.style.display = 'none';
-    elements.uploadArea.classList.remove('blur-sm');
-    elements.submitBtn.classList.remove('blur-sm');
-    elements.submitBtn.disabled = false;
-    elements.cancelBtn.disabled = false;
+  const initalLoad = () => {
+    elements.loadingBtn.style.display = 'none';
+    hideButton(elements.cancelBtn);
+    hideButton(elements.submitBtn);
   };
 
+  const hideButton = async (button) => {
+    button.classList.add('pointer-events-none');
+    button.classList.add('blur-sm');
+    button.disabled = true;
+  }
+
+  const enableButton = async (button) => {
+    button.classList.remove('pointer-events-none');
+    button.classList.remove('blur-sm');
+    button.disabled = false;
+  }
+
+  const enableLoading = async () => {
+    hideButton(elements.uploadArea);
+    hideButton(elements.submitBtn);
+    enableButton(elements.cancelBtn);
+    elements.loadingBtn.style.remove = 'none';
+  }
+
   // Hide the loader on initial load
-  hideLoader();
+  initalLoad();
 
   // Upload file to the server
   const uploadFile = async (file) => {
@@ -78,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please select a file first.");
       return;
     }
-    showLoader();
+    enableLoading();
     try {
       // Upload the file
       const uploadData = await uploadFile(file);
@@ -94,22 +106,31 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", error);
       alert("Operation failed (check console for details).");
     } finally {
-      hideLoader();
+      enableButton(elements.submitBtn);
     }
   };
+
+  elements.inputDoc.addEventListener("change", () => {
+    if (elements.inputDoc.files.length > 0) {
+      // A file has been selected; show the cancel button
+      enableButton(elements.cancelBtn);
+      enableButton(elements.submitBtn);
+    } else {
+      // No file is selected; hide the cancel button
+      hideButton(elements.cancelBtn);
+      hideButton(elements.submitBtn);
+    }
+  });
 
   // Handle the cancel button click event
   const handleCancelClick = () => {
     // Reset the file input and filename display
     elements.inputDoc.value = "";
     elements.fileNameID.textContent = "No file chosen";
-    
-    hideLoader();
-
-    // Optionally, disable the submit and cancel buttons after reset
-    elements.submitBtn.disabled = true;
-    elements.cancelBtn.disabled = true;
-
+    hideButton(elements.cancelBtn);
+    hideButton(elements.submitBtn);
+    elements.loadingBtn.style.display = 'none';
+    enableButton(elements.uploadArea);
     console.log("Cancel button clicked. File input reset.");
   };
 
