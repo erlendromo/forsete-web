@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", error);
       alert("Operation failed (check console for details).");
       initialLoad();
+      clearFileInput();
     } 
   };
 
@@ -117,15 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle the cancel button click event
   const handleCancelClick = (): void => {
-    // Reset the file input and filename display
-    elements.inputDoc.value = "";
-    elements.fileNameID.textContent = "No file chosen";
+    clearFileInput()
     hideElement(elements.cancelBtn);
     hideElement(elements.submitBtn);
     elements.spinnerId.style.display = "none";
     enableElement(elements.uploadArea);
     console.log("Cancel button clicked. File input reset.");
   };
+
+  const clearFileInput = (): void => {
+    // Reset the file input and filename display
+    elements.inputDoc.value = "";
+    elements.fileNameID.textContent = "No file chosen";
+  }
 
   // Attach event listeners
   elements.submitBtn.addEventListener("click", handleUploadClick);
