@@ -1,5 +1,5 @@
 import data from './dummyData.json';
-import { extractTextMapping } from '../public/js/jsonFormatter';
+import { extractTextMapping } from '../src/ts/jsonFormatter';
 
 
 describe('extractTextMapping', () => {

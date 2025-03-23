@@ -4,7 +4,8 @@
   "description": "Frontend for bachelor thesis",
   "main": "index.js",
   "scripts": {
-    "tailwind": "npx @tailwindcss/cli -i ./public/input.css -o ./public/output.css --watch",
+    "build": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css",
+    "tailwind": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css --watch",
     "server": "node server.js",
     "dev": "concurrently \"npm run tailwind\" \"npm run server\""
   },
@@ -37,6 +38,7 @@
     "filepond": "^4.32.7",
     "form-data": "^4.0.2",
     "jspdf": "^3.0.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "pdf2pic": "^3.1.4"
   }
 }
