@@ -5,8 +5,8 @@ const doc = new jsPDF({});
 /**
  * Saves the content of the textarea as a PDF
  */
-export function saveTextAreaAsPdf(textareaId: string): void {
-  const textarea = document.getElementById(textareaId) as HTMLTextAreaElement | null;
+export function extracAsPdf(document: DocumentManager): void {
+  
 
   if (!textarea) {
     console.error(`Textarea with ID "${textareaId}" not found.`);

@@ -1,9 +1,14 @@
+import { text } from "stream/consumers";
+
 /**
  * DocumentManager class for managing ATR-processed text documents.
  */
+
+type editedAndOriginal ={original: string; edited: string}
+
 class DocumentManager {
     private originalATRResult: ATRResult;
-    private editedTexts: Map<number,EditedText>;
+    private lineSegments: Map<number,LineSegment>;
     private documentId: string;
     private createdAt: Date;
   
@@ -13,7 +18,7 @@ class DocumentManager {
       
       this.documentId = this.generateDocumentId(atrResult); //current solution, can be changed
       
-      this.editedTexts = this.indexATRResult(atrResult);
+      this.lineSegments = this.indexATRResult(atrResult);
     }
   
     //random id generator
@@ -25,14 +30,14 @@ class DocumentManager {
       return `${fileBase}_${timestamp}_${randomSuffix}`;
     }
   
-    private indexATRResult(atrResult: ATRResult): Map<number, EditedText> {
-        const editedTextsMap = new Map<number, EditedText>();
+    private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
+        const LineSegmentMap = new Map<number, LineSegment>();
         let lineIndex = 0;
         
-        atrResult.contains.forEach((textElement, originalIndex) => {
+        atrResult.contains.forEach((textElement) => {
           // For each text in the text_result.texts array
           textElement.text_result.texts.forEach((text) => {
-            editedTextsMap.set(lineIndex, {
+            LineSegmentMap.set(lineIndex, {
               originalIndex: lineIndex,
               textContent: text,
               confidence: textElement.text_result.scores[0],
@@ -46,12 +51,37 @@ class DocumentManager {
           });
         });
         
-        return editedTextsMap;
+        return LineSegmentMap;
+      }
+
+      // Get line segmentation inteface
+      getLineSegment(lineIndex:number): LineSegment|undefined{
+        return this.lineSegments.get(lineIndex) 
+      }
+
+      // Get the text content of a line index
+      getTextContent(lineIndex: number): string | undefined {
+        return this.lineSegments.get(lineIndex)?.editedContent || this.lineSegments.get(lineIndex)?.textContent;
       }
     
+      // Gets a map that contains the edited lines and orignal content
+      getEditedAndOriginal(): Map<number, editedAndOriginal> {
+        const editedAndOriginal = new Map<number, editedAndOriginal>();
+      
+        this.lineSegments.forEach((text, lineIndex) => {
+          if (text.edited) {
+            editedAndOriginal.set(lineIndex, {
+              original: text.textContent,
+              edited: text.editedContent ?? "" // Use `??` to handle `undefined syntax error
+            });
+          }
+        });
+        return editedAndOriginal;
+      }
+
       // Get all the text from each line as string
       getAllText(): string {
-        return Array.from(this.editedTexts.values())
+        return Array.from(this.lineSegments.values())
           .map(item => item.edited ? (item.editedContent || '') : item.textContent)
           .join('\n');
       }
@@ -63,16 +93,16 @@ class DocumentManager {
 
       // Get bounding box based on line index
       getBoundingBox(lineIndex: number): { xmin: number; ymin: number; xmax: number; ymax: number } | undefined {
-        const textItem = this.editedTexts.get(lineIndex);
-        return textItem ? textItem.bbox : undefined;
+        const lineSegment = this.lineSegments.get(lineIndex);
+        return lineSegment ? lineSegment.bbox : undefined;
       }
 
       // Get a map of the bounding boxes as value and the line indexes as key
       getAllBoundingBoxes(): Map<number, { xmin: number; ymin: number; xmax: number; ymax: number }> {
         const bboxMap = new Map<number, { xmin: number; ymin: number; xmax: number; ymax: number }>();
         
-        this.editedTexts.forEach((item, lineIndex) => {
-          bboxMap.set(lineIndex, item.bbox);
+        this.lineSegments.forEach((lineSegment, lineIndex) => {
+          bboxMap.set(lineIndex, lineSegment.bbox);
         });
         
         return bboxMap;
@@ -80,15 +110,15 @@ class DocumentManager {
 
       // Get polygon based on line index
       getPolygon(lineIndex: number): { points: Array<{x: number, y: number}> } | undefined {
-        const text = this.editedTexts.get(lineIndex);
-        return text ? text.polygon : undefined;
+        const editedText = this.lineSegments.get(lineIndex);
+        return editedText ? editedText.polygon : undefined;
       }
 
        // Get a map of the polygons as value and the line indexes as key
       getAllPolygons(): Map<number, { points: Array<{x: number, y: number}> }> {
         const polygonMap = new Map<number, { points: Array<{x: number, y: number}> }>();
         
-        this.editedTexts.forEach((text, lineIndex) => {
+        this.lineSegments.forEach((text, lineIndex) => {
           polygonMap.set(lineIndex, text.polygon);
         });
         
@@ -97,26 +127,26 @@ class DocumentManager {
     
       // Get all line indexes as an array
       getLineIndices(): number[] {
-        return Array.from(this.editedTexts.keys());
+        return Array.from(this.lineSegments.keys());
       }
     
       // Get a specific text item by lineIndex
-      getTextByLineIndex(lineIndex: number): EditedText | undefined {
-        return this.editedTexts.get(lineIndex);
+      getTextByLineIndex(lineIndex: number): LineSegment | undefined {
+        return this.lineSegments.get(lineIndex);
       }
     
-      // Get all edited texts as an array
-      getAllTextItems(): EditedText[] {
-        return Array.from(this.editedTexts.values());
+      // Get all line segments as an array
+      getAllTextItems(): LineSegment[] {
+        return Array.from(this.lineSegments.values());
       } 
 
     
-      // Edit a specific textline
+      // Edit a specific LineSegment
       editText(lineIndex: number, newContent: string): boolean {
-        const textItem = this.editedTexts.get(lineIndex);
+        const textItem = this.lineSegments.get(lineIndex);
 
         if (textItem) {
-          this.editedTexts.set(lineIndex, {
+          this.lineSegments.set(lineIndex, {
             ...textItem,
             edited: true,
             editedContent: newContent
@@ -132,7 +162,7 @@ class DocumentManager {
             documentId: this.documentId,
             originalFile: this.originalATRResult.file_name,
             createdAt: this.createdAt,
-            editedTexts: Object.fromEntries(this.editedTexts)
+            lineSegments: Object.fromEntries(this.lineSegments)
           };
       }
 }
