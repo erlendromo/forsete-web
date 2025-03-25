@@ -1,10 +1,14 @@
+# Compiles the typscript files to javascript
+comp:
+	@tsc
+
 # Run in development mode
-run:
+run: comp
 	@npm run dev
 .PHONY: run
 
 # Build docker image
-build:
+build: comp
 	@docker build --no-cache -t forsete-web .
 .PHONY: build
 
@@ -14,6 +18,6 @@ test:
 .PHONY: test
 
 # Run the dockerized image
-launch:
+launch: 
 	@docker run -d -p 3000:3000 forsete-web
 .PHONY: launch

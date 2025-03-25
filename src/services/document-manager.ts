@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 
 /**
  * DocumentManager class for managing ATR-processed text documents.
@@ -6,7 +5,7 @@ import { text } from "stream/consumers";
 
 type editedAndOriginal ={original: string; edited: string}
 
-class DocumentManager {
+export class DocumentManager {
     private originalATRResult: ATRResult;
     private lineSegments: Map<number,LineSegment>;
     private documentId: string;
@@ -80,10 +79,16 @@ class DocumentManager {
       }
 
       // Get all the text from each line as string
-      getAllText(): string {
+      getAllTextString(): string {
         return Array.from(this.lineSegments.values())
           .map(item => item.edited ? (item.editedContent || '') : item.textContent)
           .join('\n');
+      }
+
+      // Get all the text from each line as array
+      getAllTextArray(): string[] {
+        return Array.from(this.lineSegments.values())
+          .map(item => item.edited ? (item.editedContent || '') : item.textContent)
       }
     
       // Get document ID

@@ -12,7 +12,7 @@ public/images/favicon_io/site.webmanifest
 public/images/favicon_io/about.txt
 
 # Compiled code
-public/js/
+dist
 
 # Compiled CSS
 public/styles

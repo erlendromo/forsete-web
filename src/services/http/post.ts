@@ -11,7 +11,7 @@ export async function sendATRRequest(
     textRecognitionModel: string;
   },
   additionalFields: Record<string, string | number | boolean> = {}
-) {
+): Promise<ATRResult> {
   // Create FormData instance
   const formData = new FormData();
   
@@ -40,11 +40,9 @@ export async function sendATRRequest(
     );
     
     // Store both the original and current version
-    const originalResponse = JSON.parse(JSON.stringify(response.data));
+    const atrJson = response.data as ATRResult;
     
-    return {
-      original: originalResponse,
-    };
+    return atrJson;
   } catch (error) {
     console.error('Error:', error);
     throw error;
