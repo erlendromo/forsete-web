@@ -1,3 +1,5 @@
+import { pdfToImage } from "./pdfUtils";
+
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const elements = {
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Operation failed (check console for details).");
       initialLoad();
       clearFileInput();
-    } 
+    }
   };
 
   elements.inputDoc.addEventListener("change", () => {
