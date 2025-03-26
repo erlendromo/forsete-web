@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const { pdfToImage } = require('./public/js/pdfUtils.js');
 const { sendATRRequest } = require('./public/js/post.js');
 const { saveJsonToFile } = require('./public/js/jsonFormatter.js');
 const { extractTextMapping } = require('./public/js/jsonFormatter.js');
@@ -10,8 +11,11 @@ const PORT = process.env.PORT || 3000;
 const URL = 'http://10.212.170.96:8080/forsete-atr/v1/atr/basic-documents/';
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
+// Where files get stored
 const uploadDir = "uploads";
+// Public directory, where users will have access
 const publicDir = "public";
+// Where html are stored
 const viewDir = "views";
 
 // Endpoint
@@ -36,15 +40,30 @@ response.send(status);
 });
 
 // Create a POST endpoint that matches the fetch("/upload")
-app.post(uploadEndpoint, upload.single("document"), (req, res) => {
-  // Logs the submitted file
-  console.log("Submitted file info:", req.file);
-  // Sending back to front-end
-  res.status(200);
-  res.json({
-    message: "File uploaded successfully!",
-    filename: req.file.filename
-  });
+app.post(uploadEndpoint, upload.single("document"), async (req, res) => {
+  try {
+    console.log("Submitted file info:", req.file);
+
+    // If you want to check the extension, use 'originalname'
+    if (req.file.originalname.toLowerCase().endsWith(".pdf")) {
+      const pages = 1;
+      const dpi = 300;
+
+      // Convert PDF to image (pdfToImage expects the path on disk)
+      //   The second arg can be a base name for the output file 
+      //   (like req.file.filename).
+      //   The third arg is the server path to the PDF.
+      await pdfToImage(pages, req.file.filename, req.file.path, dpi);
+    }
+
+    res.status(200).json({
+      message: "File uploaded successfully!",
+      filename: req.file.filename // hashed name in ./uploads
+    });
+  } catch (err) {
+    console.error('Error in /upload route:', err);
+    res.status(500).json({ error: 'Server Error', details: String(err) });
+  }
 });
 
 // Transcribe endpoint.
