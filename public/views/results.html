@@ -11,7 +11,8 @@
 </head>
 <script type="module" src="../js/components/ham-menu.js" defer></script>
 <script type="module" src="../js/components/comp-result.js" defer></script>
-<script type="module" src="../../dist/utils/json/jsonLoader.js" defer></script>
+<script type="module" src="../js/components/document-editor.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
@@ -34,11 +35,7 @@
             Output:
           </label>
           <!-- Container for the editor, numbers and textarea -->
-          <div id="editor" class="flex flex-row">
-            <div id="numbers">1</div>
-            <textarea id="jsonOutput" name="jsonOutput" rows="20" cols="50" title="Output" placeholder="JSON output"
-              class="block w-[50ch] p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
-          </div>
+          <div id="editor-container"></div>
         </div>
       </div>
     </div>

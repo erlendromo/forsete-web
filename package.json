@@ -35,6 +35,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "typescript": "^5.8.2",
     "@tailwindcss/cli": "^4.0.14",
     "axios": "^1.8.3",
     "express": "^4.21.2",

@@ -1,6 +1,7 @@
-import { DocumentManager } from "../services/document-manager";
-import { transcribeFile } from "../services/filehandler";
-import { extracAsPdf } from "../utils/export/pdf-export";
+import { DocumentManager } from '../services/document-manager.js';
+import { getData } from '../utils/json/jsonLoader.js';
+import { generatePdfFromLineSegments } from '../utils/export/pdf-export.js';
+import { DocumentLineEditor } from './document-editor.js';
 
 // componets for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       textArea: document.getElementById("jsonOutput") as HTMLButtonElement,
       comfirmBtn: document.getElementById("comfrimBtn") as HTMLButtonElement,
       cancelBtn: document.getElementById("cancelBtn") as HTMLInputElement,
-      exportBtn: document.getElementById("exportBtn") as HTMLElement
+      exportBtn: document.getElementById("exportBtn") as HTMLElement,
     };
 
     let documentInstance: DocumentManager | null = null;
@@ -21,9 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (filename) {
             try {
-                const documentJson = await transcribeFile(filename);
-                documentInstance = new DocumentManager(documentJson);
-                elements.textArea.value = documentInstance.getAllTextString();
+                documentInstance = new DocumentManager(await getData());
+                const editor = new DocumentLineEditor('editor-container', documentInstance);
                 console.log("DocumentManager instance created on page load:", documentInstance);
             } catch (error) {
                 console.error("Transcription failed:", error);
@@ -34,13 +34,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     await initializeDocument();
-
     
+    document.getElementById('editor-container')?.addEventListener('editor-save', (event: Event) => {
+        const customEvent = event as CustomEvent;
+        console.log('Save event received:', customEvent.detail.lineSegments);
+    });
+
+    // Example of subscribing to the save event
+    document.getElementById('editor-container')?.addEventListener('editor-save', (event: Event) => {
+        const customEvent = event as CustomEvent;
+        console.log('Save event received:', customEvent.detail.lineSegments);
+        // Send data to your backend or process it as needed
+    });
 
     const handleExportClick = async (): Promise<void> => {
-        if(documentInstance)
-        extracAsPdf(documentInstance.getAllTextString());
-    }
+        if (documentInstance) {
+            generatePdfFromLineSegments(
+                documentInstance.getAllLineSegments(),
+                612,  // Width
+                792,  // Height
+                'my-document',
+                true  
+            );
+        }
+    };
 
-    elements.exportBtn.addEventListener("click",handleExportClick);
+    elements.exportBtn.addEventListener("click", handleExportClick);
 });

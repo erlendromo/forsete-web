@@ -4,7 +4,7 @@ async function main() {
     textArea.value = Object.values(data).join('\n');
   }
   
-  async function getData() {
+  export async function getData() {
     const urlParams = new URLSearchParams(window.location.search);
     const fileParam = urlParams.get('file');
     try {

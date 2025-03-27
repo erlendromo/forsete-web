@@ -35,20 +35,25 @@ export class DocumentManager {
   
     private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
         const LineSegmentMap = new Map<number, LineSegment>();
-        let lineIndex = 0;
+        let lineIndex = 1;
         
         atrResult.contains.forEach((textElement) => {
           // For each text in the text_result.texts array
           textElement.text_result.texts.forEach((text) => {
+            // Ensure text is a string
+            const textContent = typeof text === 'string' 
+              ? text 
+              : JSON.stringify(text);
+            
             LineSegmentMap.set(lineIndex, {
               originalIndex: lineIndex,
-              textContent: text,
+              textContent: textContent, // This ensures it's a string
               confidence: textElement.text_result.scores[0],
               edited: false,
               bbox: { ...textElement.segment.bbox },
-          polygon: { 
-            points: [...textElement.segment.polygon.points] 
-          }
+              polygon: { 
+                points: [...textElement.segment.polygon.points] 
+              }
             });
             lineIndex++;
           });
@@ -100,6 +105,8 @@ export class DocumentManager {
         return this.documentId;
       }
 
+     
+
       // Get bounding box based on line index
       getBoundingBox(lineIndex: number): { xmin: number; ymin: number; xmax: number; ymax: number } | undefined {
         const lineSegment = this.lineSegments.get(lineIndex);
@@ -145,7 +152,7 @@ export class DocumentManager {
       }
     
       // Get all line segments as an array
-      getAllTextItems(): LineSegment[] {
+      getAllLineSegments(): LineSegment[] {
         return Array.from(this.lineSegments.values());
       } 
 
