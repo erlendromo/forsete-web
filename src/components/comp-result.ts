@@ -1,1 +1,0 @@
-// componets for result page

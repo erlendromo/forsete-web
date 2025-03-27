@@ -1,6 +1,6 @@
 
     // Main document interface
-  interface ATRResult {
+  export interface ATRResult {
       file_name: string;
       image_path: string;
       image_name: string;

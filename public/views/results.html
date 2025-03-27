@@ -9,10 +9,9 @@
   <link rel="icon" type="image/x-icon" href="images/favicon_io/favicon.ico">
   <link rel="stylesheet" href="/styles/output.css" />
 </head>
-<script src="js/ham-menu.js" defer></script>
-<script src="js/queryreader.js" defer></script>
-<script src="js/jsonLoader.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="module" src="../js/components/ham-menu.js" defer></script>
+<script type="module" src="../js/components/comp-result.js" defer></script>
+<script type="module" src="../../dist/utils/json/jsonLoader.js" defer></script>
 
 <body class="bg-gray-900 text-white">
   <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
@@ -56,7 +55,7 @@
         class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
         Cancel
       </button>
-      <button id="saveBtn"
+      <button id="exportBtn"
         class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
         Export
       </button>

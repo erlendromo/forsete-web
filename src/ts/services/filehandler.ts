@@ -23,7 +23,8 @@
     });
 
     if (!response.ok) {
-      throw new Error("Transcription failed.");
+      const errorMessage = await response.text(); 
+      throw new Error(`Transcription failed: ${errorMessage}`);
     }
     return response.json();
   };

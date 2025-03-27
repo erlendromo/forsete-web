@@ -3,6 +3,9 @@
  * DocumentManager class for managing ATR-processed text documents.
  */
 
+import { ATRResult } from "../interfaces/atr-result";
+import { LineSegment } from "../interfaces/line-segment";
+
 type editedAndOriginal ={original: string; edited: string}
 
 export class DocumentManager {
@@ -11,7 +14,8 @@ export class DocumentManager {
     private documentId: string;
     private createdAt: Date;
   
-    constructor(atrResult: ATRResult) {
+    constructor(atrResultJson: unknown) {
+      const atrResult: ATRResult = atrResultJson as ATRResult;
       this.originalATRResult = JSON.parse(JSON.stringify(atrResult)); 
       this.createdAt = new Date();
       

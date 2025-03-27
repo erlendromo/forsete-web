@@ -6,8 +6,7 @@ const doc = new jsPDF({});
 /**
  * Saves the content of the textarea as a PDF
  */
-export function extracAsPdf(document: DocumentManager): void {
-  const textContent = document.getAllTextString();
+export function extracAsPdf(textContent: string): void {
   if (!textContent) {
     alert("There is no text to save. Please make sure the text area has content.");
     return;

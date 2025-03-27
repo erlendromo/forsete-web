@@ -1,4 +1,4 @@
-import { hideElement, enableElement } from './comp-utils';
+import { hideElement, enableElement } from './comp-utils.js';
 import{uploadFile,  transcribeFile } from '../services/filehandler.js';
 
 

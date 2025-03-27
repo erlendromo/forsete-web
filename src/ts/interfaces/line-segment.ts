@@ -1,6 +1,6 @@
 // Interfaces for editing results
 
-interface LineSegment {
+export interface LineSegment {
     originalIndex: number;
     textContent: string;      
     edited?: boolean;        
