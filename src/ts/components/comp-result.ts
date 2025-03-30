@@ -1,7 +1,7 @@
 import { DocumentManager } from '../services/document-manager.js';
 import { getData } from '../utils/json/jsonLoader.js';
 import { generatePdfFromLineSegments } from '../utils/export/pdf-export.js';
-import { DocumentLineEditor } from './document-editor.js';
+import { DocumentLineEditor } from './document-editor/document-editor.js';
 
 // componets for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       comfirmBtn: document.getElementById("comfrimBtn") as HTMLButtonElement,
       cancelBtn: document.getElementById("cancelBtn") as HTMLInputElement,
       exportBtn: document.getElementById("exportBtn") as HTMLElement,
-    };
+      inputDoc: document.getElementById("inputDocument") as HTMLImageElement,};
 
     let documentInstance: DocumentManager | null = null;
     
@@ -22,8 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (filename) {
             try {
-                documentInstance = new DocumentManager(await getData());
+                documentInstance = new DocumentManager(await getData(), filename);
                 const editor = new DocumentLineEditor('editor-container', documentInstance);
+                elements.inputDoc.src = ("uploads/" + filename + ".png");
                 console.log("DocumentManager instance created on page load:", documentInstance);
             } catch (error) {
                 console.error("Transcription failed:", error);

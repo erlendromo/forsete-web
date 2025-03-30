@@ -11,7 +11,7 @@
 </head>
 <script type="module" src="../js/components/ham-menu.js" defer></script>
 <script type="module" src="../js/components/comp-result.js" defer></script>
-<script type="module" src="../js/components/document-editor.js" defer></script>
+<script type="module" src="../js/components/document-editor/document-editor.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <body class="bg-gray-900 text-white">
@@ -35,7 +35,7 @@
             Output:
           </label>
           <!-- Container for the editor, numbers and textarea -->
-          <div id="editor-container"></div>
+          <div id="editor-container" class="w-full h-[500px] max-w-2xl border border-gray-400"></div>
         </div>
       </div>
     </div>

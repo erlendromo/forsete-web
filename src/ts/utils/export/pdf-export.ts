@@ -1,4 +1,4 @@
-import { LineSegment } from '../../interfaces/line-segment';
+import { LineSegment } from '../../types/line-segment';
 
 declare global {
   interface Window {

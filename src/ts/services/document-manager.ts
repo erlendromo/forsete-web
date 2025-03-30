@@ -3,18 +3,21 @@
  * DocumentManager class for managing ATR-processed text documents.
  */
 
-import { ATRResult } from "../interfaces/atr-result";
-import { LineSegment } from "../interfaces/line-segment";
+import { ensureDefined } from "../utils/error-handling.js";
+import { ATRResult } from "../types/atr-result.js";
+import { LineSegment } from "../types/line-segment.js";
 
 type editedAndOriginal ={original: string; edited: string}
 
 export class DocumentManager {
     private originalATRResult: ATRResult;
+    private imagePath: string;
     private lineSegments: Map<number,LineSegment>;
     private documentId: string;
     private createdAt: Date;
   
-    constructor(atrResultJson: unknown) {
+    constructor(atrResultJson: unknown, imagePath: string) {
+      this.imagePath = imagePath;
       const atrResult: ATRResult = atrResultJson as ATRResult;
       this.originalATRResult = JSON.parse(JSON.stringify(atrResult)); 
       this.createdAt = new Date();
@@ -40,7 +43,8 @@ export class DocumentManager {
         atrResult.contains.forEach((textElement) => {
           // For each text in the text_result.texts array
           textElement.text_result.texts.forEach((text) => {
-            // Ensure text is a string
+            
+            const conf = Number((Number(textElement.text_result.scores[0]) * 100).toFixed(2))
             const textContent = typeof text === 'string' 
               ? text 
               : JSON.stringify(text);
@@ -48,7 +52,7 @@ export class DocumentManager {
             LineSegmentMap.set(lineIndex, {
               originalIndex: lineIndex,
               textContent: textContent, // This ensures it's a string
-              confidence: textElement.text_result.scores[0],
+              confidence: conf,
               edited: false,
               bbox: { ...textElement.segment.bbox },
               polygon: { 
@@ -62,14 +66,15 @@ export class DocumentManager {
         return LineSegmentMap;
       }
 
+      
       // Get line segmentation inteface
-      getLineSegment(lineIndex:number): LineSegment|undefined{
-        return this.lineSegments.get(lineIndex) 
+      getLineSegment(lineIndex:number): LineSegment{
+        return ensureDefined(this.lineSegments.get(lineIndex), "Line segment not found");
       }
 
       // Get the text content of a line index
-      getTextContent(lineIndex: number): string | undefined {
-        return this.lineSegments.get(lineIndex)?.editedContent || this.lineSegments.get(lineIndex)?.textContent;
+      getTextContent(lineIndex: number): string  {
+        return ensureDefined(this.lineSegments.get(lineIndex)?.editedContent || this.lineSegments.get(lineIndex)?.textContent, "Text content not found");
       }
     
       // Gets a map that contains the edited lines and orignal content
@@ -173,12 +178,19 @@ export class DocumentManager {
       }
       
     //get documentmanager
-      getDocumentManager(){
-        return {
-            documentId: this.documentId,
-            originalFile: this.originalATRResult.file_name,
-            createdAt: this.createdAt,
-            lineSegments: Object.fromEntries(this.lineSegments)
-          };
+    getDocumentManager(): DocumentManager {
+        return this;
       }
+
+      // Sets a new line segment
+      setLineSegments(newLineSegment: LineSegment): void {
+        this.lineSegments.set(newLineSegment.originalIndex, newLineSegment);
+      }
+
+      // Sets all line segments
+      setAllLineSegments(newLineSegments: LineSegment[]): void {
+        newLineSegments.forEach((segment) => {
+          this.lineSegments.set(segment.originalIndex, segment);
+        });
+      } 
 }
