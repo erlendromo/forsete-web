@@ -38,7 +38,7 @@ export class DocumentManager {
   
     private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
         const LineSegmentMap = new Map<number, LineSegment>();
-        let lineIndex = 1;
+        let lineIndex = 0;
         
         atrResult.contains.forEach((textElement) => {
           // For each text in the text_result.texts array
@@ -183,7 +183,7 @@ export class DocumentManager {
       }
 
       // Sets a new line segment
-      setLineSegments(newLineSegment: LineSegment): void {
+      setLineSegment(newLineSegment: LineSegment): void {
         this.lineSegments.set(newLineSegment.originalIndex, newLineSegment);
       }
 

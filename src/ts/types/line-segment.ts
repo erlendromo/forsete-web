@@ -5,7 +5,7 @@ export interface LineSegment {
     textContent: string;      
     edited?: boolean;        
     editedContent?: string;
-    confidence?: number;
+    confidence: number;
     bbox: {
         xmin: number;
         ymin: number;

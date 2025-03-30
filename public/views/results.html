@@ -36,6 +36,26 @@
           </label>
           <!-- Container for the editor, numbers and textarea -->
           <div id="editor-container" class="w-full h-[500px] max-w-2xl border border-gray-400"></div>
+           const lineSegments: LineSegment[] = [
+    { lineIndex: 0, edited: false, originalText: "First line of text", editedText: "First line of text", confidenceScore: 98 },
+    { lineIndex: 1, edited: false, originalText: "Second line of text", editedText: "Second line of text", confidenceScore: 85 },
+    { lineIndex: 2, edited: false, originalText: "This is a longer line of text that will demonstrate how the text area expands when it has more content. The user can click on this line to see how it expands to fit all the text content. When expanded, this line will take up more vertical space.", editedText: "This is a longer line of text that will demonstrate how the text area expands when it has more content. The user can click on this line to see how it expands to fit all the text content. When expanded, this line will take up more vertical space.", confidenceScore: 75 },
+    { lineIndex: 3, edited: false, originalText: "Fourth line of text", editedText: "Fourth line of text", confidenceScore: 92 },
+    { lineIndex: 4, edited: false, originalText: "Fifth line of text", editedText: "Fifth line of text", confidenceScore: 65 },
+    { lineIndex: 5, edited: false, originalText: "Another example of a longer paragraph that should expand when clicked. This demonstrates how the component handles multiline text entries gracefully. The line numbers and confidence scores should stay aligned with the beginning of each paragraph.", editedText: "Another example of a longer paragraph that should expand when clicked. This demonstrates how the component handles multiline text entries gracefully. The line numbers and confidence scores should stay aligned with the beginning of each paragraph.", confidenceScore: 45 },
+  ];
+  
+  // Add more sample lines to demonstrate scrolling
+  for (let i = 6; i < 20; i++) {
+    lineSegments.push({
+      lineIndex: i,
+      edited: false,
+      originalText: `Line ${i+1} of the document`,
+      editedText: `Line ${i+1} of the document`,
+      confidenceScore: Math.floor(Math.random() * 100)
+    });
+  }
+  
         </div>
       </div>
     </div>
@@ -60,5 +80,4 @@
     </div>
   </main>
 </body>
-
 </html>

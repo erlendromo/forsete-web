@@ -90,7 +90,7 @@ export class DocumentLineEditor {
   
   private handleLineChange(updatedSegment: LineSegment): void {
     // Update the line segment in our array
-    this.documentManager.setLineSegments(updatedSegment);
+    this.documentManager.setLineSegment(updatedSegment);
     
     // Update revert button state
     this.updateRevertButtonState();
