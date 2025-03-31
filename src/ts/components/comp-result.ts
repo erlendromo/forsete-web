@@ -2,7 +2,7 @@ import { DocumentManager } from '../services/document-manager.js';
 import { getData } from '../utils/json/jsonLoader.js';
 import { generatePdfFromLineSegments, generatePlainTextPdf } from '../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
-import {loadUploadedImage } from '../utils/image-loader.js';
+import { ImageContainer } from './document-editor/image-container.js';
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", async () => {
      // confirmBtn: document.getElementById("confirmBtn") as HTMLButtonElement,
       cancelBtn: document.getElementById("cancelBtn") as HTMLInputElement,
       exportBtn: document.getElementById("exportBtn") as HTMLElement,
-      dynamicImage: document.getElementById("dynamicImage") as HTMLImageElement,
+      imageContainer: document.getElementById("image-container") as HTMLElement,
     };
 
     let documentInstance: DocumentManager | null = null;
     let editor: DocumentLineEditor | null = null;
-    
+    let imageContainerInstance: ImageContainer | null = null;
    
     
     // Initializes Document manager
@@ -29,21 +29,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // Get data and create document manager
                 documentInstance = new DocumentManager(await getData(), urlFilename);
                 
-                // Create editor instance
-                editor = new DocumentLineEditor('editor-container', documentInstance);
+                
                 
                 // Use the filename from the document instance
                 const docFilename = documentInstance.getImageFileName()
-              
+                imageContainerInstance = new ImageContainer(
+                    'image-container',
+                    docFilename,
+                    (polygon) => {
+                        console.log("Polygon changed:", polygon);
+                    }
+                );
+                imageContainerInstance.setAllPolygons(documentInstance.getAllLineSegments().map(segment => segment.polygon));
                 
-                 // Load the image directly using the filename from the URL parameter
-                try {
-                  await loadUploadedImage(urlFilename, 'dynamicImage');
-                  console.log(`Image for ${urlFilename} loaded successfully`);
-                } catch (imageError) {
-                  console.error('Failed to load document image:', imageError);
-                  }
-              
+                // Create editor instance
+                editor = new DocumentLineEditor('editor-container', documentInstance, imageContainerInstance);
                 
                 console.log("DocumentManager and editor initialized successfully");
             } catch (error) {

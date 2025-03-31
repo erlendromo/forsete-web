@@ -106,7 +106,6 @@
 <script type="module" src="../js/components/ham-menu.js" defer></script>
 <script type="module" src="../js/components/comp-result.js" defer></script>
 <script type="module" src="../js/components/document-editor/document-editor.js" defer></script>
-<script type="module" src="../js/sample-data/doc-editor-samp.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <body class="bg-gray-900 text-white">
@@ -132,8 +131,7 @@
     <!-- New layout structure -->
     <div class="content-container">
       <!-- Left side - Image -->
-      <div class="image-container">
-        <img id="dynamicImage" class="h-auto w-full rounded-lg" src="" alt="image result">
+      <div class="image-container"> <div id = "image-container"></div>
       </div>
       
       <!-- Right side - Editor -->

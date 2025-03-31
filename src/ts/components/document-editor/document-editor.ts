@@ -2,6 +2,7 @@
 import { LineSegment } from "../../types/line-segment.js";
 import { DocumentManager } from "../../services/document-manager.js";
 import { LineEditorItem } from "./line-editor.js";
+import { ImageContainer } from "./image-container.js";
 
 
 export class DocumentLineEditor {
@@ -11,15 +12,16 @@ export class DocumentLineEditor {
   private editorContentEl: HTMLElement;
   private revertAllBtn: HTMLButtonElement;
   //private saveBtn: HTMLButtonElement;
-  private imageElement: HTMLImageElement;
+  private selectedLineIndex: number = -1;
+  private imageContainer: ImageContainer | null;
   
-  constructor(containerId: string, documentManager: DocumentManager, imageFileName?: string) {
+  constructor(containerId: string, documentManager: DocumentManager,  imageContainer?: ImageContainer) {
     // Get container element
     this.container = document.getElementById(containerId) as HTMLElement;
     if (!this.container) {
       throw new Error(`Container element with ID "${containerId}" not found`);
     }
-    
+    this.imageContainer = imageContainer || null;
     // Store line segments data
     this.documentManager = documentManager;
     
@@ -30,7 +32,6 @@ export class DocumentLineEditor {
     this.editorContentEl = document.getElementById(`${containerId}-editor-content`) as HTMLElement;
     this.revertAllBtn = document.getElementById(`${containerId}-revert-all`) as HTMLButtonElement;
     //this.saveBtn = document.getElementById(`${containerId}-save`) as HTMLButtonElement;
-    this.imageElement = document.getElementById('dynamicImage') as HTMLImageElement;
     
     // Add event listeners
     this.revertAllBtn.addEventListener('click', this.handleRevertAll.bind(this));
@@ -47,7 +48,7 @@ export class DocumentLineEditor {
     this.container.innerHTML = `
       <div class="editor-container">
         <div class="editor-header">
-          <span>Document Text Editor</span>
+          <span>Document Editor</span>
           <div>
             <button id="${this.container.id}-revert-all" class="revert-btn">Revert All Changes</button>
            <!-- <button id="${this.container.id}-save" class="save-btn">Save Changes</button> -->
@@ -83,14 +84,29 @@ export class DocumentLineEditor {
     this.editorContentEl.innerHTML = '';
     this.lineItems = [];
     
-    // Create a line item for each segment
+    // Create a line item for each segment with focus handler
     this.documentManager.getAllLineSegments().forEach((segment, index) => {
-      const lineItem = new LineEditorItem(segment, this.handleLineChange.bind(this));
-      this.lineItems.push(lineItem);
-      this.editorContentEl.appendChild(lineItem.getElement());
+        const lineItem = new LineEditorItem(
+            segment, 
+            this.handleLineChange.bind(this),
+            // Focus handler for highlighting
+            (focusedSegment) => {
+                if (this.imageContainer) {
+                    // Tell the image container which line's polygon to highlight
+                    this.imageContainer.highlightLinePolygon(focusedSegment);
+                }
+            }
+        );
+        this.lineItems.push(lineItem);
+        this.editorContentEl.appendChild(lineItem.getElement());
     });
-  }
-  
+}
+
+// Method to set the image container after initialization
+public setImageContainer(imageContainer: ImageContainer): void {
+  this.imageContainer = imageContainer;
+}
+
   private handleLineChange(updatedSegment: LineSegment): void {
     // Update the line segment in our array
     this.documentManager.setLineSegment(updatedSegment);
@@ -258,7 +274,7 @@ private getEditorStyles(): string {
       background-color: #3a404f;
       margin-bottom: 8px;
     }
-    
+  
     /* Expanded line item */
     .editor-line-item.expanded {
       height: auto;

@@ -1,7 +1,5 @@
 import { LineSegment } from "../../types/line-segment";
 
-
-
 export class LineEditorItem {
     private container: HTMLElement;
     private segment: LineSegment;
@@ -10,17 +8,23 @@ export class LineEditorItem {
     private textareaEl: HTMLTextAreaElement;
     private resetBtnEl: HTMLButtonElement;
     private onChange: (segment: LineSegment) => void;
+    private onFocus: ((segment: LineSegment) => void) | null = null;
+
   
     constructor(
       segment: LineSegment, 
-      onChange: (segment: LineSegment) => void
+      onChange: (segment: LineSegment) => void,
+      onFocus?: (segment: LineSegment) => void,
+
     ) {
       this.segment = { ...segment }; // Clone to avoid modifying the original
       this.onChange = onChange;
+      this.onFocus = onFocus || null;
       
       // Create container element
       this.container = document.createElement('div');
       this.container.className = 'editor-line-item';
+      this.container.addEventListener('focus', this.handleTextareaFocus.bind(this));
       
       // Create line number element
       this.lineNumberEl = document.createElement('div');
@@ -53,8 +57,14 @@ export class LineEditorItem {
       this.textareaEl.addEventListener('input', this.handleTextChange.bind(this));
       
       // Add focus and blur events for expansion
-      this.textareaEl.addEventListener('focus', this.handleTextareaFocus.bind(this));
-      this.textareaEl.addEventListener('blur', this.handleTextareaBlur.bind(this));
+      this.textareaEl.addEventListener('focus', () => {
+        this.handleTextareaFocus();
+        
+        // Notify parent about focus if callback exists
+        if (this.onFocus) {
+            this.onFocus(this.segment);
+        }
+    });
       
       // Create reset button element
       this.resetBtnEl = document.createElement('button');
@@ -128,6 +138,30 @@ export class LineEditorItem {
         // Notify parent of the change
         this.onChange(this.segment);
       }
+
+      private handleSelect(event: Event): void {
+        // Only trigger if not clicking on the textarea or reset button
+        if (
+          event.target !== this.textareaEl && 
+          event.target !== this.resetBtnEl
+        ) {
+          // Add selected class to this container
+          this.setSelected(true);
+          
+          // Notify parent of selection if callback exists
+          if (event.target !== this.textareaEl) {
+            this.textareaEl.focus(); 
+          }
+        }
+      }
+      
+      public setSelected(selected: boolean): void {
+        if (selected) {
+          this.container.classList.add('selected');
+        } else {
+          this.container.classList.remove('selected');
+        }
+      }
       
       // Adjust height of textarea to fit content
       private adjustTextareaHeight(): void {
@@ -178,7 +212,7 @@ export class LineEditorItem {
       private handleTextareaFocus(): void {
         // Add expanded class to line container
         this.container.classList.add('expanded');
-        
+        this.container.classList.add('focused');
         // Adjust height to fit content with some extra space for typing
         this.textareaEl.style.height = 'auto';
         const minHeight = 60; // Minimum height when expanded
@@ -189,20 +223,6 @@ export class LineEditorItem {
         // Set container height to accommodate the expanded textarea
         this.container.style.height = `${contentHeight + 16}px`; // 16px for padding
     }
-    
-    // Handle textarea blur - collapse the line
-    private handleTextareaBlur(): void {
-        // Only collapse if there's no active editing
-        if (!this.segment.edited) {
-            // Remove expanded class
-            this.container.classList.remove('expanded');
-            
-            // Reset height
-            this.container.style.height = '';
-            this.textareaEl.style.height = '';
-        } else {
-            // Keep expanded for edited content but adjust height precisely
-            this.adjustTextareaHeight();
-        }
-    }
-  }
+
+ }
+  

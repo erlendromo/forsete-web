@@ -1,0 +1,226 @@
+ /* Base styling */
+    /* Container for the entire editor */
+    .editor-container {
+        width: 100%;            /* Take full width of parent */
+        max-width: none;        /* Remove max-width limitation */
+        margin: 0;              /* Remove auto margins */
+        padding: 20px;
+        border: 1px solid #333;
+        background: #2d3142;    /* Slightly lighter than the bg-gray-900 */
+        border-radius: 8px;     /* Slight rounding for a modern look */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        height: 100%;          /* Take full height of parent */
+      }
+  
+      /* Header with title and buttons */
+      .editor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #444;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        flex-shrink: 0;        /* Prevent header from shrinking */
+      }
+  
+      /* Content section where text lines will be displayed */
+      .editor-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;             /* Spacing between lines */
+        width: 100%;           /* Ensure full width */
+        padding-top: 10px;
+        overflow-y: auto;      /* Enable vertical scrolling */
+        flex: 1;               /* Take remaining height */
+      }
+  
+      /* Style for buttons (Save & Revert) */
+      .revert-btn, .save-btn {
+        padding: 10px 18px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background 0.2s ease-in-out;
+      }
+  
+      /* Revert Button - Red */
+      .revert-btn {
+        background: #f44336;
+        color: white;
+      }
+      .revert-btn:hover {
+        background: #d32f2f;
+      }
+      .revert-btn:disabled {
+        background: #666;
+        cursor: not-allowed;
+      }
+  
+      /* Save Button - Green */
+      .save-btn {
+        background: #4CAF50;
+        color: white;
+      }
+      .save-btn:hover {
+        background: #388E3C;
+      }
+  
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .editor-container {
+          width: 100%;  /* Full width on small screens */
+          padding: 15px;
+        }
+        .editor-header {
+          font-size: 16px;
+        }
+        .revert-btn, .save-btn {
+          font-size: 14px;
+          padding: 8px 14px;
+        }
+      }
+      
+      /* Editor line item - FIXED: Added display: flex */
+      .editor-line-item {
+        display: flex;
+        width: 100%;
+        min-height: 36px;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: #3a404f;
+        margin-bottom: 8px;
+      }
+      
+      /* Expanded line item */
+      .editor-line-item.expanded {
+        height: auto;
+        z-index: 10;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        background-color: #3a404f;
+      }
+      
+      /* Line number container */
+      .line-number-container {
+        display: flex;
+        align-items: center;
+        background-color: #223a4a;
+        width: 100px;
+        flex-shrink: 0;
+        padding-left: 4px;
+        height: 100%;
+      }
+      
+      .editor-line-item.expanded .line-number-container {
+        align-items: flex-start;
+        padding-top: 4px;
+      }
+      
+      .line-number {
+        width: 40px;
+        text-align: right;
+        padding-right: 8px;
+        color: #dbc9c9;
+      }
+      
+      .confidence-score {
+        font-size: 11px;
+        padding: 2px 4px;
+        border-radius: 4px;
+        margin-left: 4px;
+      }
+      
+      .confidence-high {
+        background-color: #c6f6d5;
+        color: #22543d;
+      }
+      
+      .confidence-good {
+        background-color: #bee3f8;
+        color: #2c5282;
+      }
+      
+      .confidence-medium {
+        background-color: #fefcbf;
+        color: #744210;
+      }
+      
+      .confidence-low {
+        background-color: #fed7d7;
+        color: #822727;
+      }
+      
+      /* Text container */
+      .editor-text-container {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+      }
+      
+      .editor-line-item.expanded .editor-text-container {
+        align-items: flex-start;
+      }
+      
+      .editor-textarea {
+        width: 100%;
+        height: 100%;
+        padding: 4px 8px;
+        border: none;
+        resize: none;
+        background-color: transparent;
+        font-family: Monaco, Menlo, "Courier New", monospace;
+        font-size: 14px;
+        transition: min-height 0.2s ease;
+        color: white;
+      }
+      
+      .editor-line-item.expanded .editor-textarea {
+        min-height: 60px;
+      }
+      
+      .editor-textarea:focus {
+        outline: none;
+      }
+      
+      .edited {
+        background-color: #304a66;
+      }
+      
+      /* Reset button container */
+      .reset-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        background-color: #223a4a;
+        flex-shrink: 0;
+        height: 100%;
+      }
+      
+      .editor-line-item.expanded .reset-container {
+        align-items: flex-start;
+        padding-top: 4px;
+      }
+      
+      .reset-btn {
+        background: none;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      
+      .reset-active {
+        color: #e53e3e;
+      }
+      
+      .reset-inactive {
+        color: #cbd5e0;
+      }
+      
+      .reset-btn:disabled {
+        cursor: default;
+      }

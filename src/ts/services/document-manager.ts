@@ -4,7 +4,7 @@
  */
 
 import { ensureDefined } from "../utils/error-handling.js";
-import { ATRResult } from "../types/atr-result.js";
+import { ATRResult, Polygon } from "../types/atr-result.js";
 import { LineSegment } from "../types/line-segment.js";
 
 type editedAndOriginal ={original: string; edited: string}
@@ -56,7 +56,7 @@ export class DocumentManager {
               edited: false,
               bbox: { ...textElement.segment.bbox },
               polygon: { 
-                points: [...textElement.segment.polygon.points] 
+                points: [...textElement.segment.polygon.points], 
               }
             });
             lineIndex++;
@@ -140,14 +140,14 @@ export class DocumentManager {
       }
 
        // Get a map of the polygons as value and the line indexes as key
-      getAllPolygons(): Map<number, { points: Array<{x: number, y: number}> }> {
-        const polygonMap = new Map<number, { points: Array<{x: number, y: number}> }>();
+      getAllPolygons(): Polygon[] {
+        const polygons: Polygon[] = []
         
         this.lineSegments.forEach((text, lineIndex) => {
-          polygonMap.set(lineIndex, text.polygon);
+          polygons.push(text.polygon);
         });
         
-        return polygonMap;
+        return polygons;
       }
     
       // Get all line indexes as an array
