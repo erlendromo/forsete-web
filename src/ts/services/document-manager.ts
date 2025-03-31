@@ -11,13 +11,13 @@ type editedAndOriginal ={original: string; edited: string}
 
 export class DocumentManager {
     private originalATRResult: ATRResult;
-    private imagePath: string;
+    private imageFileName: string;
     private lineSegments: Map<number,LineSegment>;
     private documentId: string;
     private createdAt: Date;
   
-    constructor(atrResultJson: unknown, imagePath: string) {
-      this.imagePath = imagePath;
+    constructor(atrResultJson: unknown, imageFileName: string) {
+      this.imageFileName = imageFileName;
       const atrResult: ATRResult = atrResultJson as ATRResult;
       this.originalATRResult = JSON.parse(JSON.stringify(atrResult)); 
       this.createdAt = new Date();
@@ -66,6 +66,10 @@ export class DocumentManager {
         return LineSegmentMap;
       }
 
+      //Get imageFileName
+      getImageFileName(): string {
+        return this.imageFileName;
+      }
       
       // Get line segmentation inteface
       getLineSegment(lineIndex:number): LineSegment{

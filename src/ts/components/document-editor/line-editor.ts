@@ -175,23 +175,34 @@ export class LineEditorItem {
         return { ...this.segment };
       }
 
-      // Handle textarea focus - expand the line
-private handleTextareaFocus(): void {
-    // Add expanded class to line container
-    this.container.classList.add('expanded');
-    
-    // Adjust height to fit content
-    this.adjustTextareaHeight();
-}
-
-// Handle textarea blur - collapse the line
-private handleTextareaBlur(): void {
-    // Remove expanded class
-    this.container.classList.remove('expanded');
-    
-    // Reset height
-    this.container.style.height = '';
-    this.textareaEl.style.height = '';
-}
+      private handleTextareaFocus(): void {
+        // Add expanded class to line container
+        this.container.classList.add('expanded');
+        
+        // Adjust height to fit content with some extra space for typing
+        this.textareaEl.style.height = 'auto';
+        const minHeight = 60; // Minimum height when expanded
+        const contentHeight = Math.max(this.textareaEl.scrollHeight + 10, minHeight);
+        
+        this.textareaEl.style.height = `${contentHeight}px`;
+        
+        // Set container height to accommodate the expanded textarea
+        this.container.style.height = `${contentHeight + 16}px`; // 16px for padding
     }
     
+    // Handle textarea blur - collapse the line
+    private handleTextareaBlur(): void {
+        // Only collapse if there's no active editing
+        if (!this.segment.edited) {
+            // Remove expanded class
+            this.container.classList.remove('expanded');
+            
+            // Reset height
+            this.container.style.height = '';
+            this.textareaEl.style.height = '';
+        } else {
+            // Keep expanded for edited content but adjust height precisely
+            this.adjustTextareaHeight();
+        }
+    }
+  }

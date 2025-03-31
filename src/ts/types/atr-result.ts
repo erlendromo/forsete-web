@@ -1,6 +1,6 @@
 
     // Main document interface
-  export interface ATRResult {
+    interface ATRResult {
       file_name: string;
       image_path: string;
       image_name: string;
@@ -62,3 +62,4 @@
         processor_version?: string;
       };
     }
+export { ATRResult, TextElement, Segment, BoundingBox, Polygon, Point, TextResult, ProcessingStep };

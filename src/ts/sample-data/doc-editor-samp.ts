@@ -3,8 +3,7 @@ import { MockDocumentManager } from "./mock-document-manager.js";
 import { DocumentLineEditor } from "../components/document-editor/document-editor.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Add this in your HTML:
-    // <div id="editor-container" data-width="1200px" data-height="400px"></div>
+   
     
     // Sample data with many lines to demonstrate scrolling
     const lineSegments: LineSegment[] = [
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create the editor
     const documentManager = new MockDocumentManager();
     documentManager.setAllLineSegments(lineSegments);
-    const editor = new DocumentLineEditor( 'default-editor',documentManager);
+    const editor = new DocumentLineEditor( 'editor-container',documentManager);
     
     // Example of subscribing to the save event
     document.getElementById('editor-container')?.addEventListener('editor-save', (event: Event) => {
