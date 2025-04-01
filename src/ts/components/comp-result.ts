@@ -3,6 +3,7 @@ import { getData } from '../utils/json/jsonLoader.js';
 import { generatePdfFromLineSegments, generatePlainTextPdf } from '../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
+import { initializeImageZoom } from './zoom-image.js';
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 );
                 imageContainerInstance.setAllPolygons(documentInstance.getAllLineSegments().map(segment => segment.polygon));
-                
+                initializeImageZoom('image-container')
                 // Create editor instance
                 editor = new DocumentLineEditor('editor-container', documentInstance, imageContainerInstance);
                 

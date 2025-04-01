@@ -1,6 +1,6 @@
 /* input.css */
 @import "tailwindcss";
-
+@import "./results.css";
 .file-uploader {
     border: 2px dashed #ccc;
     padding: 20px;
