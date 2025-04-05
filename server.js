@@ -23,6 +23,10 @@ const transcribeEndpoint = "/transcribe";
 const statusEndpoint = "/status";
 const uploadEndpoint = "/upload";
 
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+app.set(viewDir, path.join(__dirname, publicDir, viewDir));
+
 // Serves the public folder and views
 app.use(express.static(publicDir));
 app.use(express.static(publicDir+"/"+ viewDir))
@@ -30,6 +34,10 @@ app.use(express.static(publicDir+"/"+ viewDir))
 // Configure multer to store in 'uploads/'
 const upload = multer({ dest: uploadDir + "/" });
 app.use("/"+uploadDir, express.static(uploadDir));
+
+app.get('/', (req, res) => {
+  res.render('index'); // Express will look for views/index.ejs
+});
 
 // Status endpoint
 app.get(statusEndpoint, (request, response) => {
@@ -69,7 +77,8 @@ app.post(uploadEndpoint, upload.single("document"), async (req, res) => {
 // Transcribe endpoint.
 // Sends to the atr-endpoint
 app.post(transcribeEndpoint, express.json(), async (req, res) => {
-  console.log("Sent to atr:", req.file);
+  const { filename } = req.body;
+  console.log("Sent to atr:", filename);
 
   try {
     const { filename } = req.body;
