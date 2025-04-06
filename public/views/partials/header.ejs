@@ -3,38 +3,44 @@
     document.addEventListener('DOMContentLoaded', function() {
       const darkIcon = document.getElementById('theme-toggle-dark-icon');
       const lightIcon = document.getElementById('theme-toggle-light-icon');
-  
+      const darkMode = "dark";
+      const lightMode = 'light';
+      const themeToggleId = 'theme-toggle';
+      const hidden = 'hidden';
+
+
+
       // On page load, set the theme and icons based on localStorage or system preference
       if (
-        localStorage.getItem('color-theme') === 'dark' ||
+        localStorage.getItem('color-theme') === darkMode ||
         (!localStorage.getItem('color-theme') &&
           window.matchMedia('(prefers-color-scheme: dark)').matches)
       ) {
         // Show dark icon, hide light icon
-        document.documentElement.classList.add('dark');
-        darkIcon.classList.remove('hidden');
-        lightIcon.classList.add('hidden');
+        document.documentElement.classList.add(darkMode);
+        darkIcon.classList.remove(hidden);
+        lightIcon.classList.add(hidden);
       } else {
         // Show light icon, hide dark icon
-        document.documentElement.classList.remove('dark');
-        lightIcon.classList.remove('hidden');
-        darkIcon.classList.add('hidden');
+        document.documentElement.classList.remove(darkMode);
+        lightIcon.classList.remove(hidden);
+        darkIcon.classList.add(hidden);
       }
   
       // Toggle function for the button
-      document.getElementById('theme-toggle').addEventListener('click', function () {
-        if (document.documentElement.classList.contains('dark')) {
+      document.getElementById(themeToggleId).addEventListener('click', function () {
+        if (document.documentElement.classList.contains(darkMode)) {
           // Switch icons: show light icon, hide dark icon  
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('color-theme', 'light');
-          darkIcon.classList.add('hidden');
-          lightIcon.classList.remove('hidden');
+          document.documentElement.classList.remove(darkMode);
+          localStorage.setItem('color-theme', lightMode);
+          darkIcon.classList.add(hidden);
+          lightIcon.classList.remove(hidden);
         } else {
         // Switch icons: show dark icon, hide light icon
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('color-theme', 'dark');
-          lightIcon.classList.add('hidden');
-          darkIcon.classList.remove('hidden');
+          document.documentElement.classList.add(darkMode);
+          localStorage.setItem('color-theme', darkMode);
+          lightIcon.classList.add(hidden);
+          darkIcon.classList.remove(hidden);
         }
       });
     });
