@@ -1,3 +1,4 @@
+const config = require("./config.js").default;
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -7,8 +8,8 @@ const { saveJsonToFile } = require('./public/js/jsonFormatter.js');
 const { extractTextMapping } = require('./public/js/jsonFormatter.js');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const URL = 'http://10.212.170.96:8080/forsete-atr/v1/atr/basic-documents/';
+const atrEndpoint = 'atr/basic-documents/';
+const backendUrl = config.urlBackend+atrEndpoint;
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
 // Where files get stored
@@ -17,7 +18,6 @@ const uploadDir = "uploads";
 const publicDir = "public";
 // Where html are stored
 const viewDir = "views";
-
 // Endpoint
 const transcribeEndpoint = "/transcribe";
 const statusEndpoint = "/status";
@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 app.get(statusEndpoint, (request, response) => {
   const status = {
     "Status": "Running"
+    
   };
 response.send(status);
 });
@@ -93,7 +94,7 @@ app.post(transcribeEndpoint, express.json(), async (req, res) => {
     };
     
     const result = await sendATRRequest(
-      URL,
+      backendUrl,
       filePath,
       models
     );
@@ -113,7 +114,7 @@ app.post(transcribeEndpoint, express.json(), async (req, res) => {
 });
 
 // Start server on port and log
-app.listen(PORT, () => {
-  console.log(`Server running: http://localhost:${PORT}`);
+app.listen(config.port, () => {
+  console.log(`Server running: http://localhost:${config.port}`);
 });
 

@@ -16,3 +16,6 @@ public/js/
 
 # Compiled CSS
 public/styles
+
+# Environment variables
+.env
