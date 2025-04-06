@@ -1,59 +1,59 @@
 <script>
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    document.addEventListener('DOMContentLoaded', function() {
-      const darkIcon = document.getElementById('theme-toggle-dark-icon');
-      const lightIcon = document.getElementById('theme-toggle-light-icon');
-      const darkMode = "dark";
-      const lightMode = 'light';
-      const themeToggleId = 'theme-toggle';
-      const hidden = 'hidden';
+    document.addEventListener('DOMContentLoaded', function () {
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkMode = "dark";
+        const lightMode = 'light';
+        const themeToggleId = 'theme-toggle';
+        const hidden = 'hidden';
 
-
-
-      // On page load, set the theme and icons based on localStorage or system preference
-      if (
-        localStorage.getItem('color-theme') === darkMode ||
-        (!localStorage.getItem('color-theme') &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        // Show dark icon, hide light icon
-        document.documentElement.classList.add(darkMode);
-        darkIcon.classList.remove(hidden);
-        lightIcon.classList.add(hidden);
-      } else {
-        // Show light icon, hide dark icon
-        document.documentElement.classList.remove(darkMode);
-        lightIcon.classList.remove(hidden);
-        darkIcon.classList.add(hidden);
-      }
-  
-      // Toggle function for the button
-      document.getElementById(themeToggleId).addEventListener('click', function () {
-        if (document.documentElement.classList.contains(darkMode)) {
-          // Switch icons: show light icon, hide dark icon  
-          document.documentElement.classList.remove(darkMode);
-          localStorage.setItem('color-theme', lightMode);
-          darkIcon.classList.add(hidden);
-          lightIcon.classList.remove(hidden);
-        } else {
-        // Switch icons: show dark icon, hide light icon
-          document.documentElement.classList.add(darkMode);
-          localStorage.setItem('color-theme', darkMode);
-          lightIcon.classList.add(hidden);
-          darkIcon.classList.remove(hidden);
+        function checkLocalTheme() {
+            return localStorage.getItem('color-theme') === darkMode ||
+                (!localStorage.getItem('color-theme') &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches)
         }
-      });
+        // Show dark icon, hide light icon
+        function showDarkIcon() {
+            document.documentElement.classList.add(darkMode);
+            darkIcon.classList.remove(hidden);
+            lightIcon.classList.add(hidden);
+        }
+        // Show light icon, hide dark icon
+        function showLightIcon() {
+            document.documentElement.classList.remove(darkMode);
+            lightIcon.classList.remove(hidden);
+            darkIcon.classList.add(hidden);
+        }
+
+        // On page load, set the theme and icons based on localStorage or system preference
+        if (checkLocalTheme()) {
+            showDarkIcon();
+        } else {
+            showLightIcon();
+        }
+
+        // Toggle function for the button
+        document.getElementById(themeToggleId).addEventListener('click', function () {
+            if (document.documentElement.classList.contains(darkMode)) {
+                showLightIcon();
+                localStorage.setItem('color-theme', lightMode);
+            } else {
+                showDarkIcon();
+                localStorage.setItem('color-theme', darkMode);
+            }
+        });
     });
-  </script>
+</script>
 
 <nav class="navbar fixed top-0 left-0 w-full bg-gray-400 dark:bg-gray-800 py-4 px-8 shadow-md z-30">
     <a href="/">
-      <h1 class="text-4xl font-bold">FORSETE</h1>
+        <h1 class="text-4xl font-bold">FORSETE</h1>
     </a>
-    <div class="ham-menu" role="button" tabindex="0" data-drawer-target="drawer-right"
-      data-drawer-show="drawer-right" data-drawer-placement="right" aria-controls="drawer-right">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="ham-menu" role="button" tabindex="0" data-drawer-target="drawer-right" data-drawer-show="drawer-right"
+        data-drawer-placement="right" aria-controls="drawer-right">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-  </nav>
+</nav>
