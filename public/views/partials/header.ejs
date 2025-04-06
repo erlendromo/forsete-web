@@ -1,3 +1,45 @@
+<script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    document.addEventListener('DOMContentLoaded', function() {
+      const darkIcon = document.getElementById('theme-toggle-dark-icon');
+      const lightIcon = document.getElementById('theme-toggle-light-icon');
+  
+      // On page load, set the theme and icons based on localStorage or system preference
+      if (
+        localStorage.getItem('color-theme') === 'dark' ||
+        (!localStorage.getItem('color-theme') &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        // Show dark icon, hide light icon
+        document.documentElement.classList.add('dark');
+        darkIcon.classList.remove('hidden');
+        lightIcon.classList.add('hidden');
+      } else {
+        // Show light icon, hide dark icon
+        document.documentElement.classList.remove('dark');
+        lightIcon.classList.remove('hidden');
+        darkIcon.classList.add('hidden');
+      }
+  
+      // Toggle function for the button
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        if (document.documentElement.classList.contains('dark')) {
+          // Switch icons: show light icon, hide dark icon  
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'light');
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        } else {
+        // Switch icons: show dark icon, hide light icon
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('color-theme', 'dark');
+          lightIcon.classList.add('hidden');
+          darkIcon.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+
 <nav class="navbar fixed top-0 left-0 w-full bg-gray-400 dark:bg-gray-800 py-4 px-8 shadow-md z-30">
     <a href="/">
       <h1 class="text-4xl font-bold">FORSETE</h1>
