@@ -121,20 +121,7 @@ public setImageContainer(imageContainer: ImageContainer): void {
     // Update revert button state
     this.updateRevertButtonState();
   }
-  
-  private handleSave(): void {
-    // Example: Output the current state to console
-    console.log('Saving changes:', this.documentManager.getAllLineSegments());
-    
-    // Implement your own save logic here
-    // For example, send the data to a server or update a parent component
-    
-    // You could also emit a custom event
-    const saveEvent = new CustomEvent('editor-save', {
-      detail: { lineSegments: this.documentManager.getAllLineSegments() },
-    });
-    this.container.dispatchEvent(saveEvent);
-  }
+
   
   // Get current line segments data
   public getLineSegments(): LineSegment[] {
@@ -146,7 +133,7 @@ public setImageContainer(imageContainer: ImageContainer): void {
     this.documentManager.setAllLineSegments(newLineSegments);
     
     // Update existing line items if they exist
-    if (this.lineItems.length === this.documentManager.getAllLineSegments.length) {
+    if (this.lineItems.length === this.documentManager.getAllLineSegments().length) {
       this.lineItems.forEach((lineItem, index) => {
         lineItem.updateSegment(this.documentManager.getLineSegment(index));
       });
