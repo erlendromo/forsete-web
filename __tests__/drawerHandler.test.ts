@@ -3,6 +3,7 @@ const axios = require('axios');
 
 jest.mock('axios');
 
+// Positive test
 it('returns the name of all the models', async () => {
   axios.get.mockResolvedValue({
     data: [
@@ -28,4 +29,16 @@ it('returns the name of all the models', async () => {
   ]);
 });
 
+// negative tests
+it('throws an error when no model arrays are found', async () => {
+  axios.get.mockResolvedValue({
+    data: [
+      {
+        unrelatedProperty: "someValue"
+      }
+    ]
+  });
+
+  await expect(getModelNames()).rejects.toThrow('No models found.');
+});
 
