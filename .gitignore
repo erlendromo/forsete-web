@@ -1,6 +1,7 @@
 node_modules
 uploads
 test
+.env
 
 # Thumbnail for the webbrowser
 public/images/favicon_io/android-chrome-512x512.png

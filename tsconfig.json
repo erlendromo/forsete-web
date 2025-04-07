@@ -10,8 +10,8 @@
     "skipLibCheck": true,
     "allowJs": true,
     "baseUrl": "./",
-    "rootDir": "src/ts",      // Source root is src
-    "outDir": "public/js",     // Output goes to public
+    "rootDir": "src/ts",      
+    "outDir": "public/js",     
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     }

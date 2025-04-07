@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const URL = 'http://10.212.172.171:8080/forsete-atr/v1/atr/basic-documents/';
+const URL = 'http://${ATRENDPOINT}:${ATRPORT}/forsete-atr/v1/atr/basic-documents/';
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
 const uploadDir = "uploads";
