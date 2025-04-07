@@ -5,14 +5,17 @@ import { sendATRRequest } from './public/js/services/http/post.js';
 import { saveJsonToFile } from './public/js/utils/json/jsonFormatter.js';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Create __dirname equivalent for ES modules
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-const URL = 'http://${ATRENDPOINT}:${ATRPORT}/forsete-atr/v1/atr/basic-documents/';
+const URL = `http://${process.env.ATRENDPOINT}:${process.env.ATRPORT}/forsete-atr/v1/atr/basic-documents/`;
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
 const uploadDir = "uploads";

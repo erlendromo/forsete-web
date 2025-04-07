@@ -1,10 +1,7 @@
 // Function-based image zoom implementation with robust TypeScript null checking
 
-/**
- * Initialize zoom functionality for an image container
- * @param imageContainerId The ID of the image container element
- * @param zoomControlsConfig Optional configuration for zoom control element IDs
- */
+// Initialize zoom functionality for an image container
+ 
 function initializeImageZoom(
     imageContainerId: string,
     zoomControlsConfig: {
