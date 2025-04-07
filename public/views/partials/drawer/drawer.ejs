@@ -3,7 +3,7 @@
   class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
   tabindex="-1" aria-labelledby="drawer-right-label">
    <!-- Toggle button -->
-   <button id="theme-toggle" data-tooltip-target="tooltip-toggle" type="button" class="text-gray-500 inline-flex items-center justify-center dark:text-gray-400 hover:bg-gray-100 w-10 h-10 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+   <button id="theme-toggle" data-tooltip-target="tooltip-toggle" type="button" class="text-gray-500 absolute top-2.5 start-2.5 inline-flex items-center justify-center dark:text-gray-400 hover:bg-gray-100 w-8 h-8 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
     <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
       <path d="M17.8 13.75a1 1 0 0 0-.859-.5A7.488 7.488 0 0 1 10.52 2a1 1 0 0 0 0-.969A1.035 1.035 0 0 0 9.687.5h-.113a9.5 9.5 0 1 0 8.222 14.247 1 1 0 0 0 .004-.997Z"/>
     </svg>
@@ -17,7 +17,6 @@
     Toggle dark mode
     <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
-
   
   <!-- Hide drawer-->
   <button type="button" data-tooltip-target="tooltip-toggle-menu" data-drawer-hide="drawer-right" aria-controls="drawer-right"
@@ -34,11 +33,7 @@
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
 
- 
-   
-
- 
-  <ul>
+  <ul class="pt-12">
     <li>
        <!-- Drawer label -->
   <h5 id="drawer-right-label"
