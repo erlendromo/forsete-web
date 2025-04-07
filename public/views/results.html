@@ -9,9 +9,11 @@
   <link rel="icon" type="image/x-icon" href="images/favicon_io/favicon.ico">
   <link rel="stylesheet" href="/styles/output.css" />
 </head>
-<script src="js/ham-menu.js" defer></script>
-<script src="js/queryreader.js" defer></script>
-<script src="js/jsonLoader.js" defer></script>
+
+<script type="module" src="../js/components/ham-menu.js" defer></script>
+<script type="module" src="../js/components/comp-result.js" defer></script>
+<script type="module" src="../js/components/document-editor/document-editor.js" defer></script>
+<script type="module" src="../js/components/zoom-image.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <body class="bg-gray-900 text-white">
@@ -26,114 +28,61 @@
     </div>
   </nav>
 
-  <main class="min-h-screen flex flex-col items-center justify-center">
-    <div class="space-y-8 font-sans max-w-md mx-auto">
-      <div class="flex flex-row items-center justify-center font-sans max-w-md mx-auto space-x-4">
-        <img id="dynamicImage" class="h-auto max-w-lg rounded-lg" src="" alt="image result">
-        <div class="flex flex-col space-y-2">
-          <label for="jsonOutput" class="text-sm font-medium text-gray-700">
-            Output:
-          </label>
-          <!-- Container for the editor, numbers and textarea -->
-          <div id="editor" class="flex flex-row">
-            <div id="numbers">1</div>
-            <textarea id="jsonOutput" name="jsonOutput" rows="20" cols="50" title="Output" placeholder="JSON output"
-              class="block w-[50ch] p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+  <!-- Off-screen menu (from your CSS) -->
+  <div class="off-screen-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <main class="min-h-screen">
+    <!-- Layout structure -->
+    <div class="content-container">
+      <!-- Left side - Image -->
+      <div class="image-container">
+        <div class="image-zoom-wrapper">
+          <div id="image-container">
+            <!-- Your image content goes here -->
+          </div>
+          
+          <!-- Zoom controls -->
+          <div class="zoom-controls">
+            <button class="zoom-btn" id="zoom-out">-</button>
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <button class="zoom-btn" id="zoom-in">+</button>
+            <button class="zoom-btn" id="zoom-reset">↺</button>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="flex justify-end">
-      <button id="confirmBtn"
-        class="inline-block justify-end bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-        Confirm
-      </button>
-    </div>
-
-    <div class="flex justify-between space-x-4 mt-8">
-      <button id="cancelBtn"
-        class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-        Cancel
-      </button>
-      <button id="saveBtn"
-        class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-        Save all
-      </button>
-    </div>
+      
+      <!-- Right side - Editor -->
+      <div class="editor-wrapper">
+          <div id="editor-container"></div>
+          <div class="flex justify-between space-x-4 mt-8">
+            <button id="cancelBtn" class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
+              Cancel
+            </button>
+            <button id="exportBtn" class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
+              Export
+            </button>
+          </div>
+        </div>
     </div>
   </main>
+
   <script>
-
-    // Make jsPDF available in the global scope
-    const { jsPDF } = window.jspdf;
-
-    document.addEventListener("DOMContentLoaded", function () {
-      // Get the save button element
-      const saveButton = document.getElementById("saveBtn");
-
-      // Add click event listener to the button
-      if (saveButton) {
-        saveButton.addEventListener("click", saveTextAreaAsPdf);
+    // Initialize ham-menu behavior if not handled by your component script
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamMenu = document.querySelector('.ham-menu');
+      const offScreenMenu = document.querySelector('.off-screen-menu');
+      
+      if (hamMenu && offScreenMenu) {
+        hamMenu.addEventListener('click', function() {
+          hamMenu.classList.toggle('active');
+          offScreenMenu.classList.toggle('active');
+        });
       }
     });
-
-    /**
-     * Saves the content of the textarea as a PDF
-     */
-    function saveTextAreaAsPdf() {
-      try {
-        // Get the textarea content
-        const textArea = document.getElementById('jsonOutput');
-        const textContent = textArea.value;
-
-        if (!textContent.trim()) {
-          alert("There is no text in the text area.");
-          return;
-        }
-
-        // Create a new jsPDF instance
-        const doc = new jsPDF();
-
-        // Set initial position
-        let yPosition = 20;
-        const xPosition = 20;
-        const lineHeight = 10;
-        const pageHeight = doc.internal.pageSize.height;
-
-        // Set font size and type
-        doc.setFontSize(12);
-
-        // Get URL parameter for filename
-        const urlParams = new URLSearchParams(window.location.search);
-        const fileParam = urlParams.get('file') || 'document';
-
-        // Split text into lines
-        const textLines = doc.splitTextToSize(textContent, doc.internal.pageSize.width - 40);
-
-        // Add each line to the PDF
-        textLines.forEach(line => {
-          // Check if we need a new page
-          if (yPosition + lineHeight > pageHeight - 20) {
-            doc.addPage();
-            yPosition = 20;
-          }
-
-          // Add the line
-          doc.text(line, xPosition, yPosition);
-          yPosition += lineHeight;
-        });
-
-        // Save the PDF
-        doc.save(`${fileParam}-output.pdf`);
-
-      } catch (error) {
-        console.error("Error generating PDF:", error);
-        alert("Failed to generate PDF. Please try again.");
-      }
-    }
-
   </script>
 </body>
-
 </html>

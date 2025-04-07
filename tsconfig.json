@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
+    "module": "ESNext",
+    "target": "ES6",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "rootDir": "src/ts",      // Source root is src/js
-    "outDir": "public/js"     // Output goes to public/js
+    "baseUrl": "./",
+    "rootDir": "src/ts",      
+    "outDir": "public/js",     
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    }
   },
   "include": [
-    "src/ts/**/*",
-    "**/*.json"
-  ]
+    "src/**/*",
+    "**/*.json"  ],
+  "exclude": ["node_modules", "public/js"]
 }

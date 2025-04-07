@@ -1,6 +1,7 @@
 node_modules
 uploads
 test
+.env
 
 # Thumbnail for the webbrowser
 public/images/favicon_io/android-chrome-512x512.png
@@ -12,7 +13,7 @@ public/images/favicon_io/site.webmanifest
 public/images/favicon_io/about.txt
 
 # Compiled code
-public/js/
+public/js
 
 # Compiled CSS
 public/styles
