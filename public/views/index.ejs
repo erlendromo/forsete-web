@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="/styles/output.css" />
 </head>
 
-<script>var exports = {};</script>
-<script src="js/filehandler.js" defer></script>
-<script src="js/flowbite.min.js" defer></script>
+<script type='module' src="js/filehandler.js" defer></script>
+<script type='module' src="js/flowbite.min.js" defer></script>
+<script type='module' src="/js/index/drawerHandler.js" defer></script>
 
 
 <body class="bg-gray-300 dark:bg-gray-900 text-white">
@@ -18,7 +18,7 @@
     <%- include('./partials/header'); %>
   </header>
   <!-- drawer init and toggle -->
-  <%- include('./partials/drawer/drawer'); %>
+  <%- include('./partials/drawer/drawer', { modelNames: modelNames }); %>
     <main class="min-h-screen flex flex-col items-center justify-center">
       <!-- Container for uploader and spinner -->
       <div class="relative flex items-center justify-center w-full">
