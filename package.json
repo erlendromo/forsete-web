@@ -1,6 +1,7 @@
 {
   "name": "forsete-web",
   "version": "1.0.0",
+  "type": "module",
   "description": "Frontend for bachelor thesis",
   "main": "server.js",
   "scripts": {
