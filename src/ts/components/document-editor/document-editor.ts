@@ -8,11 +8,11 @@ import { ImageContainer } from "./image-container.js";
 export class DocumentLineEditor {
   private container: HTMLElement;
   private lineItems: LineEditorItem[] = [];
+  private currentlyFocusedLine: LineEditorItem | null = null;
   private documentManager: DocumentManager;
   private editorContentEl: HTMLElement;
   private revertAllBtn: HTMLButtonElement;
   //private saveBtn: HTMLButtonElement;
-  private selectedLineIndex: number = -1;
   private imageContainer: ImageContainer | null;
   
   constructor(containerId: string, documentManager: DocumentManager,  imageContainer?: ImageContainer) {
@@ -68,24 +68,38 @@ export class DocumentLineEditor {
     // Clear the editor content
     this.editorContentEl.innerHTML = '';
     this.lineItems = [];
-    
-    // Create a line item for each segment with focus handler
+  
     this.documentManager.getAllLineSegments().forEach((segment, index) => {
-        const lineItem = new LineEditorItem(
-            segment, 
-            this.handleLineChange.bind(this),
-            // Focus handler for highlighting
-            (focusedSegment) => {
-                if (this.imageContainer) {
-                    // Tell the image container which line's polygon to highlight
-                    this.imageContainer.highlightLinePolygon(focusedSegment);
-                }
+      const lineItem = new LineEditorItem(
+        segment,
+        this.handleLineChange.bind(this),
+        (focusedSegment) => {
+          if (this.imageContainer) {
+            this.imageContainer.highlightLinePolygon(focusedSegment);
+          }
+  
+          const newlyFocusedItem = this.lineItems.find(item =>
+            item.getSegment().originalIndex === focusedSegment.originalIndex
+          );
+  
+          if (newlyFocusedItem !== this.currentlyFocusedLine) {
+            if (this.currentlyFocusedLine) {
+              this.currentlyFocusedLine.setSelected(false);
             }
-        );
-        this.lineItems.push(lineItem);
-        this.editorContentEl.appendChild(lineItem.getElement());
+            if (newlyFocusedItem) {
+              newlyFocusedItem.setSelected(true);
+              this.currentlyFocusedLine = newlyFocusedItem;
+            }
+          }
+        }
+      );
+  
+      this.lineItems.push(lineItem);
+      this.editorContentEl.appendChild(lineItem.getElement());
     });
-}
+  }
+  
+
 
 // Method to set the image container after initialization
 public setImageContainer(imageContainer: ImageContainer): void {

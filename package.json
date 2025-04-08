@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Frontend for bachelor thesis",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css",
     "tailwind": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css --watch",
