@@ -3,17 +3,22 @@ run:
 	@npm run dev
 .PHONY: run
 
-# Build docker image
-build:
-	@docker build --no-cache -t forsete-web .
-.PHONY: build
-
 # Test the application
 test:
 	@npx jest
 .PHONY: test
 
-# Run the dockerized image
-launch:
-	@docker run -d -p 3000:3000 forsete-web
-.PHONY: launch
+# Build the dockerized image
+build:
+	@docker compose up --build -d 
+.PHONY: build
+
+# Remove the dockerized image
+remove:
+	@docker compose down --volumes --remove-orphans
+.PHONY: remove
+
+# Remove the dockerized image
+log:
+	@docker compose logs -f                        
+.PHONY: log

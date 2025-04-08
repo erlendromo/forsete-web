@@ -1,0 +1,12 @@
+services:
+  forsete-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: forsete-web
+    restart: unless-stopped
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - URL_BACKEND=${URL_BACKEND}
+      - PORT=${PORT}
