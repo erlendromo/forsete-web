@@ -1,0 +1,17 @@
+{
+  "line_segmentation_models": [
+    {
+      "name": "yolov9-lines-within-regions-1"
+    }
+  ],
+  "text_recognition_models": [
+    {
+      "name": "TrOCR-norhand-v3"
+    }
+  ],
+  "region_segmentation_models": [
+    {
+      "name": "yolov9-regions"
+    }
+  ]
+}
