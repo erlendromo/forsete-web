@@ -1,15 +1,18 @@
-const config = require("./config.js").default;
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const { pdfToImage } = require('./public/js/pdfUtils.js');
-const { sendATRRequest } = require('./public/js/post.js');
-const { saveJsonToFile } = require('./public/js/jsonFormatter.js');
-const { extractTextMapping } = require('./public/js/jsonFormatter.js');
+import config from "./public/js/config/config.js";
+import express from "express";
+import multer from "multer";
+import path from "path";
+import { fileURLToPath } from 'url';
+import { pdfToImage } from ".public/js/ts/pdfUtils.js";
+import { sendATRRequest } from "./public/js/post.js";
+import { saveJsonToFile, extractTextMapping } from "./public/js/jsonFormatter.js";
+import { getModelNames } from "./public/js/index/drawerHandler.js";
+import { ApiEndpoints } from "./public/js/config/endpoint.js";
+import { handleApiOrMock, handleMockEndpoints } from "./src/util/apiService.js"
+import { url } from "inspector";
+
 
 const app = express();
-const atrEndpoint = 'atr/basic-documents/';
-const backendUrl = config.urlBackend+atrEndpoint;
 const lineModel = 'yolov9-lines-within-regions-1';
 const textModel = 'TrOCR-norhand-v3';
 // Where files get stored
@@ -22,6 +25,7 @@ const viewDir = "views";
 const transcribeEndpoint = "/transcribe";
 const statusEndpoint = "/status";
 const uploadEndpoint = "/upload";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
@@ -35,8 +39,19 @@ app.use(express.static(publicDir+"/"+ viewDir))
 const upload = multer({ dest: uploadDir + "/" });
 app.use("/"+uploadDir, express.static(uploadDir));
 
-app.get('/', (req, res) => {
-  res.render('index'); // Express will look for views/index.ejs
+app.get('/', async (req, res) => {
+  //res.render('index'); // Express will look for views/index.ejs
+  try {
+    const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
+
+    const response = await handleApiOrMock(modelEndPoint, config.useMock)
+    const modelNames = await getModelNames(modelEndPoint, response);
+    // Render EJS template and pass modelNames
+    res.render('index', { 
+      modelNames:modelNames });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 // Status endpoint
@@ -94,7 +109,7 @@ app.post(transcribeEndpoint, express.json(), async (req, res) => {
     };
     
     const result = await sendATRRequest(
-      backendUrl,
+      atrEndpoint,
       filePath,
       models
     );
