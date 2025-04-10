@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -9,12 +9,13 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "rootDir": "src/ts",      // Source root is src/js
+    "rootDir": "src/",      // Source root is src/js
     "outDir": "public/js"     // Output goes to public/js
   },
   "include": [
-    "src/ts/**/*",
+    "src/**/*",
+    "mocks/**/*",
     "**/*.json"
-  ],
+, "src/config"  ],
   "exclude": ["node_modules", "dist"]
 }
