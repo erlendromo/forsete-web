@@ -1,10 +1,13 @@
 import axios from 'axios';
-import  mockModelResponse  from "../../../src/mocks/modelResponse.json" with { type: 'json' };
+// @ts-ignore mockModelResponse
+import mockModelResponse from "../../../src/mocks/modelResponse.json" with { type: 'json' };
+import { json } from 'stream/consumers';
 const errorNoModelMsg = 'No models found.';
 
 interface Model {
   type: string;
   name: string;
+  readableType?: string;
 }
 
 /**
@@ -28,19 +31,37 @@ function checkKey(item: Record<string, any>, key: string): boolean {
   return key in item && checkArray(item[key]);
 }
 
-const USE_MOCK = false;
-export async function getModelNames(url: string): Promise<Model[]> {
-let data: any;
-if (USE_MOCK) {
-  // Use the imported mock data.
-  console.log("Requesting MOCK URL:", url);
-  data = mockModelResponse;
-} else {
-  console.log("Requesting URL:", url);
-  const response = await axios.get(url);
-  data = response.data;
+/**
+ * Fetch data using either a mock or a provided HTTP request function.
+ *
+ * @param url - The URL to fetch real data from.
+ * @param useMock - When true, the function uses the static mock data.
+ * @param requestFn - A function that performs the HTTP request.
+ *                    By default, it uses axios.get.
+ * @returns The raw data.
+ */
+/*
+export async function fetchData(
+  url: string,
+  useMock: boolean,
+  requestFn: (url: string) => Promise<{ data: any }> = (url: string) => axios.get(url)
+): Promise<any> {
+  if (useMock) {
+    console.log("Using mock data.");
+    return mockModelResponse;
+  } else {
+    console.log("Requesting URL:", url);
+    const response = await requestFn(url);
+    return response.data;
+  }
 }
-data = [data]
+  */
+
+export async function getModelNames(url: string, data:any): Promise<Model[]> {
+  //let data: any;
+  //data = fetchData(url, use_mock);
+  data = JSON.parse(data);
+  data = [data];
   const models = data.flatMap((item: Record<string, any>) => {
     return Object.keys(item).flatMap(key => {
       // Checks if it is an item and an array

@@ -1,12 +1,14 @@
 import { getModelNames } from '../src/ts/index/drawerHandler';
+import { loadTestFile } from '../src/mocks/mockutil';
+import { workDirPath } from '../src/mocks/mockutil';
 const axios = require('axios');
-
+const exampleUrl = ""
 jest.mock('axios');
 
 // Positive test
 it('returns the name of all the models', async () => {
-  axios.get.mockResolvedValue({
-    data: [
+
+    const json = 
       {
         "line_segmentation_models": [
           {
@@ -19,13 +21,22 @@ it('returns the name of all the models', async () => {
           }
         ]
       }
-    ]
-  });
-
-  const modelNames = await getModelNames();
+const jsonString = JSON.stringify(json);
+const base64Data = btoa(jsonString); // Use Buffer.from(jsonString).toString('base64') in Node.js
+const dataURL = `data:application/json;base64,${base64Data}`;
+  // date = [data]
+  const modelNames = await getModelNames(dataURL, true);
   expect(modelNames).toEqual([
-    'yolov9-lines-within-regions-1',
-    'TrOCR-norhand-v3'
+    {
+      name: 'yolov9-lines-within-regions-1',
+      type: 'line_segmentation_models',
+      readableType: 'Line segmentation models'
+    },
+    {
+      name: 'TrOCR-norhand-v3',
+      type: 'text_recognition_models',
+      readableType: 'Text recognition models'
+    }
   ]);
 });
 
@@ -39,6 +50,5 @@ it('throws an error when no model arrays are found', async () => {
     ]
   });
 
-  await expect(getModelNames()).rejects.toThrow('No models found.');
+  await expect(getModelNames(exampleUrl, false)).rejects.toThrow('No models found.');
 });
-
