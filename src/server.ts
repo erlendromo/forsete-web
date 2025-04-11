@@ -1,14 +1,17 @@
-import config from "./public/js/config/config.js";
+import config from "./config/config.js";
 import express from "express";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from 'url';
-import { pdfToImage } from ".public/js/ts/pdfUtils.js";
-import { sendATRRequest } from "./public/js/post.js";
-import { saveJsonToFile, extractTextMapping } from "./public/js/jsonFormatter.js";
-import { getModelNames } from "./public/js/index/drawerHandler.js";
-import { ApiEndpoints } from "./public/js/config/endpoint.js";
-import { handleApiOrMock, handleMockEndpoints } from "./src/util/apiService.js"
+// Utilities
+import { pdfToImage } from "./util/pdfUtils.js";
+import { sendATRRequest } from "./util/post.js";
+import { saveJsonToFile, extractTextMapping } from "./util/jsonFormatter.js";
+import { handleApiOrMock, handleMockEndpoints } from "./util/apiService.js"
+// Index
+import { getModelNames } from "./index/drawerHandler.js";
+// Config
+import { ApiEndpoints } from "./config/endpoint.js";
 import { url } from "inspector";
 
 
@@ -44,13 +47,14 @@ app.get('/', async (req, res) => {
   try {
     const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
 
-    const response = await handleApiOrMock(modelEndPoint, config.useMock)
-    const modelNames = await getModelNames(modelEndPoint, response);
+    //const response = await handleApiOrMock(modelEndPoint, config.useMock)
+    //const modelNames = await getModelNames(modelEndPoint, response);
     // Render EJS template and pass modelNames
     res.render('index', { 
-      modelNames:modelNames });
+    //  modelNames:modelNames
+     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send((error as Error).message);
   }
 });
 
@@ -67,6 +71,10 @@ response.send(status);
 app.post(uploadEndpoint, upload.single("document"), async (req, res) => {
   try {
     console.log("Submitted file info:", req.file);
+    if (!req.file) {
+      res.status(400).json({ error: "No file uploaded" });
+      return; // exit after sending response
+    }
 
     // If you want to check the extension, use 'originalname'
     if (req.file.originalname.toLowerCase().endsWith(".pdf")) {
@@ -93,13 +101,15 @@ app.post(uploadEndpoint, upload.single("document"), async (req, res) => {
 // Transcribe endpoint.
 // Sends to the atr-endpoint
 app.post(transcribeEndpoint, express.json(), async (req, res) => {
+
   const { filename } = req.body;
   console.log("Sent to atr:", filename);
 
   try {
     const { filename } = req.body;
     if (!filename) {
-      return res.status(400).json({ error: 'No filename provided' });
+      res.status(400).json({ error: 'No filename provided' });
+      return;
     }
     
     const filePath = path.join(__dirname, uploadDir, filename);
@@ -109,14 +119,14 @@ app.post(transcribeEndpoint, express.json(), async (req, res) => {
     };
     
     const result = await sendATRRequest(
-      atrEndpoint,
+      ApiEndpoints.ATR_ENDPOINT,
       filePath,
       models
     );
     
     res.json({
       filename,
-      atrResult: result.current
+      atrResult: result.original
     });
     console.log("ATR Response Body:", JSON.stringify(result, null, 2));
     // Extracting the important data
