@@ -32,7 +32,7 @@ function checkKey(item: Record<string, any>, key: string): boolean {
 /**
  * Transforms the data from a JSON response into an array of Model objects.
  *
- * The data parameter must conform to the Models interface, where each key maps to an array
+ * The data parameter must apply to the Models interface, where each key maps to an array
  * of models. For each key that passes the checkKey test, the function maps each model by adding a
  * 'readableType' property obtained from getReadableText.
  *
