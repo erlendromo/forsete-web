@@ -19,3 +19,6 @@ public/styles
 
 # Environment variables
 .env
+
+# vscode
+.vscode
