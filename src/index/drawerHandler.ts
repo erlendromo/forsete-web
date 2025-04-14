@@ -29,7 +29,17 @@ function checkKey(item: Record<string, any>, key: string): boolean {
   return key in item && checkArray(item[key]);
 }
 
-export async function getModelNames(url: string, data:Models): Promise<Model[]> {
+/**
+ * Transforms the data from a JSON response into an array of Model objects.
+ *
+ * The data parameter must conform to the Models interface, where each key maps to an array
+ * of models. For each key that passes the checkKey test, the function maps each model by adding a
+ * 'readableType' property obtained from getReadableText.
+ *
+ * @param {Models} data - The JSON response data containing model arrays.
+ * @returns {Promise<Model[]>} A promise that resolves to an array of transformed Model objects.
+ */
+export async function getModelNames(data:Models): Promise<Model[]> {
   const dataArr = [data];
   const models = dataArr.flatMap((item: Record<string, any>) => {
     return Object.keys(item).flatMap(key => {
@@ -38,7 +48,7 @@ export async function getModelNames(url: string, data:Models): Promise<Model[]> 
         return item[key].map((model: Model) => ({
           name: model.name,
           type: key,
-          readableType: getReadableModelType(key)
+          readableType: getReadableText(key)
         }));
       }
       return [];
@@ -51,22 +61,12 @@ export async function getModelNames(url: string, data:Models): Promise<Model[]> 
 }
 
 /**
- * Transforms a model key into a more human-readable string.
+ * Transforms a text string and capitalizes the first letter.
  *
- * @param {string} key - The key to be transformed.
+ * @param {string} text - The key to be transformed.
  * @returns {string} A formatted, human-readable string.
  */
-function getReadableModelType(key: string): string {
+function getReadableText(text: string): string {
   // Replace underscores with spaces and capitalize first letter
-  const fallBackConv = key.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase());
-  switch (key) {
-    case 'line_segmentation_models':
-      return 'Line segmentation models';
-    case 'text_recognition_models':
-      return 'Text recognition models';
-    case 'region_segmentation_models':
-      return 'Region segmentation models';
-    default:
-      return fallBackConv;
-  }
+  return text.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase());
 }
