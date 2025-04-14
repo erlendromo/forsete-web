@@ -10,7 +10,6 @@ describe('workDirPath', () => {
 
     expect(absolutePath.endsWith(relativePath));
 
-    // You could log the output for debugging:
     // 'Absolute path:' /root/__tests__/mockutils.test.ts
     console.log('Absolute path:', absolutePath);
 

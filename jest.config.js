@@ -1,7 +1,10 @@
-export const preset = 'ts-jest';
-export const testEnvironment = 'node';
-export const transform = {
-  '^.+\\.[tj]s$': 'ts-jest'
+// jest.config.mjs
+export default {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.[tj]s$': 'ts-jest'
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleDirectories: ['node_modules', 'src'],
 };
-export const moduleFileExtensions = ['ts', 'tsx', 'js'];
-  
