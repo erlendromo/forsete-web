@@ -1,4 +1,4 @@
-import config from "./config/config.js";
+import { config } from './config/config.js';
 import express from "express";
 import multer from "multer";
 import path from "path";
@@ -49,8 +49,7 @@ app.get('/', async (req, res) => {
     const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
 
     const response = await handleApiOrMock(modelEndPoint, config.useMock)
-    const names = await getModelNames(modelEndPoint, response as Models);
-    const modelNames = JSON.stringify(names);
+    const names = await getModelNames(response as Models);
     // Render EJS template and pass modelNames
     res.render('index', {
       modelNames:names
