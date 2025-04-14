@@ -13,6 +13,7 @@ import { getModelNames } from "./index/drawerHandler.js";
 // Config
 import { ApiEndpoints } from "./config/endpoint.js";
 import { url } from "inspector";
+import { Models } from "@interfaces/modelInterface.js";
 
 
 const app = express();
@@ -32,7 +33,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-app.set(viewDir, path.join(__dirname, publicDir, viewDir));
+app.set(viewDir, path.join(__dirname, "..", viewDir));
 
 // Serves the public folder and views
 app.use(express.static(publicDir));
@@ -47,11 +48,13 @@ app.get('/', async (req, res) => {
   try {
     const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
 
-    //const response = await handleApiOrMock(modelEndPoint, config.useMock)
-    //const modelNames = await getModelNames(modelEndPoint, response);
+    const response = await handleApiOrMock(modelEndPoint, config.useMock)
+    const names = await getModelNames(modelEndPoint, response as Models);
+    const modelNames = JSON.stringify(names);
     // Render EJS template and pass modelNames
-    res.render('index', { 
-    //  modelNames:modelNames
+    res.render('index', {
+      modelNames:names
+      //modelNames:['ExampleModel1', 'ExampleModel2', 'ExampleModel3']
      });
   } catch (error) {
     res.status(500).send((error as Error).message);

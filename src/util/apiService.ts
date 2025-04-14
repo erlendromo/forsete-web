@@ -1,9 +1,8 @@
-import { loadTestFile } from '../mocks/mockutil';
-import { ApiEndpoints } from '../config/endpoint';
+import { loadTestFile } from '../mocks/mockutil.js';
+import { ApiEndpoints } from '../config/endpoint.js';
+import { Models } from '../interfaces/modelInterface.js';
+import { ImageData } from '../interfaces/htrInterface.js';
 import axios from 'axios';
-
-const modelResponse = "src/mocks/modelResponse.json";
-const atrResponse = "src/mocks/atrResponse.json";
 
 /**
  * A unified method to fetch data from a specified endpoint.
@@ -15,7 +14,7 @@ const atrResponse = "src/mocks/atrResponse.json";
  * @param {string} url - The URL of the endpoint from which to fetch data.
  * @returns {Promise<any>} A promise that resolves with the parsed JSON data from the response.
  */
-export async function fetchEndpoint(url:string) {
+export async function fetchEndpoint<T>(url: string): Promise<T> {
   const response = await axios.get(url);
   return response.data;
 }
@@ -24,7 +23,7 @@ export async function fetchEndpoint(url:string) {
  * A method to fetch mock data or real data based on the boolean useMock.
  * Uses the mock implementation when USE_MOCK is true.
  */
-export async function handleApiOrMock(url:string, useMock:boolean) {
+export async function handleApiOrMock(url: string, useMock: boolean) {
   if (useMock) {
     return handleMockEndpoints(url);
   } else {
@@ -36,12 +35,15 @@ export async function handleApiOrMock(url:string, useMock:boolean) {
 /**
  * A method to handle the different mock endpoints.
  */
-export async function handleMockEndpoints(url:string) {
+export async function handleMockEndpoints(url: string) {
+  const modelResponse = "src/mocks/modelResponse.json";
+  const atrResponse = "src/mocks/atrResponse.json";
   const errorMsg = "No matching mocking endpoint.";
   if (url.endsWith(ApiEndpoints.MODEL_ENDPOINT)) {
-    return loadTestFile(modelResponse);
+    let b =  loadTestFile<Models>(modelResponse);
+    return b;
   } else if (url.endsWith(ApiEndpoints.ATR_ENDPOINT)) {
-    return loadTestFile(atrResponse);
+    return loadTestFile<ImageData>(atrResponse);
   } else {
     throw new Error(errorMsg);
   }
