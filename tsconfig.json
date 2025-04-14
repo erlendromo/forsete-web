@@ -9,6 +9,13 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
+    "paths": {                                   
+      "@config/*": ["./src/config/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@mocks/*": ["./src/mocks/*"],
+      "@util/*": ["./src/util/*"],
+      "@index/*": ["./src/index/*"],
+    },
     "rootDir": "src/",      // Source root is src/js
     "outDir": "public/js"     // Output goes to public/js
   },
@@ -17,5 +24,5 @@
     "mocks/**/*",
     "**/*.json"
 , "src/config"  ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "public/js", "src/mocks/**/*.json"],
 }

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css",
     "tailwind": "npx tsc && npx @tailwindcss/cli -i ./src/styles/input.css -o ./public/styles/output.css --watch",
-    "server": "node server.js",
+    "server": "node public/js/server.js",
     "dev": "concurrently \"npm run tailwind\" \"npm run server\""
   },
   "repository": {
