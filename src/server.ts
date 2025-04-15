@@ -13,7 +13,7 @@ import { getModelNames } from "./index/drawerHandler.js";
 // Config
 import { ApiEndpoints } from "./config/endpoint.js";
 import { url } from "inspector";
-import { Models } from "@interfaces/modelInterface.js";
+import { Models } from "./interfaces/modelInterface.js";
 
 
 const app = express();

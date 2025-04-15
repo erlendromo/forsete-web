@@ -10,11 +10,11 @@
     "skipLibCheck": true,
     "allowJs": true,
     "paths": {                                   
-      "@config/*": ["./src/config/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@mocks/*": ["./src/mocks/*"],
-      "@util/*": ["./src/util/*"],
-      "@index/*": ["./src/index/*"],
+      "@config/*": ["../src/config/*"],
+      "@interfaces/*": ["../src/public/js/interfaces/*"],
+      "@mocks/*": ["../src/public/js/mocks/*"],
+      "@util/*": ["../src/util/*"],
+      "@index/*": ["../src/index/*"],
     },
     "rootDir": "src/",      // Source root is src/js
     "outDir": "public/js"     // Output goes to public/js

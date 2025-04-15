@@ -1,5 +1,5 @@
 import { getModelNames } from '../src/index/drawerHandler';
-import { loadTestFile } from '../src/mocks/mockutil';
+import { Models } from '../src/interfaces/modelInterface';
 import { workDirPath } from '../src/mocks/mockutil';
 const axios = require('axios');
 const exampleUrl = ""
@@ -25,7 +25,7 @@ it('returns the name of all the models', async () => {
 //const base64Data = btoa(jsonString); // Use Buffer.from(jsonString).toString('base64') in Node.js
 //const dataURL = `data:application/json;base64,${base64Data}`;
   // date = [data]
-  const modelNames = await getModelNames(json);
+  const modelNames = await getModelNames(json as Models);
   expect(modelNames).toEqual([
     {
       name: 'yolov9-lines-within-regions-1',

@@ -3,8 +3,8 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   transform: {
-    '^.+\\.[tj]s$': 'ts-jest'
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleDirectories: ['node_modules', 'src'],
 };
