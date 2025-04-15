@@ -1,7 +1,7 @@
 import { fromPath } from "pdf2pic";
 import fs from "fs";
 import path from "path";
-import { getPdfSize } from '../src/ts/pdfUtils'; // adjust path as needed
+import { getPdfSize } from '../src/util/pdfUtils';
 
 
 
