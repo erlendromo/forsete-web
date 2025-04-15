@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "node10",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -11,8 +11,8 @@
     "allowJs": true,
     "paths": {                                   
       "@config/*": ["../src/config/*"],
-      "@interfaces/*": ["../src/public/js/interfaces/*"],
-      "@mocks/*": ["../src/public/js/mocks/*"],
+      "@interfaces/*": ["../src/interfaces/*"],
+      "@mocks/*": ["../src/mocks/*"],
       "@util/*": ["../src/util/*"],
       "@index/*": ["../src/index/*"],
     },
