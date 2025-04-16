@@ -1,0 +1,3504 @@
+{
+    "file_name": "Tipsskjema_Kriminalpolitisentralen-2.png",
+    "image_path": "/tmp/gradio/63182886d55956d4df8d4d7367305dc7c68891c7b3bbb5c810f99af0c5b7a265/Tipsskjema_Kriminalpolitisentralen-2.png",
+    "image_name": "Tipsskjema_Kriminalpolitisentralen-2",
+    "label": "Tipsskjema_Kriminalpolitisentralen-2",
+    "contains": [
+        {
+            "segment": {
+                "bbox": {
+                    "xmin": 51,
+                    "ymin": 27,
+                    "xmax": 490,
+                    "ymax": 283
+                },
+                "polygon": {
+                    "points": [
+                        {
+                            "x": 51,
+                            "y": 27
+                        },
+                        {
+                            "x": 51,
+                            "y": 283
+                        },
+                        {
+                            "x": 490,
+                            "y": 283
+                        },
+                        {
+                            "x": 490,
+                            "y": 27
+                        }
+                    ]
+                },
+                "score": 0.7323223352432251,
+                "class_label": "textregion",
+                "orig_shape": [
+                    792,
+                    612
+                ],
+                "data": {}
+            },
+            "label": "Tipsskjema_Kriminalpolitisentralen-2_node0",
+            "contains": [
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 6,
+                            "ymin": 0,
+                            "xmax": 143,
+                            "ymax": 24
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 6,
+                                    "y": 0
+                                },
+                                {
+                                    "x": 6,
+                                    "y": 15
+                                },
+                                {
+                                    "x": 74,
+                                    "y": 18
+                                },
+                                {
+                                    "x": 74,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 143,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 143,
+                                    "y": 4
+                                },
+                                {
+                                    "x": 139,
+                                    "y": 0
+                                }
+                            ]
+                        },
+                        "score": 0.7650526762008667,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Kriminalpolitisentralen"
+                        ],
+                        "scores": [
+                            0.997147721781024
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node0"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 215,
+                            "ymin": 5,
+                            "xmax": 321,
+                            "ymax": 25
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 215,
+                                    "y": 5
+                                },
+                                {
+                                    "x": 215,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 312,
+                                    "y": 25
+                                },
+                                {
+                                    "x": 321,
+                                    "y": 23
+                                },
+                                {
+                                    "x": 321,
+                                    "y": 5
+                                }
+                            ]
+                        },
+                        "score": 0.73772132396698,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Tips-Norat"
+                        ],
+                        "scores": [
+                            0.9416008726312136
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node1"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 8,
+                            "xmax": 425,
+                            "ymax": 32
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 8
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 395,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 396,
+                                    "y": 32
+                                },
+                                {
+                                    "x": 416,
+                                    "y": 32
+                                },
+                                {
+                                    "x": 417,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 425,
+                                    "y": 27
+                                },
+                                {
+                                    "x": 425,
+                                    "y": 12
+                                },
+                                {
+                                    "x": 423,
+                                    "y": 12
+                                },
+                                {
+                                    "x": 422,
+                                    "y": 10
+                                },
+                                {
+                                    "x": 422,
+                                    "y": 8
+                                }
+                            ]
+                        },
+                        "score": 0.5954899191856384,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Kr\u00e6erne"
+                        ],
+                        "scores": [
+                            0.9188263109237526
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node2"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 152,
+                            "ymin": 8,
+                            "xmax": 222,
+                            "ymax": 48
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 152,
+                                    "y": 8
+                                },
+                                {
+                                    "x": 152,
+                                    "y": 47
+                                },
+                                {
+                                    "x": 173,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 182,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 200,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 214,
+                                    "y": 48
+                                },
+                                {
+                                    "x": 222,
+                                    "y": 47
+                                },
+                                {
+                                    "x": 222,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 220,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 215,
+                                    "y": 25
+                                },
+                                {
+                                    "x": 216,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 214,
+                                    "y": 13
+                                },
+                                {
+                                    "x": 204,
+                                    "y": 11
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 8
+                                }
+                            ]
+                        },
+                        "score": 0.525107204914093,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "341696 spa."
+                        ],
+                        "scores": [
+                            0.9693211124724324
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node3"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 14,
+                            "xmax": 50,
+                            "ymax": 31
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 14
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 10,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 24,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 34,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 34,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 42,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 14
+                                }
+                            ]
+                        },
+                        "score": 0.8475456833839417,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Politid strikt"
+                        ],
+                        "scores": [
+                            0.9537699647826419
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node4"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 25,
+                            "xmax": 438,
+                            "ymax": 46
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 438,
+                                    "y": 25
+                                },
+                                {
+                                    "x": 425,
+                                    "y": 25
+                                },
+                                {
+                                    "x": 423,
+                                    "y": 28
+                                },
+                                {
+                                    "x": 418,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 388,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 388,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 424,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 425,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 428,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 429,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 432,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 432,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 435,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 436,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 46
+                                }
+                            ]
+                        },
+                        "score": 0.818402111530304,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "96 40, 49"
+                        ],
+                        "scores": [
+                            0.8660346691812685
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node5"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 27,
+                            "xmax": 58,
+                            "ymax": 45
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 27
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 58,
+                                    "y": 44
+                                },
+                                {
+                                    "x": 58,
+                                    "y": 27
+                                },
+                                {
+                                    "x": 51,
+                                    "y": 27
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 41,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 21,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 13,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 13,
+                                    "y": 27
+                                }
+                            ]
+                        },
+                        "score": 0.8321194648742676,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "summere"
+                        ],
+                        "scores": [
+                            0.9997351310878259
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node6"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 33,
+                            "xmax": 93,
+                            "ymax": 58
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 33,
+                                    "y": 38
+                                },
+                                {
+                                    "x": 34,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 55
+                                },
+                                {
+                                    "x": 86,
+                                    "y": 56
+                                },
+                                {
+                                    "x": 93,
+                                    "y": 58
+                                },
+                                {
+                                    "x": 93,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 90,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 89,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 66,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 54,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 34,
+                                    "y": 45
+                                },
+                                {
+                                    "x": 33,
+                                    "y": 38
+                                },
+                                {
+                                    "x": 44,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 45,
+                                    "y": 33
+                                }
+                            ]
+                        },
+                        "score": 0.5793713927268982,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Holmboe er Grad og n\u00e6vnt"
+                        ],
+                        "scores": [
+                            0.9602648791191233
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node7"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 226,
+                            "ymin": 33,
+                            "xmax": 329,
+                            "ymax": 83
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 226,
+                                    "y": 38
+                                },
+                                {
+                                    "x": 226,
+                                    "y": 44
+                                },
+                                {
+                                    "x": 231,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 226,
+                                    "y": 48
+                                },
+                                {
+                                    "x": 226,
+                                    "y": 71
+                                },
+                                {
+                                    "x": 271,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 288,
+                                    "y": 83
+                                },
+                                {
+                                    "x": 312,
+                                    "y": 75
+                                },
+                                {
+                                    "x": 329,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 329,
+                                    "y": 37
+                                },
+                                {
+                                    "x": 325,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 324,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 246,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 246,
+                                    "y": 36
+                                }
+                            ]
+                        },
+                        "score": 0.41012778878211975,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Borgen"
+                        ],
+                        "scores": [
+                            0.967149563121007
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node8"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 155,
+                            "ymin": 38,
+                            "xmax": 332,
+                            "ymax": 83
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 155,
+                                    "y": 50
+                                },
+                                {
+                                    "x": 155,
+                                    "y": 72
+                                },
+                                {
+                                    "x": 165,
+                                    "y": 68
+                                },
+                                {
+                                    "x": 172,
+                                    "y": 72
+                                },
+                                {
+                                    "x": 189,
+                                    "y": 68
+                                },
+                                {
+                                    "x": 220,
+                                    "y": 68
+                                },
+                                {
+                                    "x": 288,
+                                    "y": 83
+                                },
+                                {
+                                    "x": 332,
+                                    "y": 72
+                                },
+                                {
+                                    "x": 332,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 328,
+                                    "y": 49
+                                },
+                                {
+                                    "x": 332,
+                                    "y": 38
+                                },
+                                {
+                                    "x": 227,
+                                    "y": 38
+                                },
+                                {
+                                    "x": 233,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 222,
+                                    "y": 51
+                                },
+                                {
+                                    "x": 192,
+                                    "y": 46
+                                }
+                            ]
+                        },
+                        "score": 0.4891064465045929,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Athen Bergen"
+                        ],
+                        "scores": [
+                            0.8316734416405566
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node9"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 44,
+                            "xmax": 438,
+                            "ymax": 57
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 44
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 404,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 410,
+                                    "y": 54
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 432,
+                                    "y": 54
+                                },
+                                {
+                                    "x": 433,
+                                    "y": 57
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 57
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 44
+                                }
+                            ]
+                        },
+                        "score": 0.7162945866584778,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Dette og klokke."
+                        ],
+                        "scores": [
+                            0.9745953629377909
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node10"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 157,
+                            "ymin": 44,
+                            "xmax": 220,
+                            "ymax": 73
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 157,
+                                    "y": 49
+                                },
+                                {
+                                    "x": 157,
+                                    "y": 71
+                                },
+                                {
+                                    "x": 166,
+                                    "y": 71
+                                },
+                                {
+                                    "x": 170,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 174,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 192,
+                                    "y": 68
+                                },
+                                {
+                                    "x": 220,
+                                    "y": 68
+                                },
+                                {
+                                    "x": 220,
+                                    "y": 51
+                                },
+                                {
+                                    "x": 214,
+                                    "y": 51
+                                },
+                                {
+                                    "x": 204,
+                                    "y": 48
+                                },
+                                {
+                                    "x": 201,
+                                    "y": 46
+                                },
+                                {
+                                    "x": 201,
+                                    "y": 44
+                                },
+                                {
+                                    "x": 168,
+                                    "y": 44
+                                },
+                                {
+                                    "x": 167,
+                                    "y": 47
+                                }
+                            ]
+                        },
+                        "score": 0.42343810200691223,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "s\u00e6tten"
+                        ],
+                        "scores": [
+                            0.8212983231063335
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node11"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 52,
+                            "xmax": 438,
+                            "ymax": 73
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 67
+                                },
+                                {
+                                    "x": 399,
+                                    "y": 67
+                                },
+                                {
+                                    "x": 406,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 424,
+                                    "y": 72
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 58
+                                },
+                                {
+                                    "x": 428,
+                                    "y": 55
+                                },
+                                {
+                                    "x": 428,
+                                    "y": 52
+                                }
+                            ]
+                        },
+                        "score": 0.7222466468811035,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "21/02"
+                        ],
+                        "scores": [
+                            0.9968230904480653
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node12"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 58,
+                            "xmax": 55,
+                            "ymax": 79
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 58
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 79
+                                },
+                                {
+                                    "x": 49,
+                                    "y": 79
+                                },
+                                {
+                                    "x": 52,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 55,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 55,
+                                    "y": 62
+                                },
+                                {
+                                    "x": 53,
+                                    "y": 62
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 60
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 58
+                                }
+                            ]
+                        },
+                        "score": 0.7758989334106445,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Molders navn"
+                        ],
+                        "scores": [
+                            0.9604672962619615
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node13"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 152,
+                            "ymin": 69,
+                            "xmax": 247,
+                            "ymax": 95
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 152,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 152,
+                                    "y": 93
+                                },
+                                {
+                                    "x": 217,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 247,
+                                    "y": 94
+                                },
+                                {
+                                    "x": 247,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 229,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 225,
+                                    "y": 71
+                                },
+                                {
+                                    "x": 225,
+                                    "y": 69
+                                },
+                                {
+                                    "x": 185,
+                                    "y": 69
+                                },
+                                {
+                                    "x": 183,
+                                    "y": 72
+                                },
+                                {
+                                    "x": 176,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 170,
+                                    "y": 73
+                                },
+                                {
+                                    "x": 168,
+                                    "y": 69
+                                },
+                                {
+                                    "x": 160,
+                                    "y": 69
+                                },
+                                {
+                                    "x": 158,
+                                    "y": 73
+                                }
+                            ]
+                        },
+                        "score": 0.7645779252052307,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "h\u00e6nhildsen"
+                        ],
+                        "scores": [
+                            0.9858570468455463
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node14"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 69,
+                            "xmax": 406,
+                            "ymax": 79
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 69
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 79
+                                },
+                                {
+                                    "x": 392,
+                                    "y": 79
+                                },
+                                {
+                                    "x": 392,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 394,
+                                    "y": 75
+                                },
+                                {
+                                    "x": 402,
+                                    "y": 75
+                                },
+                                {
+                                    "x": 404,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 406,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 406,
+                                    "y": 69
+                                }
+                            ]
+                        },
+                        "score": 0.4600522220134735,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "F\u00f8de"
+                        ],
+                        "scores": [
+                            0.8723954804945845
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node15"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 74,
+                            "xmax": 438,
+                            "ymax": 98
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 408,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 419,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 434,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 434,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 393,
+                                    "y": 74
+                                },
+                                {
+                                    "x": 393,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 390,
+                                    "y": 77
+                                }
+                            ]
+                        },
+                        "score": 0.7279627919197083,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "\u00f850"
+                        ],
+                        "scores": [
+                            0.7054528103787826
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node16"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 82,
+                            "xmax": 36,
+                            "ymax": 103
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 82
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 103
+                                },
+                                {
+                                    "x": 32,
+                                    "y": 103
+                                },
+                                {
+                                    "x": 33,
+                                    "y": 103
+                                },
+                                {
+                                    "x": 36,
+                                    "y": 103
+                                },
+                                {
+                                    "x": 36,
+                                    "y": 82
+                                }
+                            ]
+                        },
+                        "score": 0.7169327735900879,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Adresse"
+                        ],
+                        "scores": [
+                            0.986539306700238
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node17"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 90,
+                            "xmax": 414,
+                            "ymax": 100
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 100
+                                },
+                                {
+                                    "x": 409,
+                                    "y": 100
+                                },
+                                {
+                                    "x": 412,
+                                    "y": 99
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 99
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 90
+                                }
+                            ]
+                        },
+                        "score": 0.6693045496940613,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Takken"
+                        ],
+                        "scores": [
+                            0.9818807112424819
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node18"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 58,
+                            "ymin": 90,
+                            "xmax": 258,
+                            "ymax": 128
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 58,
+                                    "y": 96
+                                },
+                                {
+                                    "x": 58,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 129,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 155,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 174,
+                                    "y": 119
+                                },
+                                {
+                                    "x": 199,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 218,
+                                    "y": 128
+                                },
+                                {
+                                    "x": 258,
+                                    "y": 123
+                                },
+                                {
+                                    "x": 258,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 248,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 242,
+                                    "y": 97
+                                },
+                                {
+                                    "x": 218,
+                                    "y": 101
+                                },
+                                {
+                                    "x": 169,
+                                    "y": 99
+                                },
+                                {
+                                    "x": 150,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 148,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 100,
+                                    "y": 105
+                                },
+                                {
+                                    "x": 72,
+                                    "y": 95
+                                }
+                            ]
+                        },
+                        "score": 0.5519506335258484,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Navn Navnesens gate"
+                        ],
+                        "scores": [
+                            0.9976230029617403
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node19"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 267,
+                            "ymin": 90,
+                            "xmax": 382,
+                            "ymax": 117
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 267,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 267,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 382,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 382,
+                                    "y": 101
+                                },
+                                {
+                                    "x": 353,
+                                    "y": 97
+                                },
+                                {
+                                    "x": 347,
+                                    "y": 94
+                                },
+                                {
+                                    "x": 345,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 323,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 322,
+                                    "y": 93
+                                },
+                                {
+                                    "x": 315,
+                                    "y": 95
+                                }
+                            ]
+                        },
+                        "score": 0.43598103523254395,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "2815 Drammer"
+                        ],
+                        "scores": [
+                            0.9853965752865573
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node20"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 48,
+                            "ymin": 90,
+                            "xmax": 382,
+                            "ymax": 128
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 48,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 48,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 63,
+                                    "y": 116
+                                },
+                                {
+                                    "x": 128,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 198,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 224,
+                                    "y": 128
+                                },
+                                {
+                                    "x": 298,
+                                    "y": 117
+                                },
+                                {
+                                    "x": 382,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 382,
+                                    "y": 100
+                                },
+                                {
+                                    "x": 353,
+                                    "y": 97
+                                },
+                                {
+                                    "x": 345,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 270,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 248,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 241,
+                                    "y": 97
+                                },
+                                {
+                                    "x": 214,
+                                    "y": 101
+                                },
+                                {
+                                    "x": 168,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 150,
+                                    "y": 90
+                                },
+                                {
+                                    "x": 100,
+                                    "y": 105
+                                },
+                                {
+                                    "x": 74,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 52,
+                                    "y": 96
+                                }
+                            ]
+                        },
+                        "score": 0.32554346323013306,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Navn Navnesens gak, 2815 Drammer"
+                        ],
+                        "scores": [
+                            0.9992812243673173
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node21"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 96,
+                            "xmax": 438,
+                            "ymax": 114
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 438,
+                                    "y": 96
+                                },
+                                {
+                                    "x": 415,
+                                    "y": 96
+                                },
+                                {
+                                    "x": 415,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 99
+                                },
+                                {
+                                    "x": 410,
+                                    "y": 101
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 101
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 114
+                                },
+                                {
+                                    "x": 399,
+                                    "y": 113
+                                },
+                                {
+                                    "x": 417,
+                                    "y": 114
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 113
+                                }
+                            ]
+                        },
+                        "score": 0.8022695779800415,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "95I1845"
+                        ],
+                        "scores": [
+                            0.9030202008501413
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node22"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 104,
+                            "xmax": 50,
+                            "ymax": 127
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 50,
+                                    "y": 104
+                                },
+                                {
+                                    "x": 39,
+                                    "y": 104
+                                },
+                                {
+                                    "x": 39,
+                                    "y": 106
+                                },
+                                {
+                                    "x": 37,
+                                    "y": 108
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 107
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 125
+                                },
+                                {
+                                    "x": 15,
+                                    "y": 127
+                                },
+                                {
+                                    "x": 50,
+                                    "y": 127
+                                }
+                            ]
+                        },
+                        "score": 0.6810478568077087,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Arbeidsted"
+                        ],
+                        "scores": [
+                            0.9641199541750985
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node23"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 385,
+                            "ymin": 115,
+                            "xmax": 414,
+                            "ymax": 125
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 385,
+                                    "y": 115
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 125
+                                },
+                                {
+                                    "x": 411,
+                                    "y": 125
+                                },
+                                {
+                                    "x": 412,
+                                    "y": 125
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 125
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 115
+                                }
+                            ]
+                        },
+                        "score": 0.6362279653549194,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Takkan"
+                        ],
+                        "scores": [
+                            0.9653410150596545
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node24"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 56,
+                            "ymin": 115,
+                            "xmax": 203,
+                            "ymax": 142
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 56,
+                                    "y": 115
+                                },
+                                {
+                                    "x": 56,
+                                    "y": 138
+                                },
+                                {
+                                    "x": 191,
+                                    "y": 138
+                                },
+                                {
+                                    "x": 194,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 119
+                                },
+                                {
+                                    "x": 198,
+                                    "y": 115
+                                },
+                                {
+                                    "x": 192,
+                                    "y": 120
+                                },
+                                {
+                                    "x": 179,
+                                    "y": 123
+                                },
+                                {
+                                    "x": 154,
+                                    "y": 115
+                                },
+                                {
+                                    "x": 153,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 140,
+                                    "y": 123
+                                },
+                                {
+                                    "x": 120,
+                                    "y": 123
+                                },
+                                {
+                                    "x": 96,
+                                    "y": 119
+                                },
+                                {
+                                    "x": 85,
+                                    "y": 120
+                                },
+                                {
+                                    "x": 79,
+                                    "y": 115
+                                }
+                            ]
+                        },
+                        "score": 0.5998507738113403,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Stadent i Gj\u00f8vik"
+                        ],
+                        "scores": [
+                            0.9913957423163205
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node25"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 144,
+                            "ymin": 118,
+                            "xmax": 203,
+                            "ymax": 142
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 144,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 144,
+                                    "y": 138
+                                },
+                                {
+                                    "x": 156,
+                                    "y": 139
+                                },
+                                {
+                                    "x": 157,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 161,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 161,
+                                    "y": 140
+                                },
+                                {
+                                    "x": 163,
+                                    "y": 138
+                                },
+                                {
+                                    "x": 193,
+                                    "y": 139
+                                },
+                                {
+                                    "x": 194,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 200,
+                                    "y": 142
+                                },
+                                {
+                                    "x": 200,
+                                    "y": 139
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 139
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 191,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 190,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 181,
+                                    "y": 123
+                                },
+                                {
+                                    "x": 168,
+                                    "y": 121
+                                },
+                                {
+                                    "x": 168,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 147,
+                                    "y": 118
+                                },
+                                {
+                                    "x": 146,
+                                    "y": 121
+                                }
+                            ]
+                        },
+                        "score": 0.5772584080696106,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Gj\u00f8vik"
+                        ],
+                        "scores": [
+                            0.9796775214142807
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node26"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 4,
+                            "ymin": 137,
+                            "xmax": 195,
+                            "ymax": 151
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 4,
+                                    "y": 137
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 151
+                                },
+                                {
+                                    "x": 195,
+                                    "y": 151
+                                },
+                                {
+                                    "x": 195,
+                                    "y": 137
+                                }
+                            ]
+                        },
+                        "score": 0.7081090807914734,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Molding livs (v\u00e6vervejoner tidspunkter beskrivelser) men"
+                        ],
+                        "scores": [
+                            0.9905669360363167
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node27"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 20,
+                            "ymin": 148,
+                            "xmax": 438,
+                            "ymax": 191
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 20,
+                                    "y": 154
+                                },
+                                {
+                                    "x": 20,
+                                    "y": 184
+                                },
+                                {
+                                    "x": 220,
+                                    "y": 180
+                                },
+                                {
+                                    "x": 244,
+                                    "y": 190
+                                },
+                                {
+                                    "x": 287,
+                                    "y": 178
+                                },
+                                {
+                                    "x": 358,
+                                    "y": 182
+                                },
+                                {
+                                    "x": 385,
+                                    "y": 191
+                                },
+                                {
+                                    "x": 417,
+                                    "y": 182
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 184
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 154
+                                },
+                                {
+                                    "x": 176,
+                                    "y": 158
+                                },
+                                {
+                                    "x": 135,
+                                    "y": 148
+                                },
+                                {
+                                    "x": 101,
+                                    "y": 164
+                                }
+                            ]
+                        },
+                        "score": 0.8484549522399902,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "S\u00e5 noe veldig rart i dag. En bil han hj\u00e6rende"
+                        ],
+                        "scores": [
+                            0.9953621312327178
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node28"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 20,
+                            "ymin": 178,
+                            "xmax": 438,
+                            "ymax": 220
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 438,
+                                    "y": 187
+                                },
+                                {
+                                    "x": 382,
+                                    "y": 193
+                                },
+                                {
+                                    "x": 279,
+                                    "y": 178
+                                },
+                                {
+                                    "x": 240,
+                                    "y": 191
+                                },
+                                {
+                                    "x": 221,
+                                    "y": 182
+                                },
+                                {
+                                    "x": 152,
+                                    "y": 187
+                                },
+                                {
+                                    "x": 133,
+                                    "y": 181
+                                },
+                                {
+                                    "x": 84,
+                                    "y": 188
+                                },
+                                {
+                                    "x": 57,
+                                    "y": 182
+                                },
+                                {
+                                    "x": 20,
+                                    "y": 187
+                                },
+                                {
+                                    "x": 20,
+                                    "y": 206
+                                },
+                                {
+                                    "x": 167,
+                                    "y": 206
+                                },
+                                {
+                                    "x": 194,
+                                    "y": 215
+                                },
+                                {
+                                    "x": 270,
+                                    "y": 208
+                                },
+                                {
+                                    "x": 328,
+                                    "y": 220
+                                },
+                                {
+                                    "x": 374,
+                                    "y": 210
+                                },
+                                {
+                                    "x": 414,
+                                    "y": 218
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 215
+                                }
+                            ]
+                        },
+                        "score": 0.8688535094261169,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "og bare atellekende avg\u00e5rde. Den kj\u00f8nte s\u00e5 for"
+                        ],
+                        "scores": [
+                            0.9859155608038084
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node29"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 15,
+                            "ymin": 207,
+                            "xmax": 438,
+                            "ymax": 254
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 15,
+                                    "y": 208
+                                },
+                                {
+                                    "x": 15,
+                                    "y": 240
+                                },
+                                {
+                                    "x": 68,
+                                    "y": 252
+                                },
+                                {
+                                    "x": 124,
+                                    "y": 238
+                                },
+                                {
+                                    "x": 277,
+                                    "y": 245
+                                },
+                                {
+                                    "x": 324,
+                                    "y": 254
+                                },
+                                {
+                                    "x": 364,
+                                    "y": 247
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 249
+                                },
+                                {
+                                    "x": 438,
+                                    "y": 220
+                                },
+                                {
+                                    "x": 375,
+                                    "y": 214
+                                },
+                                {
+                                    "x": 328,
+                                    "y": 221
+                                },
+                                {
+                                    "x": 238,
+                                    "y": 210
+                                },
+                                {
+                                    "x": 203,
+                                    "y": 221
+                                },
+                                {
+                                    "x": 170,
+                                    "y": 212
+                                },
+                                {
+                                    "x": 100,
+                                    "y": 215
+                                },
+                                {
+                                    "x": 75,
+                                    "y": 207
+                                }
+                            ]
+                        },
+                        "score": 0.8578456044197083,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            256,
+                            439
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "den fl\u00f8g av veien. Dette m\u00e5 politiet ta to"
+                        ],
+                        "scores": [
+                            0.9994605470548712
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node0_node30"
+                }
+            ]
+        },
+        {
+            "segment": {
+                "bbox": {
+                    "xmin": 51,
+                    "ymin": 695,
+                    "xmax": 183,
+                    "ymax": 748
+                },
+                "polygon": {
+                    "points": [
+                        {
+                            "x": 51,
+                            "y": 695
+                        },
+                        {
+                            "x": 51,
+                            "y": 748
+                        },
+                        {
+                            "x": 183,
+                            "y": 748
+                        },
+                        {
+                            "x": 183,
+                            "y": 695
+                        }
+                    ]
+                },
+                "score": 0.8015968203544617,
+                "class_label": "textregion",
+                "orig_shape": [
+                    792,
+                    612
+                ],
+                "data": {}
+            },
+            "label": "Tipsskjema_Kriminalpolitisentralen-2_node1",
+            "contains": [
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 2,
+                            "ymin": 0,
+                            "xmax": 128,
+                            "ymax": 21
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 2,
+                                    "y": 0
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 18
+                                },
+                                {
+                                    "x": 17,
+                                    "y": 19
+                                },
+                                {
+                                    "x": 28,
+                                    "y": 15
+                                },
+                                {
+                                    "x": 44,
+                                    "y": 14
+                                },
+                                {
+                                    "x": 75,
+                                    "y": 21
+                                },
+                                {
+                                    "x": 122,
+                                    "y": 20
+                                },
+                                {
+                                    "x": 128,
+                                    "y": 18
+                                },
+                                {
+                                    "x": 128,
+                                    "y": 0
+                                }
+                            ]
+                        },
+                        "score": 0.8012561798095703,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            132
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Rappoptekriverens underskrift"
+                        ],
+                        "scores": [
+                            0.9810649746017716
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node1_node0"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 7,
+                            "ymin": 14,
+                            "xmax": 71,
+                            "ymax": 52
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 71,
+                                    "y": 23
+                                },
+                                {
+                                    "x": 58,
+                                    "y": 19
+                                },
+                                {
+                                    "x": 51,
+                                    "y": 14
+                                },
+                                {
+                                    "x": 42,
+                                    "y": 14
+                                },
+                                {
+                                    "x": 36,
+                                    "y": 17
+                                },
+                                {
+                                    "x": 28,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 19,
+                                    "y": 20
+                                },
+                                {
+                                    "x": 7,
+                                    "y": 21
+                                },
+                                {
+                                    "x": 7,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 70,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 69,
+                                    "y": 49
+                                },
+                                {
+                                    "x": 71,
+                                    "y": 47
+                                }
+                            ]
+                        },
+                        "score": 0.6003606915473938,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            132
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "tr\u00f8ken"
+                        ],
+                        "scores": [
+                            0.9136332820488061
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node1_node1"
+                }
+            ]
+        },
+        {
+            "segment": {
+                "bbox": {
+                    "xmin": 199,
+                    "ymin": 695,
+                    "xmax": 361,
+                    "ymax": 748
+                },
+                "polygon": {
+                    "points": [
+                        {
+                            "x": 199,
+                            "y": 695
+                        },
+                        {
+                            "x": 199,
+                            "y": 748
+                        },
+                        {
+                            "x": 361,
+                            "y": 748
+                        },
+                        {
+                            "x": 361,
+                            "y": 695
+                        }
+                    ]
+                },
+                "score": 0.7678593993186951,
+                "class_label": "textregion",
+                "orig_shape": [
+                    792,
+                    612
+                ],
+                "data": {}
+            },
+            "label": "Tipsskjema_Kriminalpolitisentralen-2_node2",
+            "contains": [
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 2,
+                            "ymin": 0,
+                            "xmax": 160,
+                            "ymax": 19
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 2,
+                                    "y": 0
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 35,
+                                    "y": 19
+                                },
+                                {
+                                    "x": 160,
+                                    "y": 19
+                                },
+                                {
+                                    "x": 160,
+                                    "y": 0
+                                }
+                            ]
+                        },
+                        "score": 0.7835283875465393,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            162
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "FORSTTERFORSENINGHedER"
+                        ],
+                        "scores": [
+                            0.9120923384657776
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node2_node0"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 2,
+                            "ymin": 16,
+                            "xmax": 24,
+                            "ymax": 29
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 2,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 11,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 13,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 24,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 24,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 18,
+                                    "y": 16
+                                },
+                                {
+                                    "x": 18,
+                                    "y": 17
+                                },
+                                {
+                                    "x": 17,
+                                    "y": 18
+                                },
+                                {
+                                    "x": 11,
+                                    "y": 17
+                                },
+                                {
+                                    "x": 11,
+                                    "y": 16
+                                }
+                            ]
+                        },
+                        "score": 0.8110570907592773,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            162
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Lest"
+                        ],
+                        "scores": [
+                            0.8788753118341053
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node2_node1"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 2,
+                            "ymin": 23,
+                            "xmax": 108,
+                            "ymax": 43
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 108,
+                                    "y": 23
+                                },
+                                {
+                                    "x": 34,
+                                    "y": 23
+                                },
+                                {
+                                    "x": 27,
+                                    "y": 25
+                                },
+                                {
+                                    "x": 23,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 29
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 40
+                                },
+                                {
+                                    "x": 38,
+                                    "y": 41
+                                },
+                                {
+                                    "x": 53,
+                                    "y": 43
+                                },
+                                {
+                                    "x": 108,
+                                    "y": 43
+                                }
+                            ]
+                        },
+                        "score": 0.7534127831459045,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            162
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Fart p\u00e5 arbeidsoppgaven"
+                        ],
+                        "scores": [
+                            0.9999785415959075
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node2_node2"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 2,
+                            "ymin": 41,
+                            "xmax": 40,
+                            "ymax": 53
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 2,
+                                    "y": 41
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 40,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 40,
+                                    "y": 41
+                                }
+                            ]
+                        },
+                        "score": 0.8425126671791077,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            53,
+                            162
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Datalon"
+                        ],
+                        "scores": [
+                            0.7933393409558365
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node2_node3"
+                }
+            ]
+        },
+        {
+            "segment": {
+                "bbox": {
+                    "xmin": 437,
+                    "ymin": 47,
+                    "xmax": 539,
+                    "ymax": 159
+                },
+                "polygon": {
+                    "points": [
+                        {
+                            "x": 437,
+                            "y": 47
+                        },
+                        {
+                            "x": 437,
+                            "y": 159
+                        },
+                        {
+                            "x": 478,
+                            "y": 159
+                        },
+                        {
+                            "x": 479,
+                            "y": 154
+                        },
+                        {
+                            "x": 487,
+                            "y": 154
+                        },
+                        {
+                            "x": 489,
+                            "y": 159
+                        },
+                        {
+                            "x": 539,
+                            "y": 159
+                        },
+                        {
+                            "x": 539,
+                            "y": 47
+                        }
+                    ]
+                },
+                "score": 0.731705904006958,
+                "class_label": "textregion",
+                "orig_shape": [
+                    792,
+                    612
+                ],
+                "data": {}
+            },
+            "label": "Tipsskjema_Kriminalpolitisentralen-2_node3",
+            "contains": [
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 0,
+                            "xmax": 36,
+                            "ymax": 11
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 0,
+                                    "y": 0
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 9
+                                },
+                                {
+                                    "x": 13,
+                                    "y": 11
+                                },
+                                {
+                                    "x": 36,
+                                    "y": 10
+                                },
+                                {
+                                    "x": 36,
+                                    "y": 0
+                                }
+                            ]
+                        },
+                        "score": 0.7108020186424255,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Kr\u00e6k pr."
+                        ],
+                        "scores": [
+                            0.9604375550316817
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node0"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 5,
+                            "xmax": 63,
+                            "ymax": 26
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 63,
+                                    "y": 7
+                                },
+                                {
+                                    "x": 60,
+                                    "y": 5
+                                },
+                                {
+                                    "x": 45,
+                                    "y": 5
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 10
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 9
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 35,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 63,
+                                    "y": 26
+                                }
+                            ]
+                        },
+                        "score": 0.7518132925033569,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "96 40 1975"
+                        ],
+                        "scores": [
+                            0.7806512191644323
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node1"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 24,
+                            "xmax": 67,
+                            "ymax": 37
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 67,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 67,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 24
+                                },
+                                {
+                                    "x": 3,
+                                    "y": 26
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 27
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 34
+                                },
+                                {
+                                    "x": 35,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 54,
+                                    "y": 35
+                                },
+                                {
+                                    "x": 63,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 65,
+                                    "y": 34
+                                },
+                                {
+                                    "x": 65,
+                                    "y": 37
+                                },
+                                {
+                                    "x": 66,
+                                    "y": 37
+                                },
+                                {
+                                    "x": 65,
+                                    "y": 34
+                                }
+                            ]
+                        },
+                        "score": 0.6705139875411987,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Deres og klokkvalere"
+                        ],
+                        "scores": [
+                            0.9646842207014718
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node2"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 30,
+                            "xmax": 90,
+                            "ymax": 58
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 0,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 58
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 53
+                                },
+                                {
+                                    "x": 53,
+                                    "y": 55
+                                },
+                                {
+                                    "x": 63,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 90,
+                                    "y": 51
+                                },
+                                {
+                                    "x": 90,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 68,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 52,
+                                    "y": 36
+                                },
+                                {
+                                    "x": 35,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 11,
+                                    "y": 33
+                                },
+                                {
+                                    "x": 13,
+                                    "y": 31
+                                },
+                                {
+                                    "x": 26,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 1,
+                                    "y": 30
+                                },
+                                {
+                                    "x": 5,
+                                    "y": 33
+                                }
+                            ]
+                        },
+                        "score": 0.7978569865226746,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "21/02/25"
+                        ],
+                        "scores": [
+                            0.9987000391299421
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node3"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 52,
+                            "xmax": 87,
+                            "ymax": 83
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 0,
+                                    "y": 83
+                                },
+                                {
+                                    "x": 12,
+                                    "y": 83
+                                },
+                                {
+                                    "x": 2,
+                                    "y": 82
+                                },
+                                {
+                                    "x": 19,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 18,
+                                    "y": 54
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 81
+                                },
+                                {
+                                    "x": 45,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 78,
+                                    "y": 82
+                                },
+                                {
+                                    "x": 87,
+                                    "y": 79
+                                },
+                                {
+                                    "x": 87,
+                                    "y": 56
+                                },
+                                {
+                                    "x": 29,
+                                    "y": 54
+                                },
+                                {
+                                    "x": 4,
+                                    "y": 61
+                                },
+                                {
+                                    "x": 1,
+                                    "y": 58
+                                },
+                                {
+                                    "x": 9,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 15,
+                                    "y": 54
+                                },
+                                {
+                                    "x": 11,
+                                    "y": 52
+                                },
+                                {
+                                    "x": 19,
+                                    "y": 52
+                                }
+                            ]
+                        },
+                        "score": 0.816856324672699,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Os03"
+                        ],
+                        "scores": [
+                            0.970147956194112
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node4"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 76,
+                            "xmax": 51,
+                            "ymax": 102
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 0,
+                                    "y": 102
+                                },
+                                {
+                                    "x": 32,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 10,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 12,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 9,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 31,
+                                    "y": 98
+                                },
+                                {
+                                    "x": 18,
+                                    "y": 93
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 94
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 81
+                                },
+                                {
+                                    "x": 22,
+                                    "y": 80
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 76
+                                },
+                                {
+                                    "x": 51,
+                                    "y": 77
+                                },
+                                {
+                                    "x": 51,
+                                    "y": 100
+                                },
+                                {
+                                    "x": 32,
+                                    "y": 98
+                                }
+                            ]
+                        },
+                        "score": 0.6868455410003662,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "9518 475"
+                        ],
+                        "scores": [
+                            0.8264578668933563
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node5"
+                },
+                {
+                    "segment": {
+                        "bbox": {
+                            "xmin": 0,
+                            "ymin": 92,
+                            "xmax": 30,
+                            "ymax": 111
+                        },
+                        "polygon": {
+                            "points": [
+                                {
+                                    "x": 0,
+                                    "y": 92
+                                },
+                                {
+                                    "x": 0,
+                                    "y": 111
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 111
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 110
+                                },
+                                {
+                                    "x": 27,
+                                    "y": 110
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 107
+                                },
+                                {
+                                    "x": 30,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 29,
+                                    "y": 95
+                                },
+                                {
+                                    "x": 28,
+                                    "y": 94
+                                },
+                                {
+                                    "x": 23,
+                                    "y": 94
+                                },
+                                {
+                                    "x": 19,
+                                    "y": 93
+                                },
+                                {
+                                    "x": 19,
+                                    "y": 92
+                                }
+                            ]
+                        },
+                        "score": 0.7866354584693909,
+                        "class_label": "textline",
+                        "orig_shape": [
+                            112,
+                            102
+                        ],
+                        "data": {}
+                    },
+                    "text_result": {
+                        "texts": [
+                            "Taktor"
+                        ],
+                        "scores": [
+                            0.9522533256694171
+                        ]
+                    },
+                    "label": "Tipsskjema_Kriminalpolitisentralen-2_node3_node6"
+                }
+            ]
+        }
+    ]
+}
