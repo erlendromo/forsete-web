@@ -9,15 +9,20 @@
     "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "baseUrl": "./",
-    "rootDir": "src/ts",      
-    "outDir": "public/js",     
-    "paths": {
-      "*": ["node_modules/*", "src/types/*"]
-    }
+    "paths": {                                   
+      "@config/*": ["../src/config/*"],
+      "@interfaces/*": ["../src/interfaces/*"],
+      "@mocks/*": ["../src/mocks/*"],
+      "@util/*": ["../src/util/*"],
+      "@index/*": ["../src/index/*"],
+    },
+    "rootDir": "src/",      // Source root is src
+    "outDir": "public/js"     // Output goes to public/js
   },
   "include": [
     "src/**/*",
-    "**/*.json"  ],
-  "exclude": ["node_modules", "public/js"]
+    "mocks/**/*",
+    "**/*.json"
+, "src/config"  ],
+  "exclude": ["node_modules", "public/js", "src/mocks/**/*.json"],
 }
