@@ -33,7 +33,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-app.set(viewDir, path.join(__dirname, "..", viewDir));
+app.set(viewDir, path.join(__dirname, "..", "..", viewDir));
 
 // Serves the public folder and views
 app.use(express.static(publicDir));
