@@ -1,19 +1,19 @@
-import { config } from './config/config.js';
+import { config } from '../config/config.js';
 import express from "express";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from 'url';
 // Utilities
-import { pdfToImage } from "./util/pdfUtils.js";
-import { sendATRRequest } from "./util/post.js";
-import { saveJsonToFile, extractTextMapping } from "./util/jsonFormatter.js";
-import { handleApiOrMock, handleMockEndpoints } from "./util/apiService.js"
+import { pdfToImage } from "../util/pdfUtils.js";
+import { sendATRRequest } from "../util/post.js";
+import { saveJsonToFile, extractTextMapping } from "../util/jsonFormatter.js";
+import { handleApiOrMock, handleMockEndpoints } from "./apiService.js"
 // Index
-import { getModelNames } from "./index/drawerHandler.js";
+import { getModelNames } from "../controllers/menuHandler.js";
 // Config
-import { ApiEndpoints } from "./config/endpoint.js";
+import { ApiEndpoints } from "../config/endpoint.js";
 import { url } from "inspector";
-import { Models } from "./interfaces/modelInterface.js";
+import { Models } from "../interfaces/modelInterface.js";
 
 
 const app = express();

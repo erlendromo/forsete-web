@@ -1,5 +1,3 @@
-import { pdfToImage } from "./pdfUtils";
-
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const elements = {
