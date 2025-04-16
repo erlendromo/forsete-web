@@ -17,3 +17,6 @@ public/js
 
 # Compiled CSS
 public/styles
+
+# vscode
+.vscode
