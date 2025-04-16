@@ -1,3 +1,4 @@
+// src/controllers/index/filehandler
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const elements = {
