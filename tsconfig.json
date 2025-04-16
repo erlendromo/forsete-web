@@ -16,7 +16,7 @@
       "@util/*": ["../src/util/*"],
       "@index/*": ["../src/index/*"],
     },
-    "rootDir": "src/",      // Source root is src/js
+    "rootDir": "src/",      // Source root is src
     "outDir": "public/js"     // Output goes to public/js
   },
   "include": [
