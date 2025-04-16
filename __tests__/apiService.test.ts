@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { handleMockEndpoints } from '../src/util/apiService'; 
-import { fetchEndpoint } from '../src/util/apiService'; 
-import { handleApiOrMock } from '../src/util/apiService'; 
+import { handleMockEndpoints } from '../src/model/apiService'; 
+import { fetchEndpoint } from '../src/model/apiService'; 
+import { handleApiOrMock } from '../src/model/apiService'; 
 import { ApiEndpoints } from '../src/config/endpoint'; 
 import { ImageData } from '../src/interfaces/htrInterface';
 import { Models } from '../src/interfaces/modelInterface';

@@ -1,4 +1,4 @@
-import { getModelNames } from '../src/index/drawerHandler';
+import { getModelNames } from '../src/controllers/menuHandler';
 import { Models } from '../src/interfaces/modelInterface';
 import { workDirPath } from '../src/mocks/mockutil';
 const axios = require('axios');
