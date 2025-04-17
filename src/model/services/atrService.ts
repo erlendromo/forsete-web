@@ -1,34 +1,55 @@
 import express from 'express';
-import multer  from 'multer';
-import { pdfToImage } from "../../util/pdfUtils";
+import path from "path";
+import { sendATRRequest } from "../../util/post.js";
+import { ApiEndpoints } from "../../config/endpoint.js";
+import { saveJsonToFile, extractTextMapping } from "../../util/jsonFormatter.js";
+
+
 
 const router = express.Router();
-const uploadEndpoint = "/upload";
-const upload = multer({ dest: uploadEndpoint + '/' });
+const uploadDir = "uploads";
+const transcribeEndpoint = "/transcribe";
 
-// Create a POST endpoint that matches the fetch("/upload")
-router.post(uploadEndpoint, upload.single("document"), async (req, res) => {
+// Models
+const lineModel = 'yolov9-lines-within-regions-1';
+const textModel = 'TrOCR-norhand-v3';
+
+router.post(transcribeEndpoint, express.json(), async (req, res) => {
+
+  const { filename } = req.body;
+  console.log("Sent to atr:", filename);
+
   try {
-    console.log("Submitted file info:", req.file);
-    if (!req.file) {
-      res.status(400).json({ error: "No file uploaded" });
-      return; // exit after sending response
+    const { filename } = req.body;
+    if (!filename) {
+      res.status(400).json({ error: 'No filename provided' });
+      return;
     }
-    if (req.file.originalname.toLowerCase().endsWith(".pdf")) {
-    // PDF settings
-      const pages = 1;
-      const dpi = 300;
-      // Convert PDF to image (pdfToImage expects the path on disk)
-      await pdfToImage(pages, req.file.filename, req.file.path, dpi);
-    }
-
-    res.status(200).json({
-      message: "File uploaded successfully!",
-      // hashed name in ./uploads
-      filename: req.file.filename
+    
+    const filePath = path.join(__dirname, uploadDir, filename);
+    const models = {
+      lineSegmentationModel: lineModel,
+      textRecognitionModel: textModel
+    };
+    
+    const result = await sendATRRequest(
+      ApiEndpoints.ATR_ENDPOINT,
+      filePath,
+      models
+    );
+    
+    res.json({
+      filename,
+      atrResult: result.original
     });
-  } catch (err) {
-    console.error('Error in /upload route:', err);
-    res.status(500).json({ error: 'Server Error', details: String(err) });
+    console.log("ATR Response Body:", JSON.stringify(result, null, 2));
+    // Extracting the important data
+    saveJsonToFile(extractTextMapping(result), filePath + ".json")
+
+  } catch (error) {
+    console.error("Error in"+ transcribeEndpoint +":", error);
+    res.status(500).json({ error: "Something went wrong during transcription." });
   }
 });
+
+export default router;
