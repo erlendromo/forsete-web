@@ -7,9 +7,11 @@ import { fileURLToPath } from 'url';
 import { pdfToImage } from "../util/pdfUtils.js";
 import { sendATRRequest } from "../util/post.js";
 import { saveJsonToFile, extractTextMapping } from "../util/jsonFormatter.js";
-import { handleApiOrMock, handleMockEndpoints } from "./apiService.js"
+import { handleApiOrMock, handleMockEndpoints } from "../model/services/apiService.js"
 // Index
 import { getModelNames } from "../controllers/menuHandler.js";
+// Services
+import uploadRouter from "./services/uploadService.js";
 // Config
 import { ApiEndpoints } from "../config/endpoint.js";
 import { url } from "inspector";
@@ -70,35 +72,7 @@ response.send(status);
 });
 
 // Create a POST endpoint that matches the fetch("/upload")
-app.post(uploadEndpoint, upload.single("document"), async (req, res) => {
-  try {
-    console.log("Submitted file info:", req.file);
-    if (!req.file) {
-      res.status(400).json({ error: "No file uploaded" });
-      return; // exit after sending response
-    }
-
-    // If you want to check the extension, use 'originalname'
-    if (req.file.originalname.toLowerCase().endsWith(".pdf")) {
-      const pages = 1;
-      const dpi = 300;
-
-      // Convert PDF to image (pdfToImage expects the path on disk)
-      //   The second arg can be a base name for the output file 
-      //   (like req.file.filename).
-      //   The third arg is the server path to the PDF.
-      await pdfToImage(pages, req.file.filename, req.file.path, dpi);
-    }
-
-    res.status(200).json({
-      message: "File uploaded successfully!",
-      filename: req.file.filename // hashed name in ./uploads
-    });
-  } catch (err) {
-    console.error('Error in /upload route:', err);
-    res.status(500).json({ error: 'Server Error', details: String(err) });
-  }
-});
+app.use(uploadRouter)
 
 // Transcribe endpoint.
 // Sends to the atr-endpoint
