@@ -14,12 +14,13 @@ const options = {
  * Convert a single page of a PDF to an image.
  *
  * @param pdfFilePath - Absolute or relative path to the PDF file.
- * @param pageNumber  - 1-based index of the page to convert.
- * @param opts        - Optional overrides for conversion settings.
+ * @param pages  - 1-based index of the page to convert.
  * @returns A promise resolving to the conversion result, including the output file path.
  * @throws  Will throw if conversion fails.
  */
-async function pdfToImage(pages: number, pdfFilePath:string) {
+async function pdfToImage(
+    pdfFilePath:string,
+    pages: number) {
     const absolutePdfPath = path.resolve(options.saveDirectory, pdfFilePath)
     const convert = fromPath(absolutePdfPath, options);
     const pageToConvertAsImage = pages;
