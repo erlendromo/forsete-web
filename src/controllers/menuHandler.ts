@@ -2,7 +2,7 @@
 import { Models } from '@interfaces/modelInterface';
 const errorNoModelMsg = 'No models found.';
 
-interface Model {
+interface ModelToUI {
   type: string;
   name: string;
   readableType?: string;
@@ -37,15 +37,15 @@ function checkKey(item: Record<string, any>, key: string): boolean {
  * 'readableType' property obtained from getReadableText.
  *
  * @param {Models} data - The JSON response data containing model arrays.
- * @returns {Promise<Model[]>} A promise that resolves to an array of transformed Model objects.
+ * @returns {Promise<ModelToUI[]>} A promise that resolves to an array of transformed Model objects.
  */
-export async function getModelNames(data:Models): Promise<Model[]> {
+export async function getModelNames(data:Models): Promise<ModelToUI[]> {
   const dataArr = [data];
   const models = dataArr.flatMap((item: Record<string, any>) => {
     return Object.keys(item).flatMap(key => {
       // Checks if it is an item and an array
       if (checkKey(item, key)) {
-        return item[key].map((model: Model) => ({
+        return item[key].map((model: ModelToUI) => ({
           name: model.name,
           type: key,
           readableType: getReadableText(key)
