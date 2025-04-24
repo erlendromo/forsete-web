@@ -9,7 +9,10 @@ async function main() {
     const fileParam = urlParams.get('file');
     try {
       const res = await fetch(`uploads/${encodeURIComponent(fileParam || "")}.json`);
+      //const text = await res.text(); 
+ // console.debug('RAW TEXT :', text.slice(0, 200));
       const jsonData = await res.json();
+      console.debug("JSON: ", jsonData);
       return jsonData;
     } catch (error) {
       console.error("Error fetching JSON data:", error);

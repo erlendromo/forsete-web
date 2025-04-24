@@ -1,4 +1,4 @@
-import { LineSegment } from '../../types/line-segment';
+import { LineSegment } from '../../../interfaces/line-segment';
 
 
 declare global {
