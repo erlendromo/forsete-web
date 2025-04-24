@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("File transcribed successfully.");
         
         // Redirect to results page
-        window.location.href = `results.html?file=${encodeURIComponent(filename)}`;
+        window.location.href = `results?file=${encodeURIComponent(filename)}`;
       } catch (transcribeError: any) {
         // Handle transcription error but still allow seeing results if upload succeeded
         console.error("Transcription error:", transcribeError);

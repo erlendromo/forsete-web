@@ -49,6 +49,11 @@ app.get('/', async (req, res) => {
   }
 });
 
+app.get('/results', (req, res) => {
+  const fileName = req.query.file;
+res.render('results', {fileName});
+});
+
 // upload endpoint
 app.use(uploadRouter);
 
