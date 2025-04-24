@@ -3,9 +3,9 @@
  * DocumentManager class for managing ATR-processed text documents.
  */
 
-import { ensureDefined } from "../utils/error-handling.js";
-import { ATRResult, Polygon } from "../types/atr-result.js";
-import { LineSegment } from "../types/line-segment.js";
+import { ensureDefined } from "../../ts/utils/error-handling.js";
+import { ATRResult, Polygon } from "../../interfaces/atr-result.js";
+import { LineSegment } from "../../interfaces/line-segment.js";
 
 type editedAndOriginal ={original: string; edited: string}
 
@@ -18,13 +18,12 @@ export class DocumentManager {
   
     constructor(atrResultJson: unknown, imageFileName: string) {
       this.imageFileName = imageFileName;
-      const atrResult: ATRResult = atrResultJson as ATRResult;
-      this.originalATRResult = JSON.parse(JSON.stringify(atrResult)); 
+      this.originalATRResult = atrResultJson as ATRResult; 
       this.createdAt = new Date();
       
-      this.documentId = this.generateDocumentId(atrResult); //current solution, can be changed
+      this.documentId = this.generateDocumentId(this.originalATRResult); //current solution, can be changed
       
-      this.lineSegments = this.indexATRResult(atrResult);
+      this.lineSegments = this.indexATRResult(this.originalATRResult);
     }
   
     //random id generator
@@ -41,6 +40,10 @@ export class DocumentManager {
         let lineIndex = 0;
         
         atrResult.contains.forEach((textElement) => {
+          if (!textElement.text_result) {
+            console.warn("contains element without text_result – skipping", textElement);
+            return;
+          }
           // For each text in the text_result.texts array
           textElement.text_result.texts.forEach((text) => {
             
