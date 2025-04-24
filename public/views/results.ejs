@@ -19,25 +19,11 @@
 <script type='module' src="js/index/drawerHandler.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
-<body class="bg-gray-900 text-white">
-  <nav class="navbar fixed top-0 left-0 w-full bg-gray-800 py-4 px-8 shadow-md z-50">
-    <a href="index.html">
-      <h1 class="text-4xl font-bold">FORSETE</h1>
-    </a>
-    <div class="ham-menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </nav>
-
-  <!-- Off-screen menu (from your CSS) -->
-  <div class="off-screen-menu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
-
+<header>
+  <%- include('./partials/header'); %>
+</header>
+  <!-- drawer init and toggle -->
+   <%- include('./partials/drawer/drawer', { modelNames: modelNames }); %>
   <main class="min-h-screen">
     <!-- Layout structure -->
     <div class="content-container">

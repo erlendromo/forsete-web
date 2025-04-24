@@ -35,24 +35,44 @@ app.use(express.static(publicDir+"/"+ viewDir))
 app.get('/', async (req, res) => {
   //res.render('index'); // Express will look for views/index.ejs
   try {
-    const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
-
-    const response = await handleApiOrMock(modelEndPoint, config.useMock)
-    const names = await getModelNames(response as Models);
-    // Render EJS template and pass modelNames
-    res.render('index', {
-      modelNames:names
-      //modelNames:['ExampleModel1', 'ExampleModel2', 'ExampleModel3']
-     });
+    loadMenu().then((names) => {
+      console.log("Model names loaded successfully:", names);
+      // Render EJS template and pass modelNames
+      res.render('index', {
+        //modelNames:['ExampleModel1', 'ExampleModel2', 'ExampleModel3']
+        modelNames: names
+      });
+    }).catch((error) => {
+      res.status(500).send((error as Error).message);
+    });
   } catch (error) {
     res.status(500).send((error as Error).message);
   }
 });
 
-app.get('/results', (req, res) => {
+// Results page
+// This page will be used to show the results of the transcription
+app.get('/results', async (req, res) => {
   const fileName = req.query.file;
-res.render('results', {fileName});
+  try {
+    const names = await loadMenu();
+    console.log("Model names loaded successfully:", names);
+    // Render EJS template and pass modelNames
+    res.render('results', {
+      fileName,
+      modelNames: names
+    });
+  } catch (error) {
+    res.status(500).send((error as Error).message);
+  }
 });
+
+async function loadMenu() {
+    const modelEndPoint = config.urlBackend+ApiEndpoints.MODEL_ENDPOINT;
+    const response = await handleApiOrMock(modelEndPoint, config.useMock)
+    const names = await getModelNames(response as Models);
+    return names;
+}
 
 // upload endpoint
 app.use(uploadRouter);
