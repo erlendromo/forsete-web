@@ -1,4 +1,4 @@
-import { LineSegment } from "../../../ts/types/line-segment";
+import { LineSegment } from "../../../interfaces/line-segment";
 
 export class LineEditorItem {
     private container: HTMLElement;

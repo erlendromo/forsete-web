@@ -1,6 +1,5 @@
 import { config } from '../config/config.js';
 import express from "express";
-import multer from "multer";
 import path from "path";
 import { fileURLToPath } from 'url';
 // Utilities
@@ -16,8 +15,6 @@ import { Models } from "../interfaces/modelInterface.js";
 
 
 const app = express();
-// Where files get stored
-const uploadDir = "uploads";
 // Public directory, where users will have access
 const publicDir = "public";
 // Where html are stored
@@ -33,9 +30,7 @@ app.set(viewDir, path.join(__dirname, "..", "..", viewDir));
 app.use(express.static(publicDir));
 app.use(express.static(publicDir+"/"+ viewDir))
 
-// Configure multer to store in 'uploads/'
-const upload = multer({ dest: uploadDir + "/" });
-app.use("/"+uploadDir, express.static(uploadDir));
+
 
 app.get('/', async (req, res) => {
   //res.render('index'); // Express will look for views/index.ejs
@@ -54,11 +49,10 @@ app.get('/', async (req, res) => {
   }
 });
 
-// Create a POST endpoint that matches the fetch("/upload")
+// upload endpoint
 app.use(uploadRouter);
 
-// Transcribe endpoint.
-// Sends to the atr-endpoint
+// atr endpoint
 app.use(atrRouter);
 
 // Start server on port and log

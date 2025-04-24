@@ -4,8 +4,11 @@ import { pdfToImage } from "../../util/pdfUtils.js";
 
 const router = express.Router();
 const uploadEndpoint = "/upload";
-const upload = multer({ dest: uploadEndpoint + '/' });
+// Where files get stored
+const storage = "uploads";
+const upload = multer({ dest: storage + '/' });
 
+router.use("/"+storage, express.static(storage));
 // Create a POST endpoint that matches the fetch("/upload")
 router.post(uploadEndpoint, upload.single("document"), async (req, res) => {
   try {

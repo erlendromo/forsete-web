@@ -1,5 +1,5 @@
-import { LineSegment } from "../../../ts/types/line-segment";
-import { Polygon, Point } from "../../../ts/types/atr-result";
+import { LineSegment } from "../../../interfaces/line-segment";
+import { Polygon, Point } from "../../../interfaces/atr-result";
 
 export class ImageContainer {
     private container: HTMLElement;

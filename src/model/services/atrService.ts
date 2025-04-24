@@ -1,8 +1,8 @@
 import express from 'express';
 import path from "path";
-import { sendATRRequest } from "../../util/post.js";
+import { sendATRRequest } from "../services/http/post.js";
 import { ApiEndpoints } from "../../config/endpoint.js";
-import { saveJsonToFile, extractTextMapping } from "../../util/jsonFormatter.js";
+import { saveJsonToFile, extractTextMapping } from "../../util/json/jsonFormatter.js";
 
 
 
@@ -44,7 +44,7 @@ router.post(transcribeEndpoint, express.json(), async (req, res) => {
     });
     console.log("ATR Response Body:", JSON.stringify(result, null, 2));
     // Extracting the important data
-    saveJsonToFile(extractTextMapping(result), filePath + ".json")
+    saveJsonToFile(extractTextMapping(result), filePath)
 
   } catch (error) {
     console.error("Error in"+ transcribeEndpoint +":", error);
