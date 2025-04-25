@@ -8,4 +8,4 @@ RUN npm run build
 EXPOSE ${PORT}
 
 # Start the Express server
-CMD ["node", "server.js"]
+CMD ["node", "public/js/model/server.js"]
