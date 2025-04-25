@@ -72,7 +72,7 @@ export class ImageContainer {
 
             this.imageElement.onerror = () => {
                 console.error(`Failed to load image: ${imagePath}`);
-                this.imageElement.src = "/images/image-placeholder.png"; // Fallback
+                this.imageElement.src = "/images/image-placeholder.jpg"; // Fallback
                 reject(new Error(`Failed to load image: ${imagePath}`));
             };
         });
