@@ -21,10 +21,6 @@ test:
 launch: 
 	@docker run -d -p 3000:3000 forsete-web
 .PHONY: launch
-# Build the dockerized image
-build:
-	@docker compose up --build -d 
-.PHONY: build
 
 # Remove the dockerized image
 remove:
