@@ -17,12 +17,12 @@ launch:
 	@docker-compose up -d --build
 .PHONY: launch
 
-# Remove the dockerized image
+# Remove the container using Docker Compose
 remove:
 	@docker compose down --volumes --remove-orphans
 .PHONY: remove
 
-# Remove the dockerized image
+# See the logs of the container using Docker Compose
 log:
 	@docker compose logs -f                        
 .PHONY: log
