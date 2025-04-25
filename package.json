@@ -40,16 +40,17 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.0.14",
     "axios": "^1.8.3",
+    "cross-spawn": "^7.0.6",
     "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "filepond": "^4.32.7",
+    "flowbite": "^3.1.2",
     "form-data": "^4.0.2",
     "jspdf": "^3.0.1",
     "multer": "^1.4.5-lts.1",
+    "pdf-lib": "^1.17.1",
     "pdf2pic": "^3.1.4",
-    "typescript": "^5.8.2",
-    "ejs": "^3.1.10",
-    "flowbite": "^3.1.2",
-    "pdf-lib": "^1.17.1"
+    "typescript": "^5.8.2"
   }
 }
