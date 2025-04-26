@@ -1,8 +1,4 @@
-async function main() {
-    const data = await getData();
-    const textArea = document.getElementById('jsonOutput') as HTMLTextAreaElement;
-    textArea.value = Object.values(data).join('\n');
-  }
+// jsonLoader.ts
   
   export async function getData() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,5 +14,5 @@ async function main() {
   }
   
   // Call main function on page load
-  window.addEventListener('DOMContentLoaded', main);
+  window.addEventListener('DOMContentLoaded', getData);
   
