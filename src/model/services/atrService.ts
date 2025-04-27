@@ -44,7 +44,7 @@ router.post(transcribeEndpoint, express.json(), async (req, res) => {
     });
     console.log("ATR Response Body:", JSON.stringify(result, null, 2));
     // Extracting the important data
-    saveJsonToFile(extractTextMapping(result), filePath)
+    saveJsonToFile(result, filePath)
 
   } catch (error) {
     console.error("Error in"+ transcribeEndpoint +":", error);
