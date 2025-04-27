@@ -49,21 +49,6 @@
   .progress-bar.upload-error {
     background-color: #dc3545;
   }
-  
-
-/* All elements for the navbar*/
-/* Elements to the navbar*/
-.navbar {
-    width: 100%;
-    margin: auto;
-    box-sizing: border-box;
-    padding: 2.5em;
-    align-items: center;
-    overflow: hidden;
-    justify-content: space-between;
-    position: relative;
-    display: flex;
-}
 
 /* Use a more specific selector to override any other rules */
 textarea#jsonOutput {
