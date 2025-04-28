@@ -12,20 +12,20 @@ export interface ModelToUI {
 /**
  * A service for transforming raw Models data into UI-friendly objects.
  */
-export class ModelService {
+export class MenuService {
   private static readonly ERROR_NO_MODEL_MSG = 'No models found.';
   private readonly endpointUrl: string;
   private readonly useMock: boolean;
   
   /**
-   * Constructs a ModelService instance.
+   * Constructs a MenuService instance.
    *
    * @param {AppConfig} config - The application configuration object.
    * @param {string} endpoint - The API endpoint to fetch models from.
    */
   constructor(private readonly config: AppConfig, private readonly endpoint: string) {
     // build the full URL once
-    this.endpointUrl = `${config.urlBackend}${endpoint}`;
+    this.endpointUrl = config.urlBackend+endpoint;
     this.useMock     = config.useMock
   }
 
@@ -59,7 +59,7 @@ export class ModelService {
    * @returns {boolean} - Returns true if the key exists and its value is an array; otherwise, returns false.
    */
   private static checkKey(item: Record<string, any>, key: string): boolean {
-    return key in item && ModelService.checkArray(item[key]);
+    return key in item && MenuService.checkArray(item[key]);
   }
 
   /**
@@ -77,11 +77,11 @@ export class ModelService {
     const dataArr = [data];
     const models = dataArr.flatMap((item: Record<string, any>) =>
       Object.keys(item).flatMap(key => {
-        if (ModelService.checkKey(item, key)) {
+        if (MenuService.checkKey(item, key)) {
           return item[key].map((model: ModelToUI) => ({
             name: model.name,
             type: key,
-            readableType: ModelService.getReadableText(key)
+            readableType: MenuService.getReadableText(key)
           }));
         }
         return [];
@@ -89,7 +89,7 @@ export class ModelService {
     );
 
     if (models.length === 0) {
-      throw new Error(ModelService.ERROR_NO_MODEL_MSG);
+      throw new Error(MenuService.ERROR_NO_MODEL_MSG);
     }
 
     return models;
