@@ -1,5 +1,7 @@
+import { handleApiOrMock } from '../services/apiService.js';
 // @ts-ignore mockModelResponse
 import { Models } from '@interfaces/modelInterface';
+import { AppConfig } from '../config/config.js';
 
 export interface ModelToUI {
   type: string;
@@ -12,6 +14,32 @@ export interface ModelToUI {
  */
 export class ModelService {
   private static readonly ERROR_NO_MODEL_MSG = 'No models found.';
+  private readonly endpointUrl: string;
+  private readonly useMock: boolean;
+  
+  /**
+   * Constructs a ModelService instance.
+   *
+   * @param {AppConfig} config - The application configuration object.
+   * @param {string} endpoint - The API endpoint to fetch models from.
+   */
+  constructor(private readonly config: AppConfig, private readonly endpoint: string) {
+    // build the full URL once
+    this.endpointUrl = `${config.urlBackend}${endpoint}`;
+    this.useMock     = config.useMock
+  }
+
+   /**
+   * Fetches the raw models from the backend (or mock),
+   * then returns them as an array of ModelToUI.
+   *
+   * @returns {Promise<ModelToUI[]>}
+   * @throws {Error} if no models are found or the fetch fails.
+   */
+  public async loadModelNames(): Promise<ModelToUI[]> {
+    const response = await handleApiOrMock(this.endpointUrl,this.useMock);
+    return this.getModelNames(response as Models);
+  }
 
   /**
    * Checks whether the provided value is an array.
