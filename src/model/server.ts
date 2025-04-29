@@ -2,15 +2,12 @@ import { config } from '../config/config.js';
 import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
-// Utilities
-import { handleApiOrMock } from "../services/apiService.js"
 // Services
 import uploadRouter from "../services/uploadService.js";
 import atrRouter from "../services/atrService.js";
 import { MenuService } from '../services/menuService.js';
 // Config
 import { ApiEndpoints } from "../config/endpoint.js";
-import { Models } from "../interfaces/modelInterface.js";
 
 
 const app = express();
@@ -31,17 +28,15 @@ app.use(express.static(publicDir+"/"+ viewDir))
 
 const menuService = new MenuService(config, ApiEndpoints.MODEL_ENDPOINT);
 menuService.loadModelNames()
-  .then(names => { app.locals.modelNames = names; })
+  .then(modelsToMenu => { app.locals.modelNames = modelsToMenu; })
   .catch(err => { console.error(err); process.exit(1); });
 
-
+// Render home page
 app.get('/', async (req, res) => {
-  //res.render('index'); // Express will look for views/index.ejs
-  res.render('index', { } )
+  res.render('index');
 });
 
-// Results page
-// This page will be used to show the results of the transcription
+// Render results page
 app.get('/results', async (req, res) => {
   const fileName = req.query.file;
   try {

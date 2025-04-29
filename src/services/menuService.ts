@@ -1,7 +1,7 @@
 import { handleApiOrMock } from './apiService.js';
-import { AppConfig } from '../config/config.js';
 import { Models } from '../interfaces/modelInterface.js';
 import { ModelToUI } from '../interfaces/modelInterface.js';
+import { AppConfig } from '../interfaces/configInterface.js';
 
 
 /**
@@ -72,17 +72,19 @@ export class MenuService {
     const dataArr = [data];
     const models = dataArr.flatMap((item: Record<string, any>) =>
       Object.keys(item).flatMap(key => {
+        // Check if the key exists and its value is an array
         if (MenuService.checkKey(item, key)) {
+          // Map each model to a new object with 'name', 'type', and 'readableType'
           return item[key].map((model: ModelToUI) => ({
             name: model.name,
             type: key,
             readableType: MenuService.getReadableText(key)
           }));
         }
+        // If the key doesn't exist or its value is not an array, return an empty array
         return [];
       })
     );
-
     if (models.length === 0) {
       throw new Error(MenuService.ERROR_NO_MODEL_MSG);
     }
