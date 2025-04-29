@@ -1,13 +1,8 @@
 import { handleApiOrMock } from './apiService.js';
-// @ts-ignore mockModelResponse
-import { Models } from '@interfaces/modelInterface';
 import { AppConfig } from '../config/config.js';
+import { Models } from '../interfaces/modelInterface.js';
+import { ModelToUI } from '../interfaces/modelInterface.js';
 
-export interface ModelToUI {
-  type: string;
-  name: string;
-  readableType?: string;
-}
 
 /**
  * A service for transforming raw Models data into UI-friendly objects.

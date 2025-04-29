@@ -15,3 +15,9 @@ export interface Models {
   export interface RegionSegmentationModel {
     name: string
   }
+
+  export interface ModelToUI {
+    type: string;
+    name: string;
+    readableType?: string;
+  }
