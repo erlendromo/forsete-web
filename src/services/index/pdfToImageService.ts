@@ -18,9 +18,7 @@ const options = {
  * @returns A promise resolving to the conversion result, including the output file path.
  * @throws  Will throw if conversion fails.
  */
-async function pdfToImage(
-    pdfFilePath:string,
-    pages: number) {
+async function pdfToImage(pdfFilePath:string, pages: number) {
     const absolutePdfPath = path.resolve(options.saveDirectory, pdfFilePath)
     const convert = fromPath(absolutePdfPath, options);
     const pageToConvertAsImage = pages;

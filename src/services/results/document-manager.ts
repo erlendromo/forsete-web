@@ -3,9 +3,9 @@
  * DocumentManager class for managing ATR-processed text documents.
  */
 
-import { ensureDefined } from "../util/error-handling.js";
-import { ATRResult, Polygon } from "../interfaces/atr-result.js";
-import { LineSegment } from "../interfaces/line-segment.js";
+import { ensureDefined } from "../../util/error-handling.js";
+import { ATRResult, Polygon } from "../../interfaces/atr-result.js";
+import { LineSegment } from "../../interfaces/line-segment.js";
 
 type editedAndOriginal ={original: string; edited: string}
 
@@ -17,14 +17,6 @@ export class DocumentManager {
     private createdAt: Date;
   
     constructor(atrResultJson: unknown, imageFileName: string) {
-      //this.imageFileName = imageFileName;
-      //const atrResult: ATRResult = atrResultJson as ATRResult;
-      //this.originalATRResult = JSON.parse(JSON.stringify(atrResult)); 
-      //this.createdAt = new Date();
-      
-      //this.documentId = this.generateDocumentId(atrResult); //current solution, can be changed
-      
-      //this.lineSegments = this.indexATRResult(atrResult);
       this.imageFileName = imageFileName;
       this.originalATRResult = atrResultJson as ATRResult; 
       this.createdAt = new Date();
