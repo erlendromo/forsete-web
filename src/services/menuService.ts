@@ -18,7 +18,7 @@ export class MenuService {
    * @param {AppConfig} config - The application configuration object.
    * @param {string} endpoint - The API endpoint to fetch models from.
    */
-  constructor(private readonly config: AppConfig, private readonly endpoint: string) {
+  constructor(config: AppConfig, endpoint: string) {
     // build the full URL once
     this.endpointUrl = config.urlBackend+endpoint;
     this.useMock     = config.useMock

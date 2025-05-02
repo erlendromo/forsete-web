@@ -39,9 +39,8 @@ export async function handleMockEndpoints(url: string) {
   const modelResponse = "src/mocks/modelResponse.json";
   const atrResponse = "src/mocks/atrResponse.json";
   const errorMsg = "No matching mocking endpoint.";
-  if (url.endsWith(ApiEndpoints.MODEL_ENDPOINT)) {
-    let b =  loadTestFile<Models>(modelResponse);
-    return b;
+  if (url.endsWith(ApiEndpoints.MODELS_ENDPOINT)) {
+    return loadTestFile<Models>(modelResponse);
   } else if (url.endsWith(ApiEndpoints.ATR_ENDPOINT)) {
     return loadTestFile<ImageData>(atrResponse);
   } else {

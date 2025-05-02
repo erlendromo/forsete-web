@@ -1,13 +1,15 @@
+//src/model/server.ts
 import { config } from '../config/config.js';
 import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
 // Services
-import uploadRouter from "../services/uploadService.js";
-import atrRouter from "../services/atrService.js";
+import uploadRouter from "../services/index/uploadService.js";
+import atrRouter from "../services/index/atrService.js";
 import { MenuService } from '../services/menuService.js';
 // Config
 import { ApiEndpoints } from "../config/endpoint.js";
+import session from 'express-session';
 
 
 const app = express();
@@ -20,20 +22,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-app.set(viewDir, path.join(__dirname, "..", "..", viewDir));
+app.set('views', path.resolve(process.cwd(), 'public/views'));
+
+app.use(session(/* … */));   // <-- must be before requireAuth or any route
+app.use(express.urlencoded({ extended:true })); // (body parsing if needed)
+
 
 // Serves the public folder and views
 app.use(express.static(publicDir));
 app.use(express.static(publicDir+"/"+ viewDir))
 
-const menuService = new MenuService(config, ApiEndpoints.MODEL_ENDPOINT);
+
+const menuService = new MenuService(config, ApiEndpoints.MODELS_ENDPOINT);
 menuService.loadModelNames()
   .then(modelsToMenu => { app.locals.modelNames = modelsToMenu; })
   .catch(err => { console.error(err); process.exit(1); });
-
 // Render home page
 app.get('/', async (req, res) => {
-  res.render('index');
+  res.render('index', { config });
 });
 
 // Render results page

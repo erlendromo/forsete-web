@@ -1,6 +1,5 @@
-import { Interface } from "readline";
-import config from "../config/config";
-import { ApiEndpoints } from "../config/endpoint";
+import config from "../config/config.js";
+import { ApiEndpoints } from "../config/endpoint.js";
 
 const TOKEN_KEY = 'auth.token';
 
@@ -38,6 +37,7 @@ export interface LoginSuccess {
 export class LoginError extends Error {
     status: number;
     constructor(message: string, status = 0) {
+        // Call the parent constructor with the error message
         super(message);
         this.status = status;
     }
@@ -58,9 +58,12 @@ export async function login(
     let res: Response;
 
     try {
+        // config.urlBackend + endpoint
         res = await fetch(config.urlBackend + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer <token>' 
+             },
             body: JSON.stringify(creds),
         });
     } catch (err) {
