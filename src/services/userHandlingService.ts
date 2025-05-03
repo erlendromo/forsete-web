@@ -1,7 +1,9 @@
 import config from "../config/config.js";
-import { ApiEndpoints } from "../config/endpoint.js";
+import { ApiEndpoints } from "../config/constants.js";
+import { Credentials, LoginSuccess, Registration } from "../interfaces/userInterface.js";
 
 const TOKEN_KEY = 'auth.token';
+const BASEURL = 'http://192.168.2.0/24';
 
 /**
  * This module provides functions for user authentication, including login,
@@ -9,28 +11,6 @@ const TOKEN_KEY = 'auth.token';
  *
  * @module loginService
  */
-
-/**
- * Credentials interface represents the structure of user credentials
- * required for login.
- * @typedef {Interface} Credentials
- */
-export interface Credentials {
-    email: string;
-    password: string;
-}
-
-export interface Registration extends Credentials {
-    role: number
-}
-/**
- * LoginSuccess interface represents the structure of the response
- * received upon successful login.
- * @typedef {Interface} LoginSuccess
- */
-export interface LoginSuccess {
-    token: string;
-}
 
 /**
  * LoginError class extends the built-in Error class to represent errors
@@ -57,7 +37,7 @@ export class LoginError extends Error {
  */
 export async function login(
     userCred: Credentials,
-    endpoint = "http://192.168.2.0/24/forsete-atr/v2/auth/register/",
+    endpoint = BASEURL + "/forsete-atr/v2/auth/login/",
 ): 
 Promise<LoginSuccess> {
     let res: Response;
@@ -80,7 +60,7 @@ Promise<LoginSuccess> {
 
 export async function register(
     userData: Registration,
-    endpoint = "http://192.168.2.0/24/forsete-atr/v2/auth/login/",
+    endpoint = BASEURL+"/forsete-atr/v2/auth/register/",
 ): 
 Promise<LoginSuccess> {
     let res: Response;

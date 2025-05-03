@@ -28,3 +28,16 @@ export enum ApiEndpoints {
   // Status endpoint
   STATUS_ENDPOINT = ApiEndpoints.VERSION_ATR + 'status/',
 }
+
+export enum tokenStorage {
+  TOKEN_KEY = 'auth.token'
+}
+
+export const HTTP_STATUS = {
+  SUCCESS: 200,
+  CREATED: 201,
+  UNAUTHORIZED: 401,
+  BAD_REQUEST: 400,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+};
