@@ -19,6 +19,10 @@ export interface Credentials {
     email: string;
     password: string;
 }
+
+export interface Registration extends Credentials {
+    role: number
+}
 /**
  * LoginSuccess interface represents the structure of the response
  * received upon successful login.
@@ -52,7 +56,30 @@ export class LoginError extends Error {
  * @throws {LoginError} - Throws an error if the login fails or if there is a network issue.
  */
 export async function login(
-    creds: Credentials,
+    userCred: Credentials,
+    endpoint = "http://192.168.2.0/24/forsete-atr/v2/auth/register/",
+): 
+Promise<LoginSuccess> {
+    let res: Response;
+    try {
+        // config.urlBackend + endpoint
+        res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(userCred),
+        });
+    } catch (err) {
+        throw new LoginError('Network unreachable');
+    }
+    if (!res.ok) {
+        throw new LoginError('Error during login: ', res.status);
+    }
+    const data = await res.json();
+    return data as LoginSuccess;
+}
+
+export async function register(
+    userData: Registration,
     endpoint = "http://192.168.2.0/24/forsete-atr/v2/auth/login/",
 ): 
 Promise<LoginSuccess> {
@@ -62,13 +89,13 @@ Promise<LoginSuccess> {
         res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify(creds),
+            body: JSON.stringify(userData),
         });
     } catch (err) {
         throw new LoginError('Network unreachable');
     }
     if (!res.ok) {
-        throw new LoginError('Something went wrong during login: ', res.status);
+        throw new LoginError('Error during registration: ', res.status);
     }
     const data = await res.json();
     return data as LoginSuccess;
