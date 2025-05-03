@@ -53,14 +53,13 @@ export class LoginError extends Error {
  */
 export async function login(
     creds: Credentials,
-    endpoint = ApiEndpoints.LOGIN_ENDPOINT,
+    endpoint = "http://192.168.2.0/24/forsete-atr/v2/auth/login/",
 ): 
 Promise<LoginSuccess> {
     let res: Response;
-
     try {
         // config.urlBackend + endpoint
-        res = await fetch(config.urlBackend + endpoint, {
+        res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(creds),
