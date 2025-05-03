@@ -1,4 +1,4 @@
-import { login, storeToken, LoginError } from '../services/loginService.js';
+import { login, storeToken, LoginError } from '../services/userHandlingService.js';
 
 /*
 * This script handles the login functionality for the application.

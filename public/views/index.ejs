@@ -9,6 +9,13 @@
 
   <script type='module' src="../js/controllers/components/comp-index.js" defer></script>
   <script type='module' src="../flowbite/flowbite.min.js" defer></script>
+
+  <script>
+    const token = localStorage.getItem('auth.token');
+    if (!token) {
+        window.location.href = '/login';
+    }
+</script>
 </head>
 
 
