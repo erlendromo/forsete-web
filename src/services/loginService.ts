@@ -54,29 +54,25 @@ export class LoginError extends Error {
 export async function login(
     creds: Credentials,
     endpoint = ApiEndpoints.LOGIN_ENDPOINT,
-): Promise<LoginSuccess> {
+): 
+Promise<LoginSuccess> {
     let res: Response;
 
     try {
         // config.urlBackend + endpoint
         res = await fetch(config.urlBackend + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                'Authorization': 'Bearer <token>' 
-             },
+            headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(creds),
         });
     } catch (err) {
         throw new LoginError('Network unreachable');
     }
-    const text = await res.text();
-    if (!res.ok) throw new LoginError(res.statusText, res.status);
-
-    try {
-        return JSON.parse(text) as LoginSuccess;
-    } catch (err) {
-        throw new LoginError('Invalid JSON from server');
+    if (!res.ok) {
+        throw new LoginError('Something went wrong during login: ', res.status);
     }
+    const data = await res.json();
+    return data as LoginSuccess;
 }
 
 export function storeToken(t: string): void {
