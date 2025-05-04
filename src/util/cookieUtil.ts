@@ -1,9 +1,24 @@
 // util/setAuthCookie.ts
-import { Response } from 'express';
+import { Response, Request } from 'express';
+const COOKIE_NAME = 'auth.token';
 
+/**
+ * Sets the authentication token in the response cookies.
+ * @param {Response} res - The Express response object.
+ * @param {string} token - The authentication token to be set.
+ */
 export function setAuthCookie(res: Response, token: string) {
-  res.cookie('auth.token', token, {
+  res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
+}
+
+/**
+ * Retrieves the authentication token from the request cookies.
+ * @param {Request} req - The Express request object.
+ * @returns {string | undefined} - The authentication token or undefined if not found.
+ */
+export function getAuthToken(req: Request): string | undefined {
+  return req.cookies?.[COOKIE_NAME];
 }
