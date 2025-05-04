@@ -2,6 +2,7 @@
  * 
  * @param message - The message to be displayed in the alert.
  * @description This function creates an alert box with a message and a close button.
+ * The alert is red for indicating an error or warning.
  * The alert box is styled with Tailwind CSS classes for a consistent look and feel.
  * The alert box includes an icon, a message, and a close button.
  * The close button has an event listener that removes the alert box when clicked.
