@@ -1,5 +1,7 @@
 // src/controllers/loginController.ts
 
+import { ApiRoute } from "../config/apiRoutes";
+
 /*
 * This script handles the login functionality for the application.
 * It listens for form submission, validates user credentials,
@@ -20,7 +22,7 @@ form.addEventListener('submit', async ev => {
   ) as Record<string, string>;
 
   try {
-    const response = await fetch('/api/login', {
+    const response = await fetch(ApiRoute.Login, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -30,7 +32,7 @@ form.addEventListener('submit', async ev => {
       const { message } = await response.json();
       throw new Error(message || 'Login failed');
     }
-    window.location.replace('/');
+    window.location.replace("/");
   } catch (err) {
     msg.textContent =
       err instanceof Error ? err.message : 'Login failed';
