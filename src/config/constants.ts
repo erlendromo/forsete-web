@@ -41,3 +41,17 @@ export const HTTP_STATUS = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
 };
+
+export enum AppRoute {
+  Home = '/',
+  Results = '/results',
+  Login = '/login',
+  Register = '/register',
+}
+
+export enum AppPages {
+  Home = 'index',
+  Results = 'results',
+  Login = 'login',
+  Register = 'register',
+}
