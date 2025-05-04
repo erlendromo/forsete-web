@@ -1,4 +1,4 @@
-import { login, LoginError } from '../src/services/loginService';
+import { login, LoginError } from '../src/services/userHandlingService';
 
 const globalAny: any = global;
 
