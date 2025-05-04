@@ -8,7 +8,6 @@
 
     <link rel="stylesheet" href="/styles/output.css" />
     <script type="module" src="../flowbite/flowbite.min.js" defer></script>
-    <script type="module" src="/js/controllers/loginController.js" defer></script>
 </head>
 
 <%- include('./partials/drawer/drawerLogin'); %>
@@ -28,6 +27,7 @@
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Create an account
                 </h1>
+                <div id="reg-alert-container"></div>
                 <form class="space-y-4 md:space-y-6" method="post" id="registerForm">
                     <div>
                         <label for="email"
@@ -52,6 +52,8 @@
                             class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                     </p>
                 </form>
+                <script type="module" src="/js/controllers/registerController.js" defer></script>
+
             </div>
         </div>
     </div>
