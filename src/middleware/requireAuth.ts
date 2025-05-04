@@ -1,6 +1,6 @@
 // middleware/requireAuth.ts
 import { Request, Response, NextFunction } from 'express';
-import { getAuthToken } from '../util/cookieUtil.js';
+import { getAuthToken } from '../utils/cookieUtil.js';
 import { AppRoute } from '../config/constants.js';
 
 export function requireAuth(

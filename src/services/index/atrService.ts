@@ -2,7 +2,7 @@ import express from 'express';
 import path from "path";
 import { sendATRRequest } from "../http/post.js";
 import { ApiEndpoints } from "../../config/constants.js";
-import { saveJsonToFile, extractTextMapping } from "../../util/json/jsonFormatter.js";
+import { saveJsonToFile, extractTextMapping } from "../../utils/json/jsonFormatter.js";
 
 
 

@@ -1,5 +1,5 @@
 // src/services/userHandlingService.ts
-import { setAuthCookie } from "../util/cookieUtil.js";
+import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS } from "../config/constants.js";
 import { User, LoginSuccess, Registration } from "../interfaces/userInterface.js";
 import { Response as ExpressResponse } from "express";

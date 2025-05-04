@@ -3,7 +3,7 @@
  * DocumentManager class for managing ATR-processed text documents.
  */
 
-import { ensureDefined } from "../../util/error-handling.js";
+import { ensureDefined } from "../../utils/error-handling.js";
 import { ATRResult, Polygon } from "../../interfaces/atr-result.js";
 import { LineSegment } from "../../interfaces/line-segment.js";
 

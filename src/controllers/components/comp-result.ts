@@ -1,6 +1,6 @@
 import { DocumentManager } from '../../services/results/document-manager.js';
-import { getData } from '../../util/json/jsonLoader.js';
-import { generatePlainTextPdf } from '../../util/export/pdf-export.js';
+import { getData } from '../../utils/json/jsonLoader.js';
+import { generatePlainTextPdf } from '../../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
 import { initializeImageZoom } from './zoom-image.js';
