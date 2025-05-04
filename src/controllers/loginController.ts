@@ -1,4 +1,4 @@
-import { login, storeToken, LoginError } from '../services/userHandlingService.js';
+// src/controllers/loginController.ts
 
 /*
 * This script handles the login functionality for the application.
@@ -14,17 +14,25 @@ form.append(msg);
 
 form.addEventListener('submit', async ev => {
   ev.preventDefault();
-  msg.textContent = 'Signing in…';
-
-  const creds = Object.fromEntries(new FormData(form).entries());
+  
+  const { email, password } = Object.fromEntries(
+    new FormData(form).entries()
+  ) as Record<string, string>;
 
   try {
-    const { token } = await login(creds as any);
-    storeToken(token);
-    msg.textContent = 'Welcome!';
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const { message } = await response.json();
+      throw new Error(message || 'Login failed');
+    }
     window.location.replace('/');
   } catch (err) {
     msg.textContent =
-      err instanceof LoginError ? err.message : 'Login failed';
+      err instanceof Error ? err.message : 'Login failed';
   }
 });

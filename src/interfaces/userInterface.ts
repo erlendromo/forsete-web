@@ -1,14 +1,19 @@
 /**
- * Credentials interface represents the structure of user credentials
+ * User interface represents the structure of User User
  * required for login.
- * @typedef {Interface} Credentials
+ * @typedef {Interface} User
  */
-export interface Credentials {
+export interface User {
     email: string;
     password: string;
 }
 
-export interface Registration extends Credentials {
+/**
+ * Registration interface extends User interface and represents
+ * the structure of the user required for registration.
+ * @typedef {Interface} Registration
+ */
+export interface Registration extends User {
 }
 /**
  * LoginSuccess interface represents the structure of the response

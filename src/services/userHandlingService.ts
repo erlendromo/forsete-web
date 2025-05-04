@@ -1,8 +1,9 @@
-import config from "../config/config.js";
-import { ApiEndpoints } from "../config/constants.js";
-import { Credentials, LoginSuccess, Registration } from "../interfaces/userInterface.js";
+// src/services/userHandlingService.ts
+import { setAuthCookie } from "../util/cookieUtil.js";
+import { HTTP_STATUS } from "../config/constants.js";
+import { User, LoginSuccess, Registration } from "../interfaces/userInterface.js";
+import { Response as ExpressResponse } from "express";
 
-const TOKEN_KEY = 'auth.token';
 const BASEURL = 'http://192.168.2.0/24';
 
 /**
@@ -36,7 +37,7 @@ export class LoginError extends Error {
  * @throws {LoginError} - Throws an error if the login fails or if there is a network issue.
  */
 export async function login(
-    userCred: Credentials,
+    userCred: User,
     endpoint = BASEURL + "/forsete-atr/v2/auth/login/",
 ): 
 Promise<LoginSuccess> {
@@ -81,18 +82,45 @@ Promise<LoginSuccess> {
     return data as LoginSuccess;
 }
 
-export function storeToken(t: string): void {
-    localStorage.setItem(TOKEN_KEY, t);          // or cookies/sessionStorage
-}
-
-export function getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
-}
-
-export function clearToken(): void {
-    localStorage.removeItem(TOKEN_KEY);
-}
-
-export function isLoggedIn(): boolean {
-    return !!getToken();
-}
+/**
+ * Route handler for processing user login.
+ *
+ * This function receives user credentials (email and password) from the request body,
+ * sends them to the external authentication API using the `login` service,
+ * and stores the returned token in a secure HttpOnly cookie.
+ *
+ * On success, it returns a JSON response with a success message.
+ * On failure (e.g., wrong credentials or API error), it returns a 401 Unauthorized status.
+ *
+ * @param {Request} req - Express request object containing the login credentials in the body.
+ * @param {Response} res - Express response object used to send the result and set the auth cookie.
+ *
+ * @returns {Promise<void>} Responds with 200 on success, 401 on failure.
+ */
+export async function handleLogin(username: string, password: string, res: ExpressResponse){
+    const userData: User = {
+        email: username,
+        password: password
+      };
+    try {
+      const { token } = await login(userData);
+      setAuthCookie(res, token);
+      res.status(HTTP_STATUS.SUCCESS).json({ success: true, message: 'Login successful' });
+    } catch (err) {
+      res.status(HTTP_STATUS.UNAUTHORIZED).json({ success: false, message: 'Login failed' });
+    }
+  }
+  
+  export async function handleRegister(username: string, password: string, res: ExpressResponse) {
+    const userData: Registration = {
+        email: username,
+        password: password
+      };
+    try {
+      const { token } = await register(userData);
+      setAuthCookie(res, token);
+      res.status(HTTP_STATUS.CREATED).json({ success: true, message: 'Registration successful' });
+    } catch (err) {
+      res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
+    }
+  }

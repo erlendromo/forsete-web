@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/erlendromo/forsete-web#readme",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/form-data": "^2.2.1",
     "@types/jest": "^29.5.14",
@@ -41,6 +42,7 @@
     "@tailwindcss/cli": "^4.0.14",
     "@types/express-session": "^1.18.1",
     "axios": "^1.8.3",
+    "cookie-parser": "^1.4.7",
     "cross-spawn": "^7.0.6",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",

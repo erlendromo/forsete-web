@@ -20,6 +20,6 @@ router.get(AppRoute.Home, requireAuth, (_req, res) => {
 router.get(AppRoute.Results, requireAuth, (req, res) => {
   const fileName = req.query.file;
   res.render(AppPages.Results, { fileName });
-});
+})
 
 export default router;

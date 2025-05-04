@@ -3,14 +3,15 @@ import { config } from '../config/config.js';
 import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
 // Services
 import uploadRouter from "../services/index/uploadService.js";
 import atrRouter from "../services/index/atrService.js";
 import { MenuService } from '../services/menuService.js';
 // Config
-import { ApiEndpoints } from "../config/endpoint.js";
-import session from 'express-session';
-
+import { ApiEndpoints } from "../config/constants.js";
+import authRouter from "../routes/apiRoutes.js";
+import renderRouter from "../routes/renderingRoutes.js";
 
 const app = express();
 // Public directory, where users will have access
@@ -24,36 +25,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(process.cwd(), 'public/views'));
 
-app.use(session(/* … */));   // <-- must be before requireAuth or any route
-app.use(express.urlencoded({ extended:true })); // (body parsing if needed)
 
 
 // Serves the public folder and views
 app.use(express.static(publicDir));
-app.use(express.static(publicDir+"/"+ viewDir))
+app.use(express.static(publicDir+"/"+ viewDir));
+app.use(cookieParser());
 
+app.use(authRouter);
+app.use(renderRouter);
 
 const menuService = new MenuService(config, ApiEndpoints.MODELS_ENDPOINT);
 menuService.loadModelNames()
   .then(modelsToMenu => { app.locals.modelNames = modelsToMenu; })
   .catch(err => { console.error(err); process.exit(1); });
-// Render home page
-app.get('/', async (req, res) => {
-  res.render('index', { config });
-});
-
-// Render results page
-app.get('/results', async (req, res) => {
-  const fileName = req.query.file;
-  try {
-    // Render EJS template and pass modelNames
-    res.render('results', {
-      fileName,
-    });
-  } catch (error) {
-    res.status(500).send((error as Error).message);
-  }
-});
 
 // upload endpoint
 app.use(uploadRouter);
