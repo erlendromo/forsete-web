@@ -8,42 +8,52 @@ import { createAlert } from "./utils/ui/alert.js";
 *
 * @module loginPage
 */
-const form = document.querySelector<HTMLFormElement>('form')!;
+const form = document.querySelector<HTMLFormElement>('#loginForm')!;
+const alertContainer = document.getElementById('login-alert-container');
 const endpoint = ApiRoute.Login;
+
 form.addEventListener('submit', async ev => {
   ev.preventDefault();
+
+  if (!form) {
+    console.error('loginController: #loginForm not found in DOM');
+    return;
+  }
 
   const { email, password } = Object.fromEntries(
     new FormData(form).entries()
   ) as Record<string, string>;
 
-
+  let response: Response;
   try {
-    const response = await fetch(endpoint, {
+    response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-
-    if (!response.ok) {
-      const { message } = await response.json();
-      throw new Error(message || 'Login failed');
-    }
-    window.location.replace("/");
+  } catch {
+    showError('Network error: check your connection and try again.');
+    return;
   }
-  catch (err) {
-    const container = document.getElementById('login-alert-container');
-    if (!container) return;
 
-    // Fallback message if the error is not an instance of Error
-    // or if it doesn't have a message property
-    const message = err instanceof Error ? err.message : 'Login failed';
-
-    // Create and display the alert
-    container.innerHTML = createAlert(message);
-    const closeBtn = document.getElementById('close-alert-button');
-    closeBtn?.addEventListener('click', () => {
-      container.innerHTML = ''; // removes the whole container content
-    });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    showError(data.message ?? `Server returned: ${response.status}`);
+    return;
   }
+  window.location.replace('/');
 });
+
+/**
+ * Displays an error message in the alert container.
+ *
+ * @param {string} message - The error message to display.
+ */
+function showError(message: string) {
+  if (!alertContainer) return;
+
+  alertContainer.innerHTML = createAlert(message);
+  alertContainer
+    .querySelector<HTMLButtonElement>('#close-alert-button')
+    ?.addEventListener('click', () => (alertContainer.innerHTML = ''));
+}
