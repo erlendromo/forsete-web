@@ -1,4 +1,4 @@
-import { DocumentManager } from '../../model/services/document-manager.js';
+import { DocumentManager } from '../../services/results/document-manager.js';
 import { getData } from '../../util/json/jsonLoader.js';
 import { generatePlainTextPdf } from '../../util/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';

@@ -1,6 +1,6 @@
 
 import { LineSegment } from "../../../interfaces/line-segment.js";
-import { DocumentManager } from "../../../model/services/document-manager.js";
+import { DocumentManager } from "../../../services/results/document-manager.js";
 import { LineEditorItem } from "./line-editor.js";
 import { ImageContainer } from "./image-container.js";
 
