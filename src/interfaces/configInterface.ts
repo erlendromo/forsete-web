@@ -10,3 +10,9 @@ export interface AppConfig {
     port:      number;
     useMock:   boolean;
   }
+
+export interface ImageProcessingConfig {
+    image_ids: string[];          // Array of image IDs (strings)
+    line_segmentation_model: string;  // Model for line segmentation
+    text_recognition_model: string;   // Model for text recognition
+ }

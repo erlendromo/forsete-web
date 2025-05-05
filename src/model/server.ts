@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(authRouter);
 app.use(renderRouter);
 
-const menuService = new MenuService(config, ApiEndpoints.MODELS_ENDPOINT);
+const menuService = new MenuService();
 menuService.loadModelNames()
   .then(modelsToMenu => { app.locals.modelNames = modelsToMenu; })
   .catch(err => { console.error(err); process.exit(1); });

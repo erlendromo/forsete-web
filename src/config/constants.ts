@@ -8,7 +8,7 @@ export enum ApiEndpoints {
   VERSION_ATR = '/forsete-atr/v2/',
 
   // ATR endpoint
-  ATR_ENDPOINT = 'atr/basic-documents/',
+  ATR_ENDPOINT = 'atr/',
 
   // Auth endpoints
   REGISTER_ENDPOINT = ApiEndpoints.VERSION_ATR + 'auth/register/',
@@ -27,6 +27,15 @@ export enum ApiEndpoints {
 
   // Status endpoint
   STATUS_ENDPOINT = ApiEndpoints.VERSION_ATR + 'status/',
+
+}
+
+export function outputEndpointConstructor(imageID: string): string {
+  return  ApiEndpoints.ATR_ENDPOINT + 'Images/' + imageID + '/outputs/';
+}
+
+export function outputDataEndpointConstructor(imageID: string, outputID: string): string {
+  return  outputEndpointConstructor(imageID) + outputID + '/data/';
 }
 
 export enum tokenStorage {
