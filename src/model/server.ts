@@ -12,6 +12,7 @@ import { MenuService } from '../services/menuService.js';
 import { ApiEndpoints } from "../config/constants.js";
 import authRouter from "../routes/apiRoutes.js";
 import renderRouter from "../routes/renderingRoutes.js";
+import { ModelsSingelton } from '../config/atrModels.js';
 
 const app = express();
 // Public directory, where users will have access
@@ -19,35 +20,50 @@ const publicDir = "public";
 // Where html are stored
 const viewDir = "views";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
+const setViews = () => {
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(process.cwd(), 'public/views'));
-
-
+}
 
 // Serves the public folder and views
-app.use(express.static(publicDir));
-app.use(express.static(publicDir+"/"+ viewDir));
-app.use(cookieParser());
+const configureMiddlewares = () => {
+  app.use(express.static(publicDir));
+  app.use(express.static(path.join(publicDir, viewDir)));
+  app.use(cookieParser());
+  app.use(express.json());
+  app.use(authRouter);
+  app.use(renderRouter);
+  app.use(uploadRouter);
+  app.use(atrRouter);
+};
 
-app.use(authRouter);
-app.use(renderRouter);
+const loadModels = async () => {
+  const menuService = new MenuService();
+  try {
+    const modelsToMenu = await menuService.loadModelNames();
+    app.locals.modelNames = modelsToMenu;
+  } catch (err) {
+    console.error('Error loading models:', err);
+    process.exit(1); // Terminate the server if model loading fails
+  }
+};
 
-const menuService = new MenuService();
-menuService.loadModelNames()
-  .then(modelsToMenu => { app.locals.modelNames = modelsToMenu; })
-  .catch(err => { console.error(err); process.exit(1); });
+const startServer = () => {
+  const documentation = 'forsete-atr/v2/swaggo/index.html';
+  app.listen(config.port, () => {
+    console.log(`Server running: http://localhost:${config.port}`);
+    console.log(`Backend documentation: `);
+  });
+};
 
-// upload endpoint
-app.use(uploadRouter);
+const setupServer = async () => {
+  setViews();
+  configureMiddlewares();
+  const modelsSingelton = ModelsSingelton.getInstance();
+  await modelsSingelton.init();
+  await loadModels();
+  startServer();
+};
 
-// atr endpoint
-app.use(atrRouter);
-
-// Start server on port and log
-app.listen(config.port, () => {
-  console.log(`Server running: http://localhost:${config.port}`);
-});
-
+setupServer();

@@ -10,23 +10,23 @@ import atrApi from './apiConfig.js';
  */
 export class ModelsSingelton{
         private static instance: ModelsSingelton;
-        private models: BaseModel[];
+        private models: BaseModel[] = [];
         
         private constructor(){}
 
         public static getInstance(): ModelsSingelton {
                 if (!ModelsSingelton.instance){
                         ModelsSingelton.instance = new ModelsSingelton();
+                        this.instance.init()
                 }
                 return ModelsSingelton.instance;
         }
 
-        public async init(): Promise<void> {
-                
+        public async init(): Promise<void> {  
                 const response = await atrApi.get(ApiEndpoints.MODELS_ENDPOINT);
                 if (response.status === 200) {
                         this.models = response.data as BaseModel[];
-                 
+                        
                 } else {                
                         throw new Error(`Failed to fetch models. Status code: ${response.status}`);
                 }

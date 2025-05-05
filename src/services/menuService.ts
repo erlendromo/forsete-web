@@ -17,6 +17,7 @@ export class MenuService {
    */
   public async loadModelNames(): Promise<ModelToUI[]> {
     const models = ModelsSingelton.getInstance().getModels();
+    console.log("Loaded models:", JSON.stringify(models, null, 2));
     return this.getModelNames(models);
   }
 
@@ -29,21 +30,16 @@ export class MenuService {
   }
 
   public async getModelNames(data: BaseModel[]): Promise<ModelToUI[]> {
-    const models = data.flatMap((item: Record<string, any>) =>
-      Object.keys(item).flatMap(key => {
-        if (MenuService.checkKey(item, key)) {
-          return item[key].map((model: ModelToUI) => ({
-            name: model.name,
-            type: key,
-            readableType: MenuService.getReadableText(key)
-          }));
-        }
-        return [];
-      })
-    );
+    const models: ModelToUI[] = data.map((model) => ({
+      name: model.name,
+      type: model.model_type,
+      readableType: MenuService.getReadableText(model.model_type),
+    }));
+  
     if (models.length === 0) {
       throw new Error(MenuService.ERROR_NO_MODEL_MSG);
     }
+  
     return models;
   }
 

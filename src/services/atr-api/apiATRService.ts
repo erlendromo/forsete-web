@@ -1,7 +1,7 @@
-import { handleRequestError } from '../../utils/error-handling';
-import atrApi from '../../config/apiConfig';
-import { ApiEndpoints } from '../../config/constants';
-import { ImageProcessingConfig } from '../../interfaces/configInterface';
+import { handleRequestError } from '../../utils/error-handling.js';
+import atrApi from '../../config/apiConfig.js';
+import { ApiEndpoints } from '../../config/constants.js';
+import { ImageProcessingConfig } from '../../interfaces/configInterface.js';
 
 /**
  * Sends an ATR request using provided image, models, and fields.

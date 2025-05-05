@@ -28,11 +28,14 @@ atrRouter.post(AppRoute.Transcribe, upload.single("document"), async (req, res) 
       const pages = 1;
       const dpi = 300;
       // Convert PDF to image buffer
-      // imageBuffer = await pdfToImage(pages, req.file.originalname, req.file.buffer, dpi);
+      //imageBuffer = await pdfToImage(pages, req.file.originalname, req.file.buffer, dpi);
     } else {
       imageBuffer = req.file.buffer;
     }
-
+    if (!imageBuffer) {
+      res.status(400).json({ error: "Could not process the file into an image buffer" });
+      return;
+    }
     const imageUploadResponse = await uploadImage(imageBuffer, req.file.originalname); 
 
     if (!imageUploadResponse) {

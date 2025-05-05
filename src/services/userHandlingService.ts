@@ -1,10 +1,8 @@
-// src/services/userHandlingService.ts
 import { setAuthCookie } from "../utils/cookieUtil.js";
-import { HTTP_STATUS } from "../config/constants.js";
+import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
 import { User, LoginSuccess, Registration } from "../interfaces/userInterface.js";
 import { Response as ExpressResponse } from "express";
-
-const BASEURL = 'http://192.168.2.0/24';
+import atrApi from "../config/apiConfig.js";
 
 /**
  * This module provides functions for user authentication, including login,
@@ -37,17 +35,13 @@ export class LoginError extends Error {
  * @throws {LoginError} - Throws an error if the login fails or if there is a network issue.
  */
 export async function login(
-    userCred: User,
-    endpoint = BASEURL + "/forsete-atr/v2/auth/login/",
+    userCred: User
 ): 
 Promise<LoginSuccess> {
     let res: Response;
     try {
-        // config.urlBackend + endpoint
-        res = await fetch(endpoint, {
-            method: 'POST',
+        res = await atrApi.post(ApiEndpoints.LOGIN_ENDPOINT, userCred, {
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify(userCred),
         });
     } catch (err) {
         throw new LoginError('Network unreachable');
@@ -60,19 +54,17 @@ Promise<LoginSuccess> {
 }
 
 export async function register(
-    userData: Registration,
-    endpoint = BASEURL+"/forsete-atr/v2/auth/register/",
+    userData: Registration
 ): 
 Promise<LoginSuccess> {
     let res: Response;
     try {
         // config.urlBackend + endpoint
-        res = await fetch(endpoint, {
-            method: 'POST',
+        res = await atrApi.post(ApiEndpoints.REGISTER_ENDPOINT, userData, {
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify(userData),
         });
     } catch (err) {
+        console.error('Error during registration:', err);
         throw new LoginError('Network unreachable');
     }
     if (!res.ok) {
@@ -122,5 +114,6 @@ export async function handleLogin(username: string, password: string, res: Expre
       res.status(HTTP_STATUS.CREATED).json({ success: true, message: 'Registration successful' });
     } catch (err) {
       res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
+      console.error('Registration failed:', err);
     }
   }

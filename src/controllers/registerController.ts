@@ -1,28 +1,30 @@
-// src/controllers/loginController.ts
 import { ApiRoute } from "../config/apiRoutes.js";
 import { createAlert } from "./utils/ui/alert.js";
 /*
-* This script handles the login functionality for the application.
+* This script handles the register functionality for the application.
 * It listens for form submission, validates user credentials,
-* and manages the display of messages based on the login status.
+* and manages the display of messages based on the registration status.
 *
 * @module loginPage
 */
-const form = document.querySelector<HTMLFormElement>('#loginForm')!;
-const alertContainer = document.getElementById('login-alert-container');
-const endpoint = ApiRoute.Login;
+const form = document.querySelector<HTMLFormElement>('#registerForm')!;
+const alertContainer = document.getElementById('reg-alert-container');
+const endpoint = ApiRoute.Register;
+
 
 form.addEventListener('submit', async ev => {
   ev.preventDefault();
 
   if (!form) {
-    console.error('loginController: #loginForm not found in DOM');
+    console.error('registerController: #registerForm not found in DOM');
     return;
   }
+  
 
   const { email, password } = Object.fromEntries(
     new FormData(form).entries()
   ) as Record<string, string>;
+
 
   let response: Response;
   try {
