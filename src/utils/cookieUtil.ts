@@ -9,8 +9,9 @@ const COOKIE_NAME = 'auth.token';
  */
 export function setAuthCookie(res: Response, token: string) {
   res.cookie(COOKIE_NAME, token, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 1000, // 1 hour
+    httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+    sameSite: 'strict', // Helps prevent CSRF attacks
+    maxAge: 60 * 60 * 1000, //1 hour
   });
 }
 
