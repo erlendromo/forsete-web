@@ -1,10 +1,11 @@
 // src/services/userHandlingService.ts
+import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
-import { HTTP_STATUS } from "../config/constants.js";
+import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
 import { User, LoginSuccess, Registration } from "../interfaces/userInterface.js";
 import { Response as ExpressResponse } from "express";
 
-const BASEURL = 'http://192.168.2.0/24';
+const url = config.urlBackend;
 
 /**
  * This module provides functions for user authentication, including login,
@@ -38,7 +39,7 @@ export class LoginError extends Error {
  */
 export async function login(
     userCred: User,
-    endpoint = BASEURL + "/forsete-atr/v2/auth/login/",
+    endpoint = url + ApiEndpoints.LOGIN_ENDPOINT,
 ): 
 Promise<LoginSuccess> {
     let res: Response;
@@ -61,7 +62,7 @@ Promise<LoginSuccess> {
 
 export async function register(
     userData: Registration,
-    endpoint = BASEURL+"/forsete-atr/v2/auth/register/",
+    endpoint = url + ApiEndpoints.REGISTER_ENDPOINT,
 ): 
 Promise<LoginSuccess> {
     let res: Response;
