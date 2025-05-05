@@ -199,5 +199,22 @@ export class DocumentManager {
         newLineSegments.forEach((segment) => {
           this.lineSegments.set(segment.originalIndex, segment);
         });
-      } 
+      }
+
+      // Updated the orginal json atrresult by adding the edited text
+      updateATRResult(): ATRResult {
+        this.originalATRResult.contains.forEach((element, index) => {
+          const lineSegment = this.getLineSegment(index);
+          
+          if (lineSegment && lineSegment.edited && lineSegment.editedContent) {
+            element.edited = {
+              text: lineSegment.editedContent,
+              timestamp: new Date().toISOString()
+            };
+          }
+        });
+      
+        return this.originalATRResult;
+      }
 }
+      

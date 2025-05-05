@@ -33,6 +33,7 @@ export class MenuService {
    */
   public async loadModelNames(): Promise<ModelToUI[]> {
     const response = await handleApiOrMock(this.endpointUrl,this.useMock);
+    
     return this.getModelNames(response as Models);
   }
 

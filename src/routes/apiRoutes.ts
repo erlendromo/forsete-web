@@ -17,4 +17,6 @@ router.post(AppRoute.Register, (req, res) => {
   return handleRegister(email, password, res);
 });
 
+
+
 export default router;

@@ -47,6 +47,9 @@ export enum AppRoute {
   Results = '/results',
   Login = '/login',
   Register = '/register',
+  Upload = '/upload',
+  Transcribe = '/transcribe',
+  Update = '/update'
 }
 
 export enum AppPages {
