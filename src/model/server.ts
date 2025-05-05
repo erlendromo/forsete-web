@@ -19,7 +19,6 @@ const publicDir = "public";
 // Where html are stored
 const viewDir = "views";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');

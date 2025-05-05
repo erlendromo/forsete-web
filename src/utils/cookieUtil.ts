@@ -10,7 +10,7 @@ const COOKIE_NAME = 'auth.token';
 export function setAuthCookie(res: Response, token: string) {
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    maxAge: 60 * 60 * 1000, // 1 hour
   });
 }
 
