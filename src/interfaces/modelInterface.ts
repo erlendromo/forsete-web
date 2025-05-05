@@ -1,19 +1,22 @@
-export interface Models {
-    line_segmentation_models: LineSegmentationModel[]
-    text_recognition_models: TextRecognitionModel[]
-    region_segmentation_models: RegionSegmentationModel[]
+export interface BaseModel {
+    id: number;
+    model_type: string;
+    name: string;
   }
   
   export interface LineSegmentationModel {
+    id: number;
     name: string
   }
   
   export interface TextRecognitionModel {
-    name: string
+    id: number;
+    name: string;
   }
   
   export interface RegionSegmentationModel {
-    name: string
+    id: number;
+    name: string;
   }
 
   export interface ModelToUI {
@@ -21,3 +24,8 @@ export interface Models {
     name: string;
     readableType?: string;
   }
+  
+  export type ModelVariants =
+  | LineSegmentationModel
+  | TextRecognitionModel
+  | RegionSegmentationModel;

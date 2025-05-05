@@ -1,8 +1,8 @@
-import axios from 'axios';
 import {
-        Models, LineSegmentationModel, TextRecognitionModel, RegionSegmentationModel
+        BaseModel, LineSegmentationModel, TextRecognitionModel
 } from '../interfaces/modelInterface'
 import { ApiEndpoints } from './constants.js';
+import atrApi from './apiConfig.js';
 
 
 /**
@@ -10,7 +10,7 @@ import { ApiEndpoints } from './constants.js';
  */
 export class ModelsSingelton{
         private static instance: ModelsSingelton;
-        private availbeModels: Models;
+        private models: BaseModel[];
         
         private constructor(){}
 
@@ -22,31 +22,26 @@ export class ModelsSingelton{
         }
 
         public async init(): Promise<void> {
-                if(!this.availbeModels){      
-                const response = await axios.get(ApiEndpoints.MODELS_ENDPOINT);
+                
+                const response = await atrApi.get(ApiEndpoints.MODELS_ENDPOINT);
                 if (response.status === 200) {
-                        // Assuming the response data is in the expected format
-                        this.availbeModels = response.data as Models;
+                        this.models = response.data as BaseModel[];
+                 
                 } else {                
                         throw new Error(`Failed to fetch models. Status code: ${response.status}`);
                 }
-                }
+                
         }
 
-        public getModels(): Models {
-                return this.availbeModels
+        public getModels(): BaseModel[] {
+                return this.models;
         }
 
-        public getRegionSegmentationModel(): RegionSegmentationModel[] {
-                return this.availbeModels.region_segmentation_models
+        public getLineSegmentationModels(): LineSegmentationModel[] {
+                return this.models.filter((model) => model.model_type === 'line_segmentation') as LineSegmentationModel[];
         }
 
-        public getRegioLineSegmentationModel(): LineSegmentationModel[] {
-                return this.availbeModels.line_segmentation_models
+        public getTextRecognitionModels(): TextRecognitionModel[] {
+                return this.models.filter((model) => model.model_type === 'text_recognition') as TextRecognitionModel[];
         }
-
-        public getTextRecognitionModel(): TextRecognitionModel[] {
-                return this.availbeModels.text_recognition_models
-        }
-
 }

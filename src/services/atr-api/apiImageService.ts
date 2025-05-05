@@ -1,10 +1,12 @@
 import atrApi from '../../config/apiConfig.js';
 import { ApiEndpoints } from '../../config/constants.js';
 
-export const uploadImage = async (file: File): Promise<any> => {
+export const uploadImage = async (buffer: Buffer, filename: string): Promise<any> => {
   const formData = new FormData();
-  formData.append('image', file);
-
+  
+  const blob = new Blob([buffer], { type: 'image/png' }); 
+  formData.append('image', blob, filename); 
+  
   const response = await atrApi.post(ApiEndpoints.UPLOAD_IMAGE_ENDPOINT, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -12,7 +14,7 @@ export const uploadImage = async (file: File): Promise<any> => {
     withCredentials: true,
   });
 
-  return response.data;  
+  return response.data;
 };
 
 export const getImages = async (): Promise<any> => {

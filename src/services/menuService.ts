@@ -1,4 +1,4 @@
-import { Models, ModelToUI } from '../interfaces/modelInterface.js';
+import { BaseModel, ModelToUI } from '../interfaces/modelInterface.js';
 import { ModelsSingelton } from '../config/atrModels.js';
 
 /**
@@ -28,9 +28,8 @@ export class MenuService {
     return key in item && MenuService.checkArray(item[key]);
   }
 
-  public async getModelNames(data: Models): Promise<ModelToUI[]> {
-    const dataArr = [data];
-    const models = dataArr.flatMap((item: Record<string, any>) =>
+  public async getModelNames(data: BaseModel[]): Promise<ModelToUI[]> {
+    const models = data.flatMap((item: Record<string, any>) =>
       Object.keys(item).flatMap(key => {
         if (MenuService.checkKey(item, key)) {
           return item[key].map((model: ModelToUI) => ({

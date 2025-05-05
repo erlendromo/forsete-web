@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 // Services
 import uploadRouter from "../services/index/uploadService.js";
-import atrRouter from "../services/index/atrService.js";
+import atrRouter from "../services/index/atrApiRouter.js";
 import { MenuService } from '../services/menuService.js';
 // Config
 import { ApiEndpoints } from "../config/constants.js";
