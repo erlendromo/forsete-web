@@ -30,7 +30,7 @@ app.set('views', path.resolve(process.cwd(), 'public/views'));
 app.use(express.static(publicDir));
 app.use(express.static(publicDir+"/"+ viewDir));
 app.use(cookieParser());
-
+app.use(express.json());
 app.use(authRouter);
 app.use(renderRouter);
 
