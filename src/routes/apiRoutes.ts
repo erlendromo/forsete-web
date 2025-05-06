@@ -21,6 +21,8 @@ router.post(ApiRoute.Register, (req, res) => {
 });
 
 // PDF to Image route
-router.post(ApiRoute.PdfToImage, uploadMemory.single("file"), handlePdfToImage);
+router.post(ApiRoute.PdfToImage, uploadMemory.single("file"), async (req, res) => {
+  await handlePdfToImage(req, res);
+});
 
 export default router;
