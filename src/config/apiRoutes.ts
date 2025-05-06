@@ -4,4 +4,5 @@
 export enum ApiRoute {
     Login = '/api/login',
     Register = '/api/register',
+    PdfToImage = '/api/pdfToImage',
   }
