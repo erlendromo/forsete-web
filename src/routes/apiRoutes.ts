@@ -2,8 +2,11 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { ApiRoute } from '../config/apiRoutes.js';
+import { requireAuth } from '../middleware/requireAuth.js';
+import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
 import { handlePdfToImage } from '../services/index/handlepdfToImageService.js';
+import { AppPages } from '../config/constants.js';
 
 const router = Router();
 const uploadMemory = multer();
@@ -20,8 +23,13 @@ router.post(ApiRoute.Register, (req, res) => {
   return handleRegister(email, password, res);
 });
 
+// Logout route
+router.post(ApiRoute.Logout, requireAuth, (req, res) => {
+  clearAuthCookie(res);
+  res.redirect(AppPages.Login);
+});
 // PDF to Image route
-router.post(ApiRoute.PdfToImage, uploadMemory.single("file"), async (req, res) => {
+router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
   await handlePdfToImage(req, res);
 });
 

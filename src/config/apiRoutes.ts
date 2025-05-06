@@ -3,6 +3,7 @@
  */
 export enum ApiRoute {
     Login = '/api/login',
+    Logout = '/api/logout',
     Register = '/api/register',
     PdfToImage = '/api/pdfToImage',
   }

@@ -23,3 +23,14 @@ export function setAuthCookie(res: Response, token: string) {
 export function getAuthToken(req: Request): string | undefined {
   return req.cookies?.[COOKIE_NAME];
 }
+
+/**
+ * Clears the authentication token from the response cookies.
+ * @param {Response} res - The Express response object.
+ */
+export function clearAuthCookie(res: Response) {
+  res.clearCookie(COOKIE_NAME, {
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}

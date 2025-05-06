@@ -64,4 +64,13 @@
       <%- include('configurationSetting/configurationSetting', { modelNames: modelNames }); %>
     </li>
   </ul>
+  <form action="<%= logoutApi %>" method="post" class="mt-8">
+    <button
+      type="submit"
+      class="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+             text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4
+             focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">
+      Log out
+    </button>
+  </form>
 </div>
