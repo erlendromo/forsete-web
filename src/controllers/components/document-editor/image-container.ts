@@ -60,24 +60,42 @@ export class ImageContainer {
         }
     }
 
-    private async loadUploadedImage(filename: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const imagePath = `/uploads/${filename}`;
-            this.imageElement.src = imagePath;
-
-            this.imageElement.onload = () => {
-                console.log(`Image loaded successfully: ${imagePath}`);
-                resolve();
-            };
-
-            this.imageElement.onerror = () => {
-                console.error(`Failed to load image: ${imagePath}`);
-                this.imageElement.src = "/images/image-placeholder.jpg"; // Fallback
-                reject(new Error(`Failed to load image: ${imagePath}`));
-            };
-        });
+    private async loadUploadedImage(imageId: string): Promise<void> {
+        try {
+            const response = await fetch('/api/images', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image_id: imageId }),
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch image: ${response.statusText}`);
+            }
+    
+            const { dataUrl } = await response.json();
+    
+            return new Promise((resolve, reject) => {
+                this.imageElement.src = dataUrl;
+    
+                this.imageElement.onload = () => {
+                    console.log('Image loaded successfully');
+                    resolve();
+                };
+    
+                this.imageElement.onerror = () => {
+                    console.error('Error loading image');
+                    this.imageElement.src = "/images/image-placeholder.jpg";
+                    reject(new Error('Failed to load image from data URL'));
+                };
+            });
+        } catch (error) {
+            console.error(error);
+            this.imageElement.src = "/images/image-placeholder.jpg";
+            throw error;
+        }
     }
-
     private setupCanvas() {
         this.canvas.width = this.imageElement.width;
         this.canvas.height = this.imageElement.height;

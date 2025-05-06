@@ -1,6 +1,5 @@
 import express from 'express';
 import multer  from 'multer';
-import { pdfToImage } from "../../utils/pdfUtils.js";
 
 const router = express.Router();
 const uploadEndpoint = "/upload";
@@ -16,13 +15,6 @@ router.post(uploadEndpoint, upload.single("document"), async (req, res) => {
     if (!req.file) {
       res.status(400).json({ error: "No file uploaded" });
       return; // exit after sending response
-    }
-    if (req.file.originalname.toLowerCase().endsWith(".pdf")) {
-    // PDF settings
-      const pages = 1;
-      const dpi = 300;
-      // Convert PDF to image (pdfToImage expects the path on disk)
-      await pdfToImage(pages, req.file.filename, req.file.path, dpi);
     }
 
     res.status(200).json({

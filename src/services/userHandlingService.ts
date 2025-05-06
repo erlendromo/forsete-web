@@ -1,4 +1,3 @@
-// src/services/userHandlingService.ts
 import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
@@ -44,8 +43,11 @@ export async function login(
 Promise<LoginSuccess> {
     let res: Response;
     try {
-        res = await atrApi.post(ApiEndpoints.LOGIN_ENDPOINT, userCred, {
+        // config.urlBackend + endpoint
+        res = await fetch(endpoint, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(userCred),
         });
     } catch (err) {
         throw new LoginError('Network unreachable');
@@ -65,11 +67,12 @@ Promise<LoginSuccess> {
     let res: Response;
     try {
         // config.urlBackend + endpoint
-        res = await atrApi.post(ApiEndpoints.REGISTER_ENDPOINT, userData, {
+        res = await fetch(endpoint, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(userData),
         });
     } catch (err) {
-        console.error('Error during registration:', err);
         throw new LoginError('Network unreachable');
     }
     if (!res.ok) {
@@ -119,6 +122,5 @@ export async function handleLogin(username: string, password: string, res: Expre
       res.status(HTTP_STATUS.CREATED).json({ success: true, message: 'Registration successful' });
     } catch (err) {
       res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
-      console.error('Registration failed:', err);
     }
   }

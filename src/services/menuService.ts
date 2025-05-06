@@ -1,5 +1,5 @@
 import { BaseModel, ModelToUI } from '../interfaces/modelInterface.js';
-import { ModelsSingelton } from '../config/atrModels.js';
+import { ModelsSingelton } from './atrModels.js';
 
 /**
  * A service for transforming raw Models data into UI-friendly objects.
@@ -17,7 +17,7 @@ export class MenuService {
    */
   public async loadModelNames(): Promise<ModelToUI[]> {
     const models = ModelsSingelton.getInstance().getModels();
-    console.log("Loaded models:", JSON.stringify(models, null, 2));
+  
     return this.getModelNames(models);
   }
 

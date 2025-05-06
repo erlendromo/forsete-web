@@ -8,7 +8,7 @@ export enum ApiEndpoints {
   VERSION_ATR = 'forsete-atr/v2/',
 
   // ATR endpoint
-  ATR_ENDPOINT = 'atr/',
+  ATR_ENDPOINT = ApiEndpoints.VERSION_ATR + 'atr/',
 
   // Auth endpoints
   REGISTER_ENDPOINT = ApiEndpoints.VERSION_ATR + 'auth/register/',

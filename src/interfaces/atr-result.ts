@@ -2,7 +2,7 @@
     // Main document interface
     interface ATRResult {
       file_name: string;
-      image_path: string;
+      image_id: string;
       image_name: string;
       label: string;
       contains: TextElement[];

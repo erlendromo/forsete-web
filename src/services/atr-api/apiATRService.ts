@@ -1,29 +1,38 @@
 import { handleRequestError } from '../../utils/error-handling.js';
-import atrApi from '../../config/apiConfig.js';
 import { ApiEndpoints } from '../../config/constants.js';
 import { ImageProcessingConfig } from '../../interfaces/configInterface.js';
+import { config } from "../../config/config.js";
 
-/**
- * Sends an ATR request using provided image, models, and fields.
- */
 export const postATRRequest = async (
-  config: ImageProcessingConfig
+  imageConfig: ImageProcessingConfig,
+  token: string
 ): Promise<any> => {
   try {
-    const response = await atrApi.post(ApiEndpoints.ATR_ENDPOINT, config, {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 360000); // 6min timeout
+    const response = await fetch(config.urlBackend+ ApiEndpoints.ATR_ENDPOINT, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      withCredentials : true,
-      timeout: 60000,
-      maxContentLength: 100 * 1024 * 1024, // 100 MB
+      body: JSON.stringify(imageConfig),
+      credentials: 'include',
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeout);
 
-    if (!response.data) {
+    if (!response.ok) {
+      throw new Error(`ATR request failed: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (!data) {
       throw new Error('Empty response received from ATR service');
     }
 
-    return response.data;
+    return data;
   } catch (error: any) {
     handleRequestError(error);
     throw error;

@@ -4,7 +4,7 @@ dotenv.config();
 
 
 const atrApi = axios.create({
-  baseURL:  process.env.URL_BACKEND || 'http://129.241.150.71:8080',
+  baseURL:  process.env.URL_BACKEND || 'http://129.241.150.71:8080/',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -14,26 +14,26 @@ document.addEventListener("DOMContentLoaded", async () => {
       exportBtn: document.getElementById("exportBtn") as HTMLElement,
       imageContainer: document.getElementById("image-container") as HTMLElement,
     };
-
+    
     let documentInstance: DocumentManager | null = null;
     let editor: DocumentLineEditor | null = null;
     let imageContainerInstance: ImageContainer | null = null;
    
     
     // Initializes Document manager
+    
     const initializeDocument = async (): Promise<void> => {
-        const params = new URLSearchParams(window.location.search);
-        const urlFilename = params.get("file");
-
-        if (urlFilename) {
+        const transcribedData = localStorage.getItem('transcribedData')
+        console.log("Transcribed data:", transcribedData);
+        if (transcribedData) {
             try {
                 // Get data and create document manager
-                documentInstance = new DocumentManager(await getData(), urlFilename);
+                documentInstance = new DocumentManager(transcribedData);
                 
                 
                 
                 // Use the filename from the document instance
-                const docFilename = documentInstance.getImageFileName()
+                const docFilename = documentInstance.getImageId()
                 imageContainerInstance = new ImageContainer(
                     'image-container',
                     docFilename,
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const handleExportClick = async (): Promise<void> => {
         if (documentInstance) {
             // Use the filename from the document instance for export
-            const filename = documentInstance.getImageFileName();
+            const filename = documentInstance.getImageId();
                            
             generatePlainTextPdf(
                 documentInstance.getAllLineSegments(),
