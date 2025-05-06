@@ -5,7 +5,7 @@
  */
 export enum ApiEndpoints {
   // Base URL for the backend API
-  VERSION_ATR = '/forsete-atr/v2/',
+  VERSION_ATR = 'forsete-atr/v2/',
 
   // ATR endpoint
   ATR_ENDPOINT = 'atr/',

@@ -1,18 +1,18 @@
 // src/routes/router.ts
 import { Router } from 'express';
-import { AppRoute } from '../config/constants.js';
+import { ApiRoute } from '../config/apiRoutes.js';
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
 
 const router = Router();
 
 // Login route
-router.post(AppRoute.Login, (req, res) => {
+router.post(ApiRoute.Login, (req, res) => {
   const { email, password } = req.body;
   return handleLogin(email, password, res);
 });
 
 // Register route
-router.post(AppRoute.Register, (req, res) => {
+router.post(ApiRoute.Register, (req, res) => {
   const { email, password } = req.body;
   return handleRegister(email, password, res);
 });

@@ -2,7 +2,6 @@
 import { config } from '../config/config.js';
 import express from "express";
 import path from "path";
-import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 // Services
 import uploadRouter from "../services/index/uploadService.js";
@@ -21,9 +20,11 @@ const publicDir = "public";
 const viewDir = "views";
 
 const setViews = () => {
+const setViews = () => {
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.resolve(process.cwd(), 'public/views'));
+}
 }
 
 // Serves the public folder and views

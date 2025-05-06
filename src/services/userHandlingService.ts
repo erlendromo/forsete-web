@@ -1,8 +1,11 @@
+// src/services/userHandlingService.ts
+import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
 import { User, LoginSuccess, Registration } from "../interfaces/userInterface.js";
 import { Response as ExpressResponse } from "express";
-import atrApi from "../config/apiConfig.js";
+
+const url = config.urlBackend;
 
 /**
  * This module provides functions for user authentication, including login,
@@ -35,7 +38,8 @@ export class LoginError extends Error {
  * @throws {LoginError} - Throws an error if the login fails or if there is a network issue.
  */
 export async function login(
-    userCred: User
+    userCred: User,
+    endpoint = url + ApiEndpoints.LOGIN_ENDPOINT,
 ): 
 Promise<LoginSuccess> {
     let res: Response;
@@ -54,7 +58,8 @@ Promise<LoginSuccess> {
 }
 
 export async function register(
-    userData: Registration
+    userData: Registration,
+    endpoint = url + ApiEndpoints.REGISTER_ENDPOINT,
 ): 
 Promise<LoginSuccess> {
     let res: Response;
