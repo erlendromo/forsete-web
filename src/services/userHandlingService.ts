@@ -112,7 +112,7 @@ export async function handleLogin(username: string, password: string, res: Expre
     }
   }
   
-  export async function handleRegister(username: string, password: string, res: ExpressResponse) {
+  export async function handleRegister(username: string, password: string, res: ExpressResponse): Promise<void>{
     const userData: Registration = {
         email: username,
         password: password
