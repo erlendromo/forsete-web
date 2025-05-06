@@ -1,6 +1,5 @@
-// pdfUtils.ts
-import fs from 'fs';
-import { fromPath } from "pdf2pic";
+// utils/pdfUtils.ts
+import { fromBuffer } from "pdf2pic";
 import { PDFDocument } from 'pdf-lib';
 
 interface PdfSize {
@@ -8,41 +7,50 @@ interface PdfSize {
   width: number;
 }
 
-// Exports a function that returns the size of the PDF's first page
-export async function getPdfSize(pdfPath: string): Promise<PdfSize> {
-  const pdfBytes = fs.readFileSync(pdfPath);
-  const pdfDoc = await PDFDocument.load(pdfBytes);
-  const firstPage = pdfDoc.getPage(0);
-  const { width, height } = firstPage.getSize();
+/**
+ * Retrieves the dimensions of the first page of a PDF document.
+ *
+ * @param bytesFromPdf - The PDF file content as a Buffer.
+ * @returns A Promise that resolves to an object containing the width and height of the first page.
+ * @throws Will throw an error if the PDF size cannot be determined.
+ */
+export async function getPdfSize(bytesFromPdf: Buffer): Promise<PdfSize> {
+  const pdfDoc = await PDFDocument.load(bytesFromPdf);
+  const { width, height } = pdfDoc.getPage(0).getSize();
   return { width, height };
 }
 
 /**
- * Converts a PDF (on the server's filesystem) to an image.
- * @param pages The page number to convert
- * @param name The base name for the output file (no extension).
- * @param path The *server-side path* to the PDF.
- * @param density The DPI to use for conversion.
- * @returns The result object from pdf2pic containing { page, name, path, etc. }
+ * Converts a specific page of a PDF into an image buffer.
+ *
+ * @description This function it meant to be used to convert a PDF file to an image.
+ * For this to work two dependencies are required: pdf-lib and pdf2pic, server also needs
+ * installation of dependencies to make pdf2pic to work.
+ * @param pages - The page number to convert (1-based index).
+ * @param bytesFromPdf - The PDF file content as a Buffer.
+ * @param density - The resolution density for the output image (measured in DPI).
+ * @returns A Promise that resolves to a Buffer containing the image data of the specified page.
+ * @throws Will throw an error if the PDF size cannot be determined or if the conversion fails.
  */
-export async function pdfToImage(
-  pages: number,
-  name: string,
-  path: string,
-  density: number
-): Promise<any> {
+export async function pdfToImage(pages: number, bytesFromPdf: Buffer, density: number): Promise<Buffer> {
   // The size of the pdf, height and width
-  const size = await getPdfSize(path);
+  const size = await getPdfSize(bytesFromPdf);
+  const { width, height } = size;
+  if (!width || !height) {
+    throw new Error("Failed to get PDF size");
+  }
 
   // Options
-  const options = {
+  const convert = fromBuffer(bytesFromPdf, {
     density,
-    saveFilename: name,
-    savePath: "./uploads", // Folder on the server
     format: "png",
-    width: size.width,
-    height: size.height,
-  };
-  const convert = fromPath(path, options);
-  return convert(pages, { responseType: "image" });
+    width,
+    height,
+  });
+  const pageOutput = await convert(pages, { responseType: "buffer" });
+  if (!pageOutput || !pageOutput.buffer) {
+    throw new Error("pdf2pic failed to produce an image buffer");
+  }
+  
+  return pageOutput.buffer; 
 }
