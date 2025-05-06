@@ -3,6 +3,7 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   transform: {
+    // Use ts-jest to transpile TypeScript files
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
