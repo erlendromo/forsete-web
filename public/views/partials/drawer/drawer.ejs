@@ -61,10 +61,10 @@
     </li>
 
     <li>
-      <%- include('configurationSetting/configurationSetting', { modelNames: modelNames }); %>
+      <%- include('configurationSetting/configurationSetting'); %>
     </li>
   </ul>
-  <form action="<%= logoutApi %>" method="post" class="mt-8">
+  <form action="<%= logoutUrl %>" method="post" class="mt-8">
     <button
       type="submit"
       class="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium

@@ -30,9 +30,8 @@
       <p class="font-bold dark:text-white text-gray-700">Model Type</p>
       <p class="font-bold dark:text-white text-gray-700">Model Name</p>
     </div>
-    <% modelNames.forEach(function (model) { %>
-      <%- include('modelArea', { model: model }) %>
-        <% }); %>
+    <!-- Radio buttons -->
+    <%- include('radioButton') %>
   </ul>
   </ul>
 </li>
