@@ -45,7 +45,15 @@ export class ImageContainer {
         this.redraw();
     }
 
+    public drawAllPolygons(){
+        this.polygons.forEach((polygon) => {
+            this.drawPolygon(polygon)
+        });
+    }
 
+    public clearCanvas(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 
     public highlightLinePolygon(lineSegment: LineSegment | null): void {
         this.selectedLineSegment = lineSegment;
@@ -145,21 +153,24 @@ export class ImageContainer {
         if(this.selectedLineSegment){
             if (this.selectedLineSegment.confidence >= 90) {
                 // High confidence - Green
-                this.ctx.fillStyle = "rgba(198, 246, 213, 0.5)"; // #c6f6d5 with 0.5 opacity
-                this.ctx.strokeStyle = "#22543d";
+                this.ctx.fillStyle = "rgba(198, 246, 213, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(34, 84, 61, 1)";
             } else if (this.selectedLineSegment.confidence >= 75) {
                 // Good confidence - Blue
-                this.ctx.fillStyle = "rgba(190, 227, 248, 0.5)"; // #bee3f8 with 0.5 opacity
-                this.ctx.strokeStyle = "#2c5282";
+                this.ctx.fillStyle = "rgba(190, 227, 248, 0.5)";
+                this.ctx.strokeStyle = "rgba(44, 82, 130, 1)";
             } else if (this.selectedLineSegment.confidence >= 60) {
                 // Medium confidence - Yellow
-                this.ctx.fillStyle = "rgba(254, 252, 191, 0.5)"; // #fefcbf with 0.5 opacity
-                this.ctx.strokeStyle = "#744210";
+                this.ctx.fillStyle = "rgba(254, 252, 191, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(116, 66, 16, 1)";
             } else {
                 // Low confidence - Red
-                this.ctx.fillStyle = "rgba(254, 215, 215, 0.5)"; // #fed7d7 with 0.5 opacity
-                this.ctx.strokeStyle = "#822727";
+                this.ctx.fillStyle = "rgba(254, 215, 215, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(130, 39, 39, 1)";
             }
+        } else{
+            this.ctx.fillStyle = "rgba(234, 110, 215, 0.5)";
+            this.ctx.strokeStyle ="rgb(205, 17, 180)";
         }    
         this.ctx.lineWidth = 1;
         this.ctx.fill();
