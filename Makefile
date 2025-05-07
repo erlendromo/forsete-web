@@ -14,7 +14,7 @@ test:
 
 # Build and run the container using Docker Compose
 launch:
-	@docker-compose up -d --build
+	@docker compose up -d --build
 .PHONY: launch
 
 # Remove the container using Docker Compose

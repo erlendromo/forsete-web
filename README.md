@@ -2,13 +2,13 @@
 Configure your ".env" after the ".env.example" file.
 
 # Installation of the project
-Make sure you have ["make"](https://www.gnu.org/software/make/), ["docker"](https://docs.docker.com/), ["Node.js"](https://nodejs.org/en/download) and ["TypeScript"](https://www.npmjs.com/package/typescript) installed.
+Make sure you have, ["docker"](https://docs.docker.com/) installed.
 
 ```bash
-npm install # Install all dependencies, alternative: npm ci
-npx tsc # Compiles the typescript code
-make launch # Launch the docker image in a containger
-make log # To see status on container using Docker compose
+docker compose up -d --buil # Build and run the container using Docker Compose
+docker compose down --volumes --remove-orphans # Remove the container using Docker Compose
+docker compose logs -f # See the logs of the container using Docker Compose
+
 ```
 # Running the project
 After that your project should be running at http://localhost:{PORT}/.
