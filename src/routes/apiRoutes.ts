@@ -51,15 +51,23 @@ apiRouter.post(ApiRoute.Transcribe, uploadMemory.single('file'), (req, res) => {
   })();
 });
 
-apiRouter.get(ApiRoute.Images, (req, res) => {
-
+apiRouter.post(ApiRoute.Images, async (req, res) => {
   const token = getAuthToken(req);
+  
   if (!token) {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
-  const result = handleGetImageFile(req.body.image_id, token); // Call the service to get image by ID
-  res.json(result); 
+
+  try {
+    const { data, mimeType } = await handleGetImageFile(req.body.image_id, token); 
+    console.log("Image data:", data);
+    console.log("MIME type:", mimeType);
+    res.setHeader('Content-Type', mimeType);
+    res.send(Buffer.from(data));
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
 });
 
 
@@ -78,7 +86,9 @@ apiRouter.post(ApiRoute.Outputs, (req, res) => {
 
   (async () => {
     try {
+    
       const result = await hadleGetOutputData(image_id, id, token);
+     
       res.json(result);
     } catch (err: any) {
       res.status(500).json({ error: err.message });

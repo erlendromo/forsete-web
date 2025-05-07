@@ -47,20 +47,17 @@ async function handleTranscribe(file: Express.Multer.File, token: string): Promi
   }
 }
 
- async function handleGetImageFile(image_id: string, token: string): Promise<{ dataUrl:string }> {
-  const imageResponse = await getImageByID(image_id, token)
-  if (!imageResponse || !imageResponse.buffer || !imageResponse.mimeType) {
-    throw new Error('Image not found or invalid response');
+ async function handleGetImageFile(image_id: string, token: string): Promise<{ mimeType:any, data: any }> {
+  const blob = await getImageByID(image_id, token); // Already a Blob
+  const arrayBuffer = await blob.arrayBuffer(); // Convert to ArrayBuffer
+  const mimeType = blob.type; // MIME type is part of Blob object
+  return { data: arrayBuffer, mimeType };
 }
 
-const base64 = imageResponse.buffer.toString('base64');
-const dataUrl = `data:${imageResponse.mimeType};base64,${base64}`;
 
-return { dataUrl };
-  
-}
 
-async function hadleGetOutputData(imageId: string, outputId: string, token: string): Promise<{ json:string }> {
+
+async function hadleGetOutputData(imageId: string, outputId: string, token: string): Promise<{ json:any}> {
   const outputResponse = await getOutputData(imageId,outputId, token);
   if (!outputResponse) {
     throw new Error('Output not found or invalid response');

@@ -1,5 +1,6 @@
-import { LineSegment } from "../../../interfaces/line-segment";
-import { Polygon, Point } from "../../../interfaces/atr-result";
+import { LineSegment } from "../../../interfaces/line-segment.js";
+import { Polygon, Point } from "../../../interfaces/atr-result.js";
+import { ApiRoute } from "../../../config/apiRoutes.js";
 
 export class ImageContainer {
     private container: HTMLElement;
@@ -13,7 +14,7 @@ export class ImageContainer {
 
     constructor(
         containerId: string,
-        imageFilename: string, 
+        imageId: string, 
         onChange: (polygon: Polygon) => void
     ) {
         this.container = document.getElementById(containerId) as HTMLElement;
@@ -30,7 +31,7 @@ export class ImageContainer {
         this.onChange = onChange;
 
         this.container.appendChild(this.canvas);
-        this.initialize(imageFilename);
+        this.initialize(imageId);
     }
 
     // Method to set polygon
@@ -51,9 +52,9 @@ export class ImageContainer {
         this.redraw();
     }
 
-    private async initialize(imageFilename: string) {
+    private async initialize(imageId: string) {
         try {
-            await this.loadUploadedImage(imageFilename);
+            await this.loadUploadedImage(imageId);
             this.setupCanvas();
         } catch (error) {
             console.error(error);
@@ -61,41 +62,55 @@ export class ImageContainer {
     }
 
     private async loadUploadedImage(imageId: string): Promise<void> {
+        const controller = new AbortController();
+        const { signal } = controller;
+    
         try {
-            const response = await fetch('/api/images', {
-                method: 'GET',
+            const response = await fetch(ApiRoute.Images, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ image_id: imageId }),
+                signal,
             });
-    
+            console.log('Response received:', response);
             if (!response.ok) {
-                throw new Error(`Failed to fetch image: ${response.statusText}`);
+                throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
             }
     
-            const { dataUrl } = await response.json();
+            const blob = await response.blob();
+            console.log('Blob received:', blob);
+            const imageUrl = URL.createObjectURL(blob);
     
-            return new Promise((resolve, reject) => {
-                this.imageElement.src = dataUrl;
+            // Clean previous image URL if needed
+            if (this.imageElement.src.startsWith('blob:')) {
+                URL.revokeObjectURL(this.imageElement.src);
+            }
     
+            this.imageElement.src = imageUrl;
+    
+            await new Promise<void>((resolve, reject) => {
                 this.imageElement.onload = () => {
+                    URL.revokeObjectURL(imageUrl); 
                     console.log('Image loaded successfully');
                     resolve();
                 };
-    
                 this.imageElement.onerror = () => {
-                    console.error('Error loading image');
-                    //this.imageElement.src = "/images/image-placeholder.jpg";
-                    reject(new Error('Failed to load image from data URL'));
+                    URL.revokeObjectURL(imageUrl);
+                    reject(new Error('Failed to load image from blob'));
                 };
             });
         } catch (error) {
-            console.error(error);
-            //this.imageElement.src = "/images/image-placeholder.jpg";
+            console.error('Image load error:', error);
+            // Optional fallback image:
+            // this.imageElement.src = "/images/image-placeholder.jpg";
             throw error;
         }
     }
+    
+
+   
     private setupCanvas() {
         this.canvas.width = this.imageElement.width;
         this.canvas.height = this.imageElement.height;

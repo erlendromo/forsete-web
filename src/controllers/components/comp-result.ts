@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initializes Document manager
     
     const initializeDocument = async (): Promise<void> => {
-        console.log("Initializing document...");
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageIdParms = urlParams.get('file') || '';
         const transcribedDataRaw = localStorage.getItem('transcribedData')
         if (transcribedDataRaw) {
             try {
@@ -52,16 +53,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
                 const data = await response.json();
                 // Get data and create document manager
-                console.log("Transcribed data:", transcribedData);
                 documentInstance = new DocumentManager( data, image_id);
                 
                 
                 
-                // Use the filename from the document instance
-                const docFilename = documentInstance.getImageId()
+                // Use the Image ID from the document instance
+                
                 imageContainerInstance = new ImageContainer(
                     'image-container',
-                    docFilename,
+                    imageIdParms,
                     (polygon) => {
                         console.log("Polygon changed:", polygon);
                     }

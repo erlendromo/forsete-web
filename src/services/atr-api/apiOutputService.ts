@@ -52,7 +52,6 @@ export const getOutputData = async (imageID: string, outputID: string, token: st
     },
     credentials: 'include',
   });
-
   if (!response.ok) throw new Error(`Failed to get output data: ${response.statusText}`);
   return await response.json();
 };
