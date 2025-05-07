@@ -269,7 +269,7 @@ body {
   background-color: #223a4a;
   width: 100px;
   flex-shrink: 0;
-  padding-left: 4px;
+  padding-left: 0;
   height: 100%;
 }
 
@@ -329,8 +329,12 @@ body {
   flex-grow: 1;            
   resize: none;             
   min-height: 60px;      
-  transition: height 0.3s ease;
-  padding: 2px;
+
+  background-color: #1e1e24; /* Dark background */
+  color: #ffffff; /* Light text */
+  
+  border: 1px solid #444;
+border-radius: 4px;
 }
 
 
@@ -381,6 +385,71 @@ body {
 
 .reset-btn:disabled {
   cursor: default;
+}
+
+/* NavBar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2d3748;
+}
+
+/* Hamburger Menu */
+.ham-menu {
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  cursor: pointer;
+}
+
+.ham-menu span {
+  background-color: white;
+  height: 3px;
+  margin: 3px 0;
+  transition: 0.2s;
+}
+
+.ham-menu.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.ham-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.ham-menu.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Off-screen Menu */
+.off-screen-menu {
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  width: 300px;
+  height: calc(100% - 80px);
+  background-color: #2d3748;
+  transition: 0.3s;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.off-screen-menu.active {
+  right: 0;
+}
+
+.off-screen-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 15px 30px;
+  transition: 0.2s;
+}
+
+.off-screen-menu a:hover {
+  background-color: #4a5568;
 }
 
 /* Responsive adjustments */
