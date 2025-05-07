@@ -6,4 +6,5 @@ export enum ApiRoute {
     Register = '/api/register',
     Transcribe = '/api/transcribe',
     Images = '/api/images',
+    Outputs = '/api/outputs',
   }

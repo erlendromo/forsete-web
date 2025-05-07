@@ -86,13 +86,13 @@ export class ImageContainer {
     
                 this.imageElement.onerror = () => {
                     console.error('Error loading image');
-                    this.imageElement.src = "/images/image-placeholder.jpg";
+                    //this.imageElement.src = "/images/image-placeholder.jpg";
                     reject(new Error('Failed to load image from data URL'));
                 };
             });
         } catch (error) {
             console.error(error);
-            this.imageElement.src = "/images/image-placeholder.jpg";
+            //this.imageElement.src = "/images/image-placeholder.jpg";
             throw error;
         }
     }

@@ -31,7 +31,7 @@ export enum ApiEndpoints {
 }
 
 export function outputEndpointConstructor(imageID: string): string {
-  return  ApiEndpoints.ATR_ENDPOINT + 'Images/' + imageID + '/outputs/';
+  return  ApiEndpoints.VERSION_ATR + 'Images/' + imageID + '/outputs/';
 }
 
 export function outputDataEndpointConstructor(imageID: string, outputID: string): string {

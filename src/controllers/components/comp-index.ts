@@ -102,12 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
                              `Transcription failed: ${statusText} (${response.status})`;
         throw new Error(errorMessage);
       }
-      console.log("Transcription response:", response);
-      const jsonData = response.json();
-
+  
+      const jsonData = await response.json();
+      console.log("API Response JSON:", jsonData);
       // Store the transcribed data in localStorage
       localStorage.setItem('transcribedData', JSON.stringify(jsonData));
-      console.log("Transcribed data:", jsonData);
       return jsonData
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
@@ -163,15 +162,21 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       // Transcribe the file using the returned filename
       try {
+       
         console.log("Calling transcribeFile...");
         transcribeDoc = await transcribeFile(file);
         console.log("Received transcription response:", transcribeDoc);
       
-        if (!Array.isArray(transcribeDoc) || !transcribeDoc[0]?.image_id) {
-          throw new Error("Unexpected response format. Unable to find image_id.");
+        if (Array.isArray(transcribeDoc)) {
+          if (!transcribeDoc[0]?.image_id) {
+            throw new Error("Unexpected response format. Unable to find image_id.");
+          }
+          window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
+        } else if (transcribeDoc?.image_id) {
+          window.location.href = `results?file=${encodeURIComponent(transcribeDoc.image_id)}`;
+        } else {
+          throw new Error("Unexpected response format. No image_id found.");
         }
-    
-        window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
       } catch (transcribeError: any) {
         // Handle transcription error but still allow seeing results if upload succeeded
         console.error("Transcription error:", transcribeError);

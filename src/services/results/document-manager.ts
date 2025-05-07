@@ -7,39 +7,33 @@ import { ensureDefined } from "../../utils/error-handling.js";
 import { ATRResult, Polygon } from "../../interfaces/atr-result.js";
 import { LineSegment } from "../../interfaces/line-segment.js";
 
-type editedAndOriginal ={original: string; edited: string}
+
+type editedAndOriginal ={original: string; edited: string};
 
 export class DocumentManager {
     private originalATRResult: ATRResult;
     private imageId: string;
     private lineSegments: Map<number,LineSegment>;
-    private documentId: string;
     private createdAt: Date;
   
-    constructor(atrResultJson: unknown) {
+    constructor(atrResultJson: unknown, imageId: string) {
       
       this.originalATRResult = atrResultJson as ATRResult; 
       this.createdAt = new Date();
-      this.imageId = this.originalATRResult.image_id as string; //imageId is the same as the image_id in the json result
-      
-      this.documentId = this.generateDocumentId(this.originalATRResult); //current solution, can be changed
+      this.imageId = imageId;
+
       
       this.lineSegments = this.indexATRResult(this.originalATRResult);
     }
   
     //random id generator
-    private generateDocumentId(atrResult: ATRResult): string {
-      const fileBase = atrResult.file_name.split('.')[0];
-      const timestamp = this.createdAt.getTime();
-      const randomSuffix = Math.random().toString(36).substring(2, 8);
-      
-      return `${fileBase}_${timestamp}_${randomSuffix}`;
-    }
+
   
     private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
         const LineSegmentMap = new Map<number, LineSegment>();
         let lineIndex = 0;
         
+        console.log("Indexing ATR result:", atrResult);
         atrResult.contains.forEach((textElement) => {
           if (!textElement.text_result) {
             console.warn("contains element without text_result – skipping", textElement);
@@ -113,12 +107,6 @@ export class DocumentManager {
           .map(item => item.edited ? (item.editedContent || '') : item.textContent)
       }
     
-      // Get document ID
-      getDocumentId(): string {
-        return this.documentId;
-      }
-
-     
 
       // Get bounding box based on line index
       getBoundingBox(lineIndex: number): { xmin: number; ymin: number; xmax: number; ymax: number } | undefined {

@@ -12,7 +12,7 @@ export class DocumentLineEditor {
   private editorContentEl: HTMLElement;
   private revertAllBtn: HTMLButtonElement;
   //private saveBtn: HTMLButtonElement;
-  private selectedLineIndex: number = -1;
+
   private imageContainer: ImageContainer | null;
   
   constructor(containerId: string, documentManager: DocumentManager,  imageContainer?: ImageContainer) {

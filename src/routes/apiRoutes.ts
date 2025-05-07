@@ -2,11 +2,10 @@
 import { Router } from 'express';
 import { ApiRoute } from '../config/apiRoutes.js';
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
-import { handleTranscribe, handleGetImageFile } from '../services/atrApiHandler.js';
+import { handleTranscribe, handleGetImageFile, hadleGetOutputData } from '../services/atrApiHandler.js';
 import multer from 'multer';
 import { getAuthToken } from '../utils/cookieUtil.js';
-import { get } from 'http';
-import { getImageByID } from '../services/atr-api/apiImageService.js';
+
 
 const storage = multer.memoryStorage();
 const uploadMemory = multer({ storage });
@@ -60,17 +59,32 @@ apiRouter.get(ApiRoute.Images, (req, res) => {
     return;
   }
   const result = handleGetImageFile(req.body.image_id, token); // Call the service to get image by ID
-      res.json(result); // Send the result back
-  (async () => {
-    try {
-      
-    } catch (error: any) {
-      res.status(500).json({ error: error.message || 'Server error' });
-    }
-  })();
+  res.json(result); 
 });
 
 
+apiRouter.post(ApiRoute.Outputs, (req, res) => {
+  const token = getAuthToken(req);
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  const { image_id, id } = req.body;
+  if (!image_id || !id) {
+    res.status(400).json({ error: "Missing image_id or id" });
+    return;
+  }
+
+  (async () => {
+    try {
+      const result = await hadleGetOutputData(image_id, id, token);
+      res.json(result);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  })();
+});
 
 export default apiRouter;
 

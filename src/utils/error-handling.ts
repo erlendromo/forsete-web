@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-
 // This file contains utility functions for error handling in TypeScript.
 export function ensureDefined<T>(value: T | undefined, message: string = "Value is undefined"): T {
     if (value === undefined) {
@@ -31,12 +29,5 @@ export const handleRequestError = (error: any): void => {
   }
 };
 
-/**
- * Validates that a file exists at the given path.
- */
-export const validateFileExists = (filePath: string): void => {
-    if (!fs.existsSync(filePath)) {
-      throw new Error(`File does not exist: ${filePath}`);
-    }
-  };
+
   

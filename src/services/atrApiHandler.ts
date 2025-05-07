@@ -1,6 +1,7 @@
 
 import { getImageByID, uploadImage } from '../services/atr-api/apiImageService.js'; 
 import { postATRRequest } from '../services/atr-api/apiATRService.js'; 
+import { getOutput, getOutputData } from './atr-api/apiOutputService.js';
 
 
 
@@ -21,8 +22,14 @@ async function handleTranscribe(file: Express.Multer.File, token: string): Promi
     if (!imageUploadResponse) {
       throw new Error("Failed to upload image");
     }
-    const imageIDs = imageUploadResponse.map((image: { id:string; }) => image.id);
-
+    let imageIDs: string[] = [];
+    if (Array.isArray(imageUploadResponse)) {
+      // If it's an array, use map
+      imageIDs = imageUploadResponse.map((image: { id: string }) => image.id);
+    } else if (imageUploadResponse && typeof imageUploadResponse === 'object') {
+      // If it's a single object, just extract the id
+      imageIDs = [imageUploadResponse.id];
+    } 
     // Prepare ATR request configuration
     const atrConfig = {
       image_ids: imageIDs,
@@ -53,4 +60,12 @@ return { dataUrl };
   
 }
 
-export { handleTranscribe, handleGetImageFile };
+async function hadleGetOutputData(imageId: string, outputId: string, token: string): Promise<{ json:string }> {
+  const outputResponse = await getOutputData(imageId,outputId, token);
+  if (!outputResponse) {
+    throw new Error('Output not found or invalid response');
+  }
+  return outputResponse;
+}
+
+export { handleTranscribe, handleGetImageFile, hadleGetOutputData };

@@ -1,9 +1,10 @@
+
 import { DocumentManager } from '../../services/results/document-manager.js';
-import { getData } from '../../utils/json/jsonLoader.js';
 import { generatePlainTextPdf } from '../../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
 import { initializeImageZoom } from './zoom-image.js';
+import { ApiRoute } from '../../config/apiRoutes.js';
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -23,12 +24,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initializes Document manager
     
     const initializeDocument = async (): Promise<void> => {
-        const transcribedData = localStorage.getItem('transcribedData')
-        console.log("Transcribed data:", transcribedData);
-        if (transcribedData) {
+        console.log("Initializing document...");
+        const transcribedDataRaw = localStorage.getItem('transcribedData')
+        if (transcribedDataRaw) {
             try {
+                const transcribedData = JSON.parse(transcribedDataRaw);
+                if (!Array.isArray(transcribedData) || transcribedData.length === 0) {
+                    throw new Error("transcribedData is empty or invalid");
+                  }
+                
+                  const firstOutput = transcribedData[0]; // Get the first output object
+                  const { image_id, id } = firstOutput;
+                
+                  if (!image_id || !id) {
+                    throw new Error("Missing image_id or id in transcribedData");
+                  }
+                
+                  const response = await fetch(ApiRoute.Outputs, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ image_id, id })
+                  });
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+                const data = await response.json();
                 // Get data and create document manager
-                documentInstance = new DocumentManager(transcribedData);
+                console.log("Transcribed data:", transcribedData);
+                documentInstance = new DocumentManager( data, image_id);
                 
                 
                 

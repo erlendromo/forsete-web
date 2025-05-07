@@ -10,6 +10,8 @@ export const postATRRequest = async (
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 360000); // 6min timeout
+    console.log("Sending ATR request with config:", imageConfig);
+    console.log(config.urlBackend+ ApiEndpoints.ATR_ENDPOINT);
     const response = await fetch(config.urlBackend+ ApiEndpoints.ATR_ENDPOINT, {
       method: 'POST',
       headers: {
