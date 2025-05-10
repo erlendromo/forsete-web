@@ -34,9 +34,30 @@
       <p class="font-bold dark:text-white text-gray-700">Model Name</p>
       <p class="font-bold dark:text-white text-gray-700">Status</p>
     </div>
+    <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
+      Text Recognition Models
+    </p>
+    <!-- Divider -->
+    <li>
+      <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+    </li>
     <%- include('modelOverview/modelAreaTextRecognitionModels') %>
-    <%- include('modelOverview/modelAreaLineRecognitionModels') %>
-  
+
+      <div class="divide-y divide-gray-300 dark:divide-gray-700"></div>
+      <!-- Divider -->
+      <li>
+        <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+      </li>
+      <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
+        Line Recognition Models
+      </p>
+      <!-- Divider -->
+      <li>
+        <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+      </li>
+
+      <%- include('modelOverview/modelAreaLineRecognitionModels') %>
+
   </ul>
   </ul>
 </li>
