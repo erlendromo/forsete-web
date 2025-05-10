@@ -1,7 +1,9 @@
 import { handleApiOrMock } from './apiService.js';
-import { Models } from '../interfaces/modelInterface.js';
-import { ModelToUI } from '../interfaces/modelInterface.js';
+import { Model, AllModels } from '../interfaces/modelInterface.js';
 import { AppConfig } from '../interfaces/configInterface.js';
+import axios from 'axios';
+import { ApiEndpoints } from '../config/constants.js';
+import { EnumMember, EnumType } from 'typescript';
 
 
 /**
@@ -9,31 +11,36 @@ import { AppConfig } from '../interfaces/configInterface.js';
  */
 export class MenuService {
   private static readonly ERROR_NO_MODEL_MSG = 'No models found.';
-  private readonly endpointUrl: string;
+  private readonly backendUrl: string;
   private readonly useMock: boolean;
   
   /**
    * Constructs a MenuService instance.
    *
    * @param {AppConfig} config - The application configuration object.
-   * @param {string} endpoint - The API endpoint to fetch models from.
    */
-  constructor(config: AppConfig, endpoint: string) {
-    // build the full URL once
-    this.endpointUrl = config.urlBackend+endpoint;
-    this.useMock     = config.useMock
+  constructor(config: AppConfig) {
+    this.backendUrl = config.urlBackend;
+    this.useMock     = config.useMock;
   }
 
    /**
    * Fetches the raw models from the backend (or mock),
    * then returns them as an array of ModelToUI.
    *
-   * @returns {Promise<ModelToUI[]>}
+   * @returns {Promise<Model>}
    * @throws {Error} if no models are found or the fetch fails.
    */
-  public async loadModelNames(): Promise<ModelToUI[]> {
-    const response = await handleApiOrMock(this.endpointUrl,this.useMock);
-    return this.getModelNames(response as Models);
+  public async loadModelNames(): Promise<AllModels> {  
+  const lineModels = this.getModels(ApiEndpoints.LINE_MODELS_ENDPOINT);
+  const textModels = this.getModels(ApiEndpoints.TEXT_MODELS_ENDPOINT);
+
+  const [line, text] = await Promise.all([lineModels, textModels]);
+
+  return {
+    lineModels: line,
+    textModels: text
+  };
   }
 
   /**
@@ -57,40 +64,7 @@ export class MenuService {
     return key in item && MenuService.checkArray(item[key]);
   }
 
-  /**
-   * Transforms the data from a JSON response into an array of Model objects.
-   *
-   * The data parameter must apply to the Models interface, where each key maps to an array
-   * of models. For each key that passes the checkKey test, the function maps each model by adding a
-   * 'readableType' property obtained from getReadableText.
-   *
-   * @param {Models} data - The JSON response data containing model arrays.
-   * @returns {Promise<ModelToUI[]>} A promise that resolves to an array of transformed Model objects.
-   * @throws {Error} If no models are found in the data.
-   */
-  public async getModelNames(data: Models): Promise<ModelToUI[]> {
-    const dataArr = [data];
-    const models = dataArr.flatMap((item: Record<string, any>) =>
-      Object.keys(item).flatMap(key => {
-        // Check if the key exists and its value is an array
-        if (MenuService.checkKey(item, key)) {
-          // Map each model to a new object with 'name', 'type', and 'readableType'
-          return item[key].map((model: ModelToUI) => ({
-            name: model.name,
-            type: key,
-            readableType: MenuService.getReadableText(key)
-          }));
-        }
-        // If the key doesn't exist or its value is not an array, return an empty array
-        return [];
-      })
-    );
-    if (models.length === 0) {
-      throw new Error(MenuService.ERROR_NO_MODEL_MSG);
-    }
 
-    return models;
-  }
 
   /**
    * Transforms a text string and capitalizes the first letter.
@@ -102,4 +76,21 @@ export class MenuService {
     // Replace underscores with spaces and capitalize first letter
     return text.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase());
   }
+
+  private async getModels(modelEndpoint: string): Promise<Model[]> {
+    const url = this.backendUrl + modelEndpoint;
+    try {
+      console.log(`Fetching models from ${url}`);
+      const { data: models } = await axios.get<Model[]>(url);
+      if (!models || models.length === 0) {
+        console.log('No models found');
+      }
+      return models;
+    } catch (error) {
+      console.error('Error fetching models:', error);
+      throw error;
+    }
+  }
+
 }
+
