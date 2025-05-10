@@ -1,5 +1,6 @@
 <!-- Configuration settings-->
 <li>
+  <ul>
   <button type="button"
     class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
     aria-controls="dropdown-configuration" data-collapse-toggle="dropdown-configuration">
@@ -17,6 +18,7 @@
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
     </svg>
   </button>
+  </ul>
   <!-- Dropdown Submenu: Hidden by default -->
   <ul id="dropdown-configuration" class="hidden py-2 space-y-2">
     <!-- Divider -->
@@ -25,22 +27,29 @@
     </li>
     <!-- Model configuration area -->
     <!-- Loop over each model to render its configuration area -->
+     <li>
     <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 text-center">
       Model Overview
     </h2>
+    </li>
+    <li>
     <div class="grid grid-cols-3 gap-4 items-center">
       <!-- Header Row -->
       <p class="font-bold dark:text-white text-gray-700">Model Type</p>
       <p class="font-bold dark:text-white text-gray-700">Model Name</p>
       <p class="font-bold dark:text-white text-gray-700">Status</p>
     </div>
+    </li>
+    <li>
     <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
       Text Recognition Models
     </p>
+    </li>
     <!-- Divider -->
     <li>
       <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
     </li>
+    <li>
     <%- include('modelArea', {models: textModels}) %>
 
       <div class="divide-y divide-gray-300 dark:divide-gray-700"></div>
@@ -48,6 +57,8 @@
       <li>
         <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
       </li>
+      </li>
+    <li>
       <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
         Line Recognition Models
       </p>
@@ -57,7 +68,35 @@
       </li>
 
       <%- include('modelArea', {models: lineModels}) %>
-
+    </li>
   </ul>
   </ul>
 </li>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Function to get the selected models
+ const getSelectedModels = () => {
+  // Select all radio buttons
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  // Store the model types in a Set, this is to avoid duplicates
+  const modelTypes = new Set(Array.from(radioButtons).map(radioButton => radioButton.name));
+
+  modelTypes.forEach(modelType => {
+    const checkedRadio = document.querySelector(`input[name="${modelType}"]:checked`);
+    if (checkedRadio) {
+      console.log(`Name: ${checkedRadio.id}, Type: ${checkedRadio.name}`);
+    }
+  });
+};
+
+  // Run once on load
+  getSelectedModels();
+
+  // Add event listeners to update log on change
+  document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
+    radioButton.addEventListener('change', () => {
+      getSelectedModels();
+    });
+  });
+});
+</script>
