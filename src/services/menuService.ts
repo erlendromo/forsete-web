@@ -43,47 +43,13 @@ export class MenuService {
   };
   }
 
-  /**
-   * Checks whether the provided value is an array.
-   *
-   * @param {any} value - The value to be checked.
-   * @returns {boolean} - Returns true if the value is an array; otherwise, returns false.
-   */
-  private static checkArray(value: any): boolean {
-    return Array.isArray(value);
-  }
-
-  /**
-   * Checks whether the specified key exists in the object and its value is an array.
-   *
-   * @param {Record<string, any>} item - The object to check. This object can have any keys with values of any type.
-   * @param {string} key - The key to look for within the object.
-   * @returns {boolean} - Returns true if the key exists and its value is an array; otherwise, returns false.
-   */
-  private static checkKey(item: Record<string, any>, key: string): boolean {
-    return key in item && MenuService.checkArray(item[key]);
-  }
-
-
-
-  /**
-   * Transforms a text string and capitalizes the first letter.
-   *
-   * @param {string} text - The key to be transformed.
-   * @returns {string} A formatted, human-readable string.
-   */
-  private static getReadableText(text: string): string {
-    // Replace underscores with spaces and capitalize first letter
-    return text.replace(/_/g, ' ').replace(/^./, char => char.toUpperCase());
-  }
-
   private async getModels(modelEndpoint: string): Promise<Model[]> {
     const url = this.backendUrl + modelEndpoint;
     try {
       console.log(`Fetching models from ${url}`);
       const { data: models } = await axios.get<Model[]>(url);
       if (!models || models.length === 0) {
-        console.log('No models found');
+        console.log(MenuService.ERROR_NO_MODEL_MSG);
       }
       return models;
     } catch (error) {
