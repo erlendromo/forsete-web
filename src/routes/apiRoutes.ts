@@ -26,11 +26,16 @@ router.post(ApiRoute.Register, (req, res) => {
 // Logout route
 router.post(ApiRoute.Logout, requireAuth, (req, res) => {
   clearAuthCookie(res);
-  res.redirect(AppPages.Login);
+  res.render(AppPages.Login);
 });
 // PDF to Image route
 router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
-  await handlePdfToImage(req, res);
+  try {
+    await handlePdfToImage(req, res);
+  } catch (err) {
+    console.error('Error in PDF to Image conversion:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 export default router;

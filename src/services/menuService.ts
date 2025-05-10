@@ -31,7 +31,7 @@ export class MenuService {
    * @returns {Promise<Model>}
    * @throws {Error} if no models are found or the fetch fails.
    */
-  public async loadModelNames(): Promise<AllModels> {  
+  public async loadAllModels(): Promise<AllModels> {  
   const lineModels = this.getModels(ApiEndpoints.LINE_MODELS_ENDPOINT);
   const textModels = this.getModels(ApiEndpoints.TEXT_MODELS_ENDPOINT);
 

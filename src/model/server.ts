@@ -36,16 +36,6 @@ const configureMiddlewares = () => {
   app.use(atrRouter);
 };
 
-const loadModels = async () => {
-  const menuService = new MenuService(config, ApiEndpoints.MODELS_ENDPOINT);
-  try {
-    const modelsToMenu = await menuService.loadModelNames();
-    app.locals.modelNames = modelsToMenu;
-  } catch (err) {
-    console.error('Error loading models:', err);
-    process.exit(1); // Terminate the server if model loading fails
-  }
-};
 
 const startServer = () => {
   const documentation = 'forsete-atr/v2/swaggo/index.html';
@@ -58,7 +48,7 @@ const startServer = () => {
 const setupServer = async () => {
   setViews();
   configureMiddlewares();
-  await loadModels();
+  //await loadModels();
   startServer();
 };
 

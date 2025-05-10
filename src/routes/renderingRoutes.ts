@@ -9,7 +9,6 @@ import {MenuService} from  '../services/menuService.js';
 const router = Router();
 const menuService = new MenuService(config);
 
-
 // Login route
 router.get(AppRoute.Login,    (_req, res) => res.render(AppPages.Login));
 // Register route
@@ -19,7 +18,7 @@ router.get(AppRoute.Register, (_req, res) => res.render(AppPages.Register));
 // Home page route
 router.get(AppRoute.Home, requireAuth, async (_req, res) => {
   try {
-    const { textModels, lineModels } = await menuService.loadModelNames();
+    let { textModels, lineModels } = await menuService.loadAllModels();
     res.render(AppPages.Home, { config, textModels, lineModels, logoutUrl: ApiRoute.Logout });
   } catch (err) {
     res.status(500).send('Server Error');
@@ -28,7 +27,7 @@ router.get(AppRoute.Home, requireAuth, async (_req, res) => {
 // Results page route
 router.get(AppRoute.Results, requireAuth, async (req, res) => {
  try {
-    const { textModels, lineModels } = await menuService.loadModelNames();
+    const { textModels, lineModels } = await menuService.loadAllModels();
     res.render(AppPages.Home, { config, textModels, lineModels, logoutUrl: ApiRoute.Logout });
   } catch (err) {
     res.status(500).send('Server Error');

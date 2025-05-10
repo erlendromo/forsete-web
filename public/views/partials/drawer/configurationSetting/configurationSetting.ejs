@@ -73,9 +73,12 @@
   </ul>
 </li>
 <script>
+  /*
 document.addEventListener('DOMContentLoaded', () => {
   // Function to get the selected models
  const getSelectedModels = () => {
+  let selectedModels = {};
+
   // Select all radio buttons
   const radioButtons = document.querySelectorAll('input[type="radio"]');
   // Store the model types in a Set, this is to avoid duplicates
@@ -84,19 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
   modelTypes.forEach(modelType => {
     const checkedRadio = document.querySelector(`input[name="${modelType}"]:checked`);
     if (checkedRadio) {
+      selectedModels[modelType] = checkedRadio.id;
       console.log(`Name: ${checkedRadio.id}, Type: ${checkedRadio.name}`);
     }
   });
+  return selectedModels;
 };
 
   // Run once on load
-  getSelectedModels();
+  selectedModels = getSelectedModels();
+  console.log('Selected models:', selectedModels);
 
   // Add event listeners to update log on change
   document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
     radioButton.addEventListener('change', () => {
-      getSelectedModels();
+      selectedModels = getSelectedModels();
     });
   });
 });
+*/
 </script>

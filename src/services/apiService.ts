@@ -1,6 +1,6 @@
 import { loadTestFile } from '../mocks/mockutil.js';
 import { ApiEndpoints } from '../config/constants.js';
-import { Models } from '../interfaces/modelInterface.js';
+import {  Model } from '../interfaces/modelInterface.js';
 import { ImageData } from '../interfaces/htrInterface.js';
 import axios from 'axios';
 
@@ -40,7 +40,7 @@ export async function handleMockEndpoints(url: string) {
   const atrResponse = "src/mocks/atrResponse.json";
   const errorMsg = "No matching mocking endpoint.";
   if (url.endsWith(ApiEndpoints.MODELS_ENDPOINT)) {
-    return loadTestFile<Models>(modelResponse);
+    return loadTestFile<Model>(modelResponse);
   } else if (url.endsWith(ApiEndpoints.ATR_ENDPOINT)) {
     return loadTestFile<ImageData>(atrResponse);
   } else {
