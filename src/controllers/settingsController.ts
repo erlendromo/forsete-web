@@ -1,3 +1,4 @@
+
 let checkedModels: { [key: string]: string } = {};
 
 /**
@@ -19,10 +20,12 @@ function updateSelectedModels(): void {
     });
 }
 
+
+
 /**
  * Function to get the selected model for a given type.
  * @param modelType The type of model you want to get the selected value for.
- * @returns Returns the selected model for the given type.
+ * @returns Returns the selected model name for the given type.
  */
 export function getSelectedModel(modelType: string): string {
     updateSelectedModels();
@@ -47,8 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Find the checked radio button for the current model type
             const checkedRadio = document.querySelector(`input[name="${modelType}"]:checked`);
             if (checkedRadio) {
+                const modelName = checkedRadio.id
                 // If a checked radio button is found, add it to the selectedModels object
-                checkedModels[modelType] = checkedRadio.id;
+                checkedModels[modelType] = modelName;
+                setSessionItem(modelType, modelName);
                 //console.log(`Name: ${(checkedRadio as HTMLInputElement).id}, Type: ${(checkedRadio as HTMLInputElement).name}`);
             }
         });
@@ -58,13 +63,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run once on load
     checkedModels = getSelectedModels();
+    postSelectedModels();
     console.log('Selected models:', checkedModels);
 
     // Add event listeners to update log on change
-    document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
-        radioButton.addEventListener('change', () => {
-            checkedModels = getSelectedModels();
-            console.log('Selected models:', checkedModels);
-        });
-    });
-});
+   document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
+  radioButton.addEventListener('change', async () => {
+    updateSelectedModels();
+    getSelectedModelsFromServer();
+    let textModel = getSelectedModel("textrecognition");
+    let lineModel = getSelectedModel("linesegmentation");
+    console.log('Selected models:', checkedModels);
+  });
+});});
+
+
+async function postSelectedModels() {
+  updateSelectedModels();
+  const textModel = getSessionItem("textrecognition");
+  const lineModel = getSessionItem("linesegmentation");
+
+  fetch("/api/selectedModels", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    textModel,
+    lineModel
+  })
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log("Server response:", data);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
+}
+  
+
+function getSessionItem(modelType: string): string | null {
+    return sessionStorage.getItem(modelType);
+}
+
+function setSessionItem(keyModelType:string, valueModelName:string): void {
+    sessionStorage.setItem(keyModelType, valueModelName);
+}
+
+function getSelectedModelsFromServer() {
+    throw new Error("Function not implemented.");
+}
