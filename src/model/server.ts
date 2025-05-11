@@ -9,7 +9,7 @@ import atrRouter from "../services/index/atrService.js";
 import { MenuService } from '../services/menuService.js';
 // Config
 import { ApiEndpoints } from "../config/constants.js";
-import authRouter from "../routes/apiRoutes.js";
+import apiRouter from "../routes/apiRoutes.js";
 import renderRouter from "../routes/renderingRoutes.js";
 
 const app = express();
@@ -30,7 +30,7 @@ const configureMiddlewares = () => {
   app.use(express.static(path.join(publicDir, viewDir)));
   app.use(cookieParser());
   app.use(express.json());
-  app.use(authRouter);
+  app.use(apiRouter);
   app.use(renderRouter);
   app.use(uploadRouter);
   app.use(atrRouter);

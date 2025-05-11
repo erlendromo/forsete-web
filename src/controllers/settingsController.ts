@@ -6,16 +6,18 @@ let checkedModels: { [key: string]: string } = {};
  */
 function updateSelectedModels(): void {
     const radios = document.querySelectorAll<HTMLInputElement>('input[type="radio"]');
-    const types = new Set(Array.from(radios).map(r => r.name));
+    const types = new Set(Array.from(radios).map(radio => radio.name));
 
-    types.forEach(type => {
+    types.forEach(modelType => {
         const checked = document.querySelector<HTMLInputElement>(
-            `input[name="${type}"]:checked`
+            `input[name="${modelType}"]:checked`
         );
         if (checked) {
-            checkedModels[type] = checked.id;
+            const modelName = checked.id;
+            checkedModels[modelType] = modelName;
+            setSessionItem(modelType, modelName);
         } else {
-            delete checkedModels[type];
+            delete checkedModels[modelType];
         }
     });
 }
@@ -63,54 +65,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run once on load
     checkedModels = getSelectedModels();
-    postSelectedModels();
     console.log('Selected models:', checkedModels);
 
     // Add event listeners to update log on change
    document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
   radioButton.addEventListener('change', async () => {
     updateSelectedModels();
-    getSelectedModelsFromServer();
-    let textModel = getSelectedModel("textrecognition");
-    let lineModel = getSelectedModel("linesegmentation");
-    console.log('Selected models:', checkedModels);
   });
 });});
 
-
-async function postSelectedModels() {
-  updateSelectedModels();
-  const textModel = getSessionItem("textrecognition");
-  const lineModel = getSessionItem("linesegmentation");
-
-  fetch("/api/selectedModels", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    textModel,
-    lineModel
-  })
-})
-  .then(response => response.json())
-  .then(data => {
-    console.log("Server response:", data);
-  })
-  .catch(error => {
-    console.error("Error:", error);
-  });
-}
   
 
-function getSessionItem(modelType: string): string | null {
+export function getModelType(modelType: string): string | null {
     return sessionStorage.getItem(modelType);
 }
 
 function setSessionItem(keyModelType:string, valueModelName:string): void {
     sessionStorage.setItem(keyModelType, valueModelName);
-}
-
-function getSelectedModelsFromServer() {
-    throw new Error("Function not implemented.");
 }

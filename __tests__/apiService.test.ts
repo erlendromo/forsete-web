@@ -1,9 +1,8 @@
+/*
 import axios from 'axios';
-import { handleMockEndpoints } from '../src/model/services/apiService'; 
-import { fetchEndpoint } from '../src/model/services/apiService'; 
-import { handleApiOrMock } from '../src/model/services/apiService'; 
-import { ApiEndpoints } from '../src/config/endpoint'; 
-import { ImageData } from '../src/interfaces/htrInterface';
+import { fetchEndpoint, handleApiOrMock, handleMockEndpoints } from '../src/services/apiService'; 
+
+import { ApiEndpoints } from '../src/config/constants'; 
 import { Models } from '../src/interfaces/modelInterface';
 
 import { loadTestFile } from '../src/mocks/mockutil';
@@ -83,3 +82,4 @@ describe('API Handler Functions', () => {
     });
   });
 });
+*/

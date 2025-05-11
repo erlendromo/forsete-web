@@ -1,7 +1,7 @@
 // src/routes/router.ts
 import { Router } from 'express';
 import multer from 'multer';
-import { ApiRoute } from '../config/apiRoutes.js';
+import { ApiRoute } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
@@ -30,6 +30,7 @@ router.post(ApiRoute.Logout, requireAuth, (req, res) => {
 });
 // PDF to Image route
 router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
+  console.log('hit');
   try {
     await handlePdfToImage(req, res);
   } catch (err) {
@@ -37,5 +38,4 @@ router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 export default router;

@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { config } from '../config/config.js';
 import { AppRoute, AppPages } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
-import { ApiRoute } from '../config/apiRoutes.js';
+import { ApiRoute } from '../config/constants.js';
 import {MenuService} from  '../services/menuService.js';
 
 const router = Router();

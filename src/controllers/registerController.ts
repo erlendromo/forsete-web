@@ -1,5 +1,5 @@
 // src/controllers/registerController.ts
-import { ApiRoute } from "../config/apiRoutes.js";
+import { ApiRoute } from "../config/constants.js";
 import { createAlert } from "./utils/ui/alert.js";
 /*
 * This script handles the register functionality for the application.
