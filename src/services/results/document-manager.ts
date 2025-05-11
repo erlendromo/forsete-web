@@ -7,38 +7,33 @@ import { ensureDefined } from "../../utils/error-handling.js";
 import { ATRResult, Polygon } from "../../interfaces/atr-result.js";
 import { LineSegment } from "../../interfaces/line-segment.js";
 
-type editedAndOriginal ={original: string; edited: string}
+
+type editedAndOriginal ={original: string; edited: string};
 
 export class DocumentManager {
     private originalATRResult: ATRResult;
-    private imageFileName: string;
+    private imageId: string;
     private lineSegments: Map<number,LineSegment>;
-    private documentId: string;
     private createdAt: Date;
   
-    constructor(atrResultJson: unknown, imageFileName: string) {
-      this.imageFileName = imageFileName;
+    constructor(atrResultJson: unknown, imageId: string) {
+      
       this.originalATRResult = atrResultJson as ATRResult; 
       this.createdAt = new Date();
-      
-      this.documentId = this.generateDocumentId(this.originalATRResult); //current solution, can be changed
+      this.imageId = imageId;
+
       
       this.lineSegments = this.indexATRResult(this.originalATRResult);
     }
   
     //random id generator
-    private generateDocumentId(atrResult: ATRResult): string {
-      const fileBase = atrResult.file_name.split('.')[0];
-      const timestamp = this.createdAt.getTime();
-      const randomSuffix = Math.random().toString(36).substring(2, 8);
-      
-      return `${fileBase}_${timestamp}_${randomSuffix}`;
-    }
+
   
     private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
         const LineSegmentMap = new Map<number, LineSegment>();
         let lineIndex = 0;
         
+        console.log("Indexing ATR result:", atrResult);
         atrResult.contains.forEach((textElement) => {
           if (!textElement.text_result) {
             console.warn("contains element without text_result – skipping", textElement);
@@ -69,9 +64,9 @@ export class DocumentManager {
         return LineSegmentMap;
       }
 
-      //Get imageFileName
-      getImageFileName(): string {
-        return this.imageFileName;
+      //Get imageId
+      getImageId(): string {
+        return this.imageId;
       }
       
       // Get line segmentation inteface
@@ -112,12 +107,6 @@ export class DocumentManager {
           .map(item => item.edited ? (item.editedContent || '') : item.textContent)
       }
     
-      // Get document ID
-      getDocumentId(): string {
-        return this.documentId;
-      }
-
-     
 
       // Get bounding box based on line index
       getBoundingBox(lineIndex: number): { xmin: number; ymin: number; xmax: number; ymax: number } | undefined {
@@ -199,5 +188,23 @@ export class DocumentManager {
         newLineSegments.forEach((segment) => {
           this.lineSegments.set(segment.originalIndex, segment);
         });
-      } 
+      }
+
+      // Updated the orginal json atrresult by adding the edited text
+      updateATRResult(): ATRResult {
+        this.originalATRResult.contains.forEach((element, index) => {
+          const lineSegment = this.getLineSegment(index);
+          
+          if (lineSegment && lineSegment.edited && lineSegment.editedContent) {
+            element.edited = {
+              text: lineSegment.editedContent,
+              timestamp: new Date().toISOString()
+            };
+          }
+        });
+      
+        return this.originalATRResult;
+      }
+
 }
+      

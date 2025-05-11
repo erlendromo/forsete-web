@@ -1,36 +1,39 @@
 // src/routes/router.ts
-import { Router } from 'express';
 import multer from 'multer';
+import { Router } from 'express';
 import { ApiRoute } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
 import { handlePdfToImage } from '../services/index/handlepdfToImageService.js';
 import { AppPages } from '../config/constants.js';
+import { handleTranscribe, handleGetImageFile, hadleGetOutputData } from '../services/atrApiHandler.js';
+import { getAuthToken } from '../utils/cookieUtil.js';
 
-const router = Router();
-const uploadMemory = multer();
+const storage = multer.memoryStorage();
+const uploadMemory = multer({ storage });
+
+const apiRouter = Router();
 
 // Login route
-router.post(ApiRoute.Login, (req, res) => {
+apiRouter.post(ApiRoute.Login, (req, res) => {
   const { email, password } = req.body;
   return handleLogin(email, password, res);
 });
 
 // Register route
-router.post(ApiRoute.Register, (req, res) => {
+apiRouter.post(ApiRoute.Register, (req, res) => {
   const { email, password } = req.body;
   return handleRegister(email, password, res);
 });
 
 // Logout route
-router.post(ApiRoute.Logout, requireAuth, (req, res) => {
+apiRouter.post(ApiRoute.Logout, requireAuth, (req, res) => {
   clearAuthCookie(res);
   res.render(AppPages.Login);
 });
 // PDF to Image route
-router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
-  console.log('hit');
+apiRouter.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
   try {
     await handlePdfToImage(req, res);
   } catch (err) {
@@ -38,4 +41,78 @@ router.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-export default router;
+
+// Transcribe route - with multer handling the file upload
+apiRouter.post(ApiRoute.Transcribe, uploadMemory.single('file'), (req, res) => {
+  const token = getAuthToken(req); // Get auth token from the request
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  if (!req.file) {
+    res.status(400).json({ error: 'No file uploaded' });
+    return;
+  }
+
+  (async () => {
+    try {
+      const imageFile = req.file as Express.Multer.File;
+
+      // Calling the service to process the file and send to ATR
+      const result = await handleTranscribe(imageFile, token);
+
+      res.json(result); // Send the result back
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || 'Server error' });
+    }
+  })();
+});
+
+apiRouter.post(ApiRoute.Images, async (req, res) => {
+  const token = getAuthToken(req);
+  
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  try {
+    const { data, mimeType } = await handleGetImageFile(req.body.image_id, token); 
+    console.log("Image data:", data);
+    console.log("MIME type:", mimeType);
+    res.setHeader('Content-Type', mimeType);
+    res.send(Buffer.from(data));
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+});
+
+
+apiRouter.post(ApiRoute.Outputs, (req, res) => {
+  const token = getAuthToken(req);
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  const { image_id, id } = req.body;
+  if (!image_id || !id) {
+    res.status(400).json({ error: "Missing image_id or id" });
+    return;
+  }
+
+  (async () => {
+    try {
+    
+      const result = await hadleGetOutputData(image_id, id, token);
+     
+      res.json(result);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  })();
+});
+
+export default apiRouter;
+

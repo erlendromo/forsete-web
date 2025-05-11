@@ -143,12 +143,12 @@ body {
 }
 
 /* Make editor container fill the wrapper */
-#editor-container {
-  width: 100%;
-  height: calc(100% - 70px); /* Full height minus space for buttons at bottom */
+.editor-content {
   display: flex;
-  flex-direction: column;
-  overflow: hidden; /* Prevent overflow at container level */
+  flex-direction: column;  
+  gap: 10px;               
+  overflow-y: auto;        
+  max-height: 100vh;       
 }
 
 /* Button container at bottom */
@@ -164,6 +164,8 @@ body {
   width: 100%;
   max-width: none;
   margin: 0;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   border: 1px solid #333;
   background: #2d3142;
@@ -192,7 +194,7 @@ body {
 .editor-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;  
   width: 100%;
   padding-top: 10px;
   padding-right: 5px; /* Space for scrollbar */
@@ -249,21 +251,16 @@ body {
 /* Editor line item */
 .editor-line-item {
   display: flex;
-  width: 100%;
-  min-height: 36px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: #3a404f;
-  margin-bottom: 8px;
+  flex-direction: row;      
+  align-items: center;       
+  padding: 10px;            
+  border-bottom: 1px solid #ccc;  
+  width: 100%;               
+  transition: all 0.3s ease; 
+  gap: 20px;
 }
 
-/* Expanded line item */
-.editor-line-item.expanded {
-  height: auto;
-  z-index: 10;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  background-color: #3a404f;
-}
+
 
 /* Line number container */
 .line-number-container {
@@ -272,14 +269,16 @@ body {
   background-color: #223a4a;
   width: 100px;
   flex-shrink: 0;
-  padding-left: 4px;
+  padding-left: 0;
   height: 100%;
 }
 
-.editor-line-item.expanded .line-number-container {
-  align-items: flex-start;
-  padding-top: 4px;
-}
+  .editor-line-item.selected {
+    border: 2px solid #3b82f6;
+    border-radius: 0.5rem;
+    background-color: #4b83a8;
+  }
+
 
 .line-number {
   width: 40px;
@@ -297,7 +296,7 @@ body {
 
 .confidence-high {
   background-color: #c6f6d5;
-  color: #22543d;
+  color: #49715e;
 }
 
 .confidence-good {
@@ -327,17 +326,17 @@ body {
 }
 
 .editor-textarea {
-  width: 100%;
-  height: 100%;
-  padding: 4px 8px;
-  border: none;
-  resize: none;
-  background-color: transparent;
-  font-family: Monaco, Menlo, "Courier New", monospace;
-  font-size: 14px;
-  transition: min-height 0.2s ease;
-  color: white;
+  flex-grow: 1;            
+  resize: none;             
+  min-height: 60px;      
+
+  background-color: #1e1e24; /* Dark background */
+  color: #ffffff; /* Light text */
+  
+  border: 1px solid #444;
+border-radius: 4px;
 }
+
 
 .editor-line-item.expanded .editor-textarea {
   min-height: 60px;
@@ -346,6 +345,8 @@ body {
 .editor-textarea:focus {
   outline: none;
 }
+
+
 
 .edited {
   background-color: #304a66;
@@ -384,6 +385,71 @@ body {
 
 .reset-btn:disabled {
   cursor: default;
+}
+
+/* NavBar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2d3748;
+}
+
+/* Hamburger Menu */
+.ham-menu {
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  cursor: pointer;
+}
+
+.ham-menu span {
+  background-color: white;
+  height: 3px;
+  margin: 3px 0;
+  transition: 0.2s;
+}
+
+.ham-menu.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.ham-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.ham-menu.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Off-screen Menu */
+.off-screen-menu {
+  position: fixed;
+  top: 80px;
+  right: -300px;
+  width: 300px;
+  height: calc(100% - 80px);
+  background-color: #2d3748;
+  transition: 0.3s;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.off-screen-menu.active {
+  right: 0;
+}
+
+.off-screen-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 15px 30px;
+  transition: 0.2s;
+}
+
+.off-screen-menu a:hover {
+  background-color: #4a5568;
 }
 
 /* Responsive adjustments */

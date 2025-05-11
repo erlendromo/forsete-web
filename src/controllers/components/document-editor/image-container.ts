@@ -1,5 +1,6 @@
-import { LineSegment } from "../../../interfaces/line-segment";
-import { Polygon, Point } from "../../../interfaces/atr-result";
+import { LineSegment } from "../../../interfaces/line-segment.js";
+import { Polygon, Point } from "../../../interfaces/atr-result.js";
+import { ApiRoute } from "../../../config/apiRoutes.js";
 
 export class ImageContainer {
     private container: HTMLElement;
@@ -13,7 +14,7 @@ export class ImageContainer {
 
     constructor(
         containerId: string,
-        imageFilename: string, 
+        imageId: string, 
         onChange: (polygon: Polygon) => void
     ) {
         this.container = document.getElementById(containerId) as HTMLElement;
@@ -30,7 +31,7 @@ export class ImageContainer {
         this.onChange = onChange;
 
         this.container.appendChild(this.canvas);
-        this.initialize(imageFilename);
+        this.initialize(imageId);
     }
 
     // Method to set polygon
@@ -44,40 +45,80 @@ export class ImageContainer {
         this.redraw();
     }
 
+    public drawAllPolygons(){
+        this.polygons.forEach((polygon) => {
+            this.drawPolygon(polygon)
+        });
+    }
 
+    public clearCanvas(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 
     public highlightLinePolygon(lineSegment: LineSegment | null): void {
         this.selectedLineSegment = lineSegment;
         this.redraw();
     }
 
-    private async initialize(imageFilename: string) {
+    private async initialize(imageId: string) {
         try {
-            await this.loadUploadedImage(imageFilename);
+            await this.loadUploadedImage(imageId);
             this.setupCanvas();
         } catch (error) {
             console.error(error);
         }
     }
 
-    private async loadUploadedImage(filename: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const imagePath = `/uploads/${filename}`;
-            this.imageElement.src = imagePath;
-
-            this.imageElement.onload = () => {
-                console.log(`Image loaded successfully: ${imagePath}`);
-                resolve();
-            };
-
-            this.imageElement.onerror = () => {
-                console.error(`Failed to load image: ${imagePath}`);
-                this.imageElement.src = "/images/image-placeholder.jpg"; // Fallback
-                reject(new Error(`Failed to load image: ${imagePath}`));
-            };
-        });
+    private async loadUploadedImage(imageId: string): Promise<void> {
+        const controller = new AbortController();
+        const { signal } = controller;
+    
+        try {
+            const response = await fetch(ApiRoute.Images, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image_id: imageId }),
+                signal,
+            });
+            console.log('Response received:', response);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
+            }
+    
+            const blob = await response.blob();
+            console.log('Blob received:', blob);
+            const imageUrl = URL.createObjectURL(blob);
+    
+            // Clean previous image URL if needed
+            if (this.imageElement.src.startsWith('blob:')) {
+                URL.revokeObjectURL(this.imageElement.src);
+            }
+    
+            this.imageElement.src = imageUrl;
+    
+            await new Promise<void>((resolve, reject) => {
+                this.imageElement.onload = () => {
+                    URL.revokeObjectURL(imageUrl); 
+                    console.log('Image loaded successfully');
+                    resolve();
+                };
+                this.imageElement.onerror = () => {
+                    URL.revokeObjectURL(imageUrl);
+                    reject(new Error('Failed to load image from blob'));
+                };
+            });
+        } catch (error) {
+            console.error('Image load error:', error);
+            // Optional fallback image:
+            // this.imageElement.src = "/images/image-placeholder.jpg";
+            throw error;
+        }
     }
+    
 
+   
     private setupCanvas() {
         this.canvas.width = this.imageElement.width;
         this.canvas.height = this.imageElement.height;
@@ -112,21 +153,24 @@ export class ImageContainer {
         if(this.selectedLineSegment){
             if (this.selectedLineSegment.confidence >= 90) {
                 // High confidence - Green
-                this.ctx.fillStyle = "rgba(198, 246, 213, 0.5)"; // #c6f6d5 with 0.5 opacity
-                this.ctx.strokeStyle = "#22543d";
+                this.ctx.fillStyle = "rgba(198, 246, 213, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(34, 84, 61, 1)";
             } else if (this.selectedLineSegment.confidence >= 75) {
                 // Good confidence - Blue
-                this.ctx.fillStyle = "rgba(190, 227, 248, 0.5)"; // #bee3f8 with 0.5 opacity
-                this.ctx.strokeStyle = "#2c5282";
+                this.ctx.fillStyle = "rgba(190, 227, 248, 0.5)";
+                this.ctx.strokeStyle = "rgba(44, 82, 130, 1)";
             } else if (this.selectedLineSegment.confidence >= 60) {
                 // Medium confidence - Yellow
-                this.ctx.fillStyle = "rgba(254, 252, 191, 0.5)"; // #fefcbf with 0.5 opacity
-                this.ctx.strokeStyle = "#744210";
+                this.ctx.fillStyle = "rgba(254, 252, 191, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(116, 66, 16, 1)";
             } else {
                 // Low confidence - Red
-                this.ctx.fillStyle = "rgba(254, 215, 215, 0.5)"; // #fed7d7 with 0.5 opacity
-                this.ctx.strokeStyle = "#822727";
+                this.ctx.fillStyle = "rgba(254, 215, 215, 0.5)"; 
+                this.ctx.strokeStyle = "rgba(130, 39, 39, 1)";
             }
+        } else{
+            this.ctx.fillStyle = "rgba(234, 110, 215, 0.5)";
+            this.ctx.strokeStyle ="rgb(205, 17, 180)";
         }    
         this.ctx.lineWidth = 1;
         this.ctx.fill();

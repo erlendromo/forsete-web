@@ -1,3 +1,5 @@
+import { ApiRoute } from '../../config/apiRoutes.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
   const elements = {
@@ -82,42 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
   initialLoad();
 
   // Upload file to the server
-  const uploadFile = async (file: File): Promise<any> => {
-    const formData = new FormData();
-    formData.append("document", file);
-
-    try {
-      const response = await fetch("/upload", {
-        method: "POST",
-        body: formData
-      });
-
-      // Handle HTTP errors
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        const statusText = response.statusText || "Unknown error";
-        const errorMessage = errorData?.error || `Upload failed: ${statusText} (${response.status})`;
-        throw new Error(errorMessage);
-      }
-
-      return response.json();
-    } catch (error) {
-      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-        throw new Error("Network error: Unable to connect to the server. Please check your internet connection.");
-      }
-      throw error; // Re-throw other errors
-    }
-  };
-
+ 
   // Request transcription using the uploaded file's filename
-  const transcribeFile = async (filename: string): Promise<any> => {
+  const transcribeFile = async (file: File): Promise<any> => {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
     try {
-      const response = await fetch("/transcribe", {
+      const response = await fetch(ApiRoute.Transcribe, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ filename })
+        body: formData,
       });
-
       // Handle HTTP errors
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
@@ -126,8 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
                              `Transcription failed: ${statusText} (${response.status})`;
         throw new Error(errorMessage);
       }
-
-      return response.json();
+  
+      const jsonData = await response.json();
+      console.log("API Response JSON:", jsonData);
+      // Store the transcribed data in localStorage
+      localStorage.setItem('transcribedData', JSON.stringify(jsonData));
+      return jsonData
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
         throw new Error("Network error: Unable to connect to the server. Please check your internet connection.");
@@ -139,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Validate file before submission
   const validateFile = (file: File): boolean => {
     // Check file size (e.g., 20MB limit)
-    const maxSize = 20 * 1024 * 1024; // 20MB
+    const maxSize = 32 * 1024 * 1024; // 20MB
     if (file.size > maxSize) {
       showError(`File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is ${maxSize / 1024 / 1024}MB.`);
       return false;
@@ -171,21 +151,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     await enableLoading();
-    
+
+
+    let transcribeDoc: any = null;
     try {
       // Upload the file
-      const uploadData = await uploadFile(file);
-      const { filename } = uploadData;
-      
-      console.log("File uploaded successfully:", filename);
-
+      const file = elements.inputDoc.files ? elements.inputDoc.files[0] : null;
+      if (!file) {
+        throw new Error("No file selected.");
+      }
       // Transcribe the file using the returned filename
       try {
-        await transcribeFile(filename);
-        console.log("File transcribed successfully.");
-        
-        // Redirect to results page
-        window.location.href = `results?file=${encodeURIComponent(filename)}`;
+       
+        console.log("Calling transcribeFile...");
+        transcribeDoc = await transcribeFile(file);
+        console.log("Received transcription response:", transcribeDoc);
+      
+        if (Array.isArray(transcribeDoc)) {
+          if (!transcribeDoc[0]?.image_id) {
+            throw new Error("Unexpected response format. Unable to find image_id.");
+          }
+          window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
+        } else if (transcribeDoc?.image_id) {
+          window.location.href = `results?file=${encodeURIComponent(transcribeDoc.image_id)}`;
+        } else {
+          throw new Error("Unexpected response format. No image_id found.");
+        }
       } catch (transcribeError: any) {
         // Handle transcription error but still allow seeing results if upload succeeded
         console.error("Transcription error:", transcribeError);
@@ -195,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
           `Would you still like to view the results page? (The file was uploaded successfully)`
         );
         
-        if (confirmView) {
-          window.location.href = `results.html?file=${encodeURIComponent(filename)}`;
+        if (confirmView && transcribeDoc) {
+          window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
         } else {
           initialLoad();
         }

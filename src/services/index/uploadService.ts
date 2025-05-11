@@ -1,6 +1,5 @@
 import express from 'express';
 import multer  from 'multer';
-import { pdfToImage } from "../../utils/pdfUtils.js";
 
 const router = express.Router();
 const uploadEndpoint = "/upload";

@@ -1,4 +1,3 @@
-// src/services/userHandlingService.ts
 import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";

@@ -2,7 +2,6 @@
     // Main document interface
     interface ATRResult {
       file_name: string;
-      image_path: string;
       image_name: string;
       label: string;
       contains: TextElement[];
@@ -14,6 +13,12 @@
       segment: Segment;
       text_result: TextResult;
       label: string;
+      edited?: EditedInfo; // <-- Add this line
+    }
+
+    interface EditedInfo {
+      text: string;
+      timestamp: string; // ISO format, e.g., "2025-05-04T12:34:56Z"
     }
     
     // Segment interface with bounding box and polygon information

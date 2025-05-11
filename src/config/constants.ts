@@ -8,7 +8,7 @@ export enum ApiEndpoints {
   VERSION_ATR = 'forsete-atr/v2/',
 
   // ATR endpoint
-  ATR_ENDPOINT = 'atr/basic-documents/',
+  ATR_ENDPOINT = ApiEndpoints.VERSION_ATR + 'atr/',
 
   // Auth endpoints
   REGISTER_ENDPOINT = ApiEndpoints.VERSION_ATR + 'auth/register/',
@@ -27,6 +27,15 @@ export enum ApiEndpoints {
 
   // Status endpoint
   STATUS_ENDPOINT = ApiEndpoints.VERSION_ATR + 'status/',
+
+}
+
+export function outputEndpointConstructor(imageID: string): string {
+  return  ApiEndpoints.VERSION_ATR + 'images/' + imageID + '/outputs/';
+}
+
+export function outputDataEndpointConstructor(imageID: string, outputID: string): string {
+  return  outputEndpointConstructor(imageID) + outputID + '/data/';
 }
 
 export enum tokenStorage {
@@ -47,6 +56,9 @@ export enum AppRoute {
   Results = '/results',
   Login = '/login',
   Register = '/register',
+  Upload = '/upload',
+  Transcribe = '/transcribe',
+  Update = '/update'
 }
 
 export enum AppPages {
@@ -59,10 +71,13 @@ export enum AppPages {
 /**
  * API routes for the application
  */
-export enum ApiRoute {
+export enum ApiRoute { 
     Login = '/api/login',
     Logout = '/api/logout',
+    Images = '/api/images',
+    Outputs = '/api/outputs',
     Register = '/api/register',
     PdfToImage = '/api/pdfToImage',
+    Transcribe = '/api/transcribe',
     SelectedModels = '/api/selectedModels',
   }

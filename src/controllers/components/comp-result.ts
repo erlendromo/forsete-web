@@ -1,9 +1,10 @@
+
 import { DocumentManager } from '../../services/results/document-manager.js';
-import { getData } from '../../utils/json/jsonLoader.js';
 import { generatePlainTextPdf } from '../../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
 import { initializeImageZoom } from './zoom-image.js';
+import { ApiRoute } from '../../config/apiRoutes.js';
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
@@ -14,29 +15,53 @@ document.addEventListener("DOMContentLoaded", async () => {
       exportBtn: document.getElementById("exportBtn") as HTMLElement,
       imageContainer: document.getElementById("image-container") as HTMLElement,
     };
-
+    
     let documentInstance: DocumentManager | null = null;
     let editor: DocumentLineEditor | null = null;
     let imageContainerInstance: ImageContainer | null = null;
    
     
     // Initializes Document manager
+    
     const initializeDocument = async (): Promise<void> => {
-        const params = new URLSearchParams(window.location.search);
-        const urlFilename = params.get("file");
-
-        if (urlFilename) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageIdParms = urlParams.get('file') || '';
+        const transcribedDataRaw = localStorage.getItem('transcribedData')
+        if (transcribedDataRaw) {
             try {
+                const transcribedData = JSON.parse(transcribedDataRaw);
+                if (!Array.isArray(transcribedData) || transcribedData.length === 0) {
+                    throw new Error("transcribedData is empty or invalid");
+                  }
+                
+                  const firstOutput = transcribedData[0]; // Get the first output object
+                  const { image_id, id } = firstOutput;
+                
+                  if (!image_id || !id) {
+                    throw new Error("Missing image_id or id in transcribedData");
+                  }
+                
+                  const response = await fetch(ApiRoute.Outputs, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ image_id, id })
+                  });
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+                const data = await response.json();
                 // Get data and create document manager
-                documentInstance = new DocumentManager(await getData(), urlFilename);
+                documentInstance = new DocumentManager( data, image_id);
                 
                 
                 
-                // Use the filename from the document instance
-                const docFilename = documentInstance.getImageFileName()
+                // Use the Image ID from the document instance
+                
                 imageContainerInstance = new ImageContainer(
                     'image-container',
-                    docFilename,
+                    imageIdParms,
                     (polygon) => {
                         console.log("Polygon changed:", polygon);
                     }
@@ -68,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const handleExportClick = async (): Promise<void> => {
         if (documentInstance) {
             // Use the filename from the document instance for export
-            const filename = documentInstance.getImageFileName();
+            const filename = documentInstance.getImageId();
                            
             generatePlainTextPdf(
                 documentInstance.getAllLineSegments(),

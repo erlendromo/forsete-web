@@ -5,12 +5,12 @@ import path from "path";
 import cookieParser from 'cookie-parser';
 // Services
 import uploadRouter from "../services/index/uploadService.js";
-import atrRouter from "../services/index/atrService.js";
 import { MenuService } from '../services/menuService.js';
 // Config
 import { ApiEndpoints } from "../config/constants.js";
 import apiRouter from "../routes/apiRoutes.js";
 import renderRouter from "../routes/renderingRoutes.js";
+import { ModelsSingelton } from "../services/atrModels.js";
 
 const app = express();
 // Public directory, where users will have access
@@ -33,9 +33,18 @@ const configureMiddlewares = () => {
   app.use(apiRouter);
   app.use(renderRouter);
   app.use(uploadRouter);
-  app.use(atrRouter);
 };
 
+const loadModels = async () => {
+  const menuService = new MenuService();
+  try {
+    const modelsToMenu = await menuService.loadModelNames();
+    app.locals.modelNames = modelsToMenu;
+  } catch (err) {
+    console.error('Error loading models:', err);
+    process.exit(1); // Terminate the server if model loading fails
+  }
+};
 
 const startServer = () => {
   const documentation = 'forsete-atr/v2/swaggo/index.html';
@@ -45,12 +54,14 @@ const startServer = () => {
   });
 };
 
+
 const setupServer = async () => {
   setViews();
   configureMiddlewares();
-  //await loadModels();
+  const modelsSingelton = ModelsSingelton.getInstance();
+  await modelsSingelton.init();
+  await loadModels();
   startServer();
 };
 
 setupServer();
-

@@ -23,9 +23,8 @@ export class MenuService {
     this.useMock     = config.useMock;
   }
 
-   /**
-   * Fetches the raw models from the backend (or mock),
-   * then returns them as an array of ModelToUI.
+  /**
+   * Returns the models from the singleton as an array of ModelToUI.
    *
    * @returns {Promise<Model>}
    * @throws {Error} if no models are found or the fetch fails.
