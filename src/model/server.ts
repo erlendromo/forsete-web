@@ -36,9 +36,9 @@ const configureMiddlewares = () => {
 };
 
 const loadModels = async () => {
-  const menuService = new MenuService();
+  const menuService = new MenuService(config);
   try {
-    const modelsToMenu = await menuService.loadModelNames();
+    const modelsToMenu = await menuService.loadAllModels();
     app.locals.modelNames = modelsToMenu;
   } catch (err) {
     console.error('Error loading models:', err);

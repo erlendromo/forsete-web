@@ -1,6 +1,6 @@
 import { LineSegment } from "../../../interfaces/line-segment.js";
 import { Polygon, Point } from "../../../interfaces/atr-result.js";
-import { ApiRoute } from "../../../config/apiRoutes.js";
+import { ApiRoute } from "../../../config/constants.js";
 
 export class ImageContainer {
     private container: HTMLElement;

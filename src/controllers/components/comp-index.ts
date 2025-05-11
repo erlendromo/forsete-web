@@ -1,4 +1,4 @@
-import { ApiRoute } from '../../config/apiRoutes.js';
+import { ApiRoute } from '../../config/constants.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements

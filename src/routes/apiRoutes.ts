@@ -43,7 +43,7 @@ apiRouter.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), as
 });
 
 // Transcribe route - with multer handling the file upload
-apiRouter.post(ApiRoute.Transcribe, uploadMemory.single('file'), (req, res) => {
+apiRouter.post(ApiRoute.Transcribe, requireAuth, uploadMemory.single('file'), (req, res) => {
   const token = getAuthToken(req); // Get auth token from the request
   if (!token) {
     res.status(401).json({ error: "Unauthorized" });
@@ -69,7 +69,7 @@ apiRouter.post(ApiRoute.Transcribe, uploadMemory.single('file'), (req, res) => {
   })();
 });
 
-apiRouter.post(ApiRoute.Images, async (req, res) => {
+apiRouter.post(ApiRoute.Images, requireAuth, async (req, res) => {
   const token = getAuthToken(req);
   
   if (!token) {
@@ -89,7 +89,7 @@ apiRouter.post(ApiRoute.Images, async (req, res) => {
 });
 
 
-apiRouter.post(ApiRoute.Outputs, (req, res) => {
+apiRouter.post(ApiRoute.Outputs, requireAuth, (req, res) => {
   const token = getAuthToken(req);
   if (!token) {
     res.status(401).json({ error: "Unauthorized" });

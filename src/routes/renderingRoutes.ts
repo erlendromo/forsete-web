@@ -29,7 +29,7 @@ router.get(AppRoute.Home, requireAuth, async (_req, res) => {
 router.get(AppRoute.Results, requireAuth, async (req, res) => {
  try {
     const { textModels, lineModels } = await menuService.loadAllModels();
-    res.render(AppPages.Home, { config, textModels, lineModels, logoutUrl: ApiRoute.Logout });
+    res.render(AppPages.Results, { config, textModels, lineModels, logoutUrl: ApiRoute.Logout });
   } catch (err) {
     res.status(500).send('Server Error');
   }

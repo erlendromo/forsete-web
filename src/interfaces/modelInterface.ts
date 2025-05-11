@@ -3,6 +3,11 @@ export interface BaseModel {
     model_type: string;
     name: string;
   }
+
+  export interface AllModels {
+  lineModels: BaseModel[];
+  textModels: BaseModel[];
+}
   
   export interface LineSegmentationModel {
     id: number;

@@ -1,4 +1,4 @@
-import { Model, AllModels } from '../interfaces/modelInterface.js';
+import { BaseModel, AllModels } from '../interfaces/modelInterface.js';
 import { AppConfig } from '../interfaces/configInterface.js';
 import axios from 'axios';
 import { ApiEndpoints } from '../config/constants.js';
@@ -41,11 +41,11 @@ export class MenuService {
   };
   }
 
-  private async getModels(modelEndpoint: string): Promise<Model[]> {
+  private async getModels(modelEndpoint: string): Promise<BaseModel[]> {
     const url = this.backendUrl + modelEndpoint;
     try {
       console.log(`Fetching models from ${url}`);
-      const { data: models } = await axios.get<Model[]>(url);
+      const { data: models } = await axios.get<BaseModel[]>(url);
       if (!models || models.length === 0) {
         console.log(MenuService.ERROR_NO_MODEL_MSG);
       }

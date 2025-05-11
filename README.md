@@ -5,7 +5,7 @@ Configure your ".env" after the ".env.example" file.
 Make sure you have, ["docker"](https://docs.docker.com/) installed.
 
 ```bash
-docker compose up -d --buil # Build and run the container using Docker Compose
+docker compose up -d --build # Build and run the container using Docker Compose
 docker compose down --volumes --remove-orphans # Remove the container using Docker Compose
 docker compose logs -f # See the logs of the container using Docker Compose
 

@@ -4,7 +4,7 @@ import { generatePlainTextPdf } from '../../utils/export/pdf-export.js';
 import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
 import { initializeImageZoom } from './zoom-image.js';
-import { ApiRoute } from '../../config/apiRoutes.js';
+import { ApiRoute } from '../../config/constants.js';
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
