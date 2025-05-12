@@ -30,7 +30,6 @@ export const uploadImage = async (buffer: Buffer, filename: string,token :string
 };
 
 export const getImageByID = async (imageID: string, token: string): Promise<any> => {
-  console.log("Fetching image with ID:", imageID);
   const url = config.urlBackend + ApiEndpoints.IMAGE_LIST_ENDPOINT + imageID + '/data/';
   const response = await fetch(url , {
     method: 'GET',

@@ -1,14 +1,15 @@
 // src/routes/router.ts
-import multer from 'multer';
 import { Router } from 'express';
 import { ApiRoute } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
+import { handleTranscribe, handleGetImageFile, hadleGetOutputData, handlePostOutputData, handleGetOutputs } from '../services/atrApiHandler.js';
 import { handlePdfToImage } from '../services/index/handlepdfToImageService.js';
 import { AppPages } from '../config/constants.js';
-import { handleTranscribe, handleGetImageFile, hadleGetOutputData } from '../services/atrApiHandler.js';
+import multer from 'multer';
 import { getAuthToken } from '../utils/cookieUtil.js';
+import { handleExport } from '../utils/export/exportHandler.js';
 
 const storage = multer.memoryStorage();
 const uploadMemory = multer({ storage });
@@ -79,8 +80,6 @@ apiRouter.post(ApiRoute.Images, requireAuth, async (req, res) => {
 
   try {
     const { data, mimeType } = await handleGetImageFile(req.body.image_id, token); 
-    console.log("Image data:", data);
-    console.log("MIME type:", mimeType);
     res.setHeader('Content-Type', mimeType);
     res.send(Buffer.from(data));
   } catch (error: any) {
@@ -88,8 +87,25 @@ apiRouter.post(ApiRoute.Images, requireAuth, async (req, res) => {
   }
 });
 
+apiRouter.post(ApiRoute.Outputs, async (req, res) => {
+  const token = getAuthToken(req);
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  try {
+    const result = await handleGetOutputs(req.body.image_id, token);
+    if (!result) {
+      res.status(400).json({ error: "Missing image_id" });
+      return;
+    }
+    res.json(result);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+});
 
-apiRouter.post(ApiRoute.Outputs, requireAuth, (req, res) => {
+apiRouter.post(ApiRoute.OutputData, (req, res) => {
   const token = getAuthToken(req);
   if (!token) {
     res.status(401).json({ error: "Unauthorized" });
@@ -113,6 +129,45 @@ apiRouter.post(ApiRoute.Outputs, requireAuth, (req, res) => {
     }
   })();
 });
+
+
+apiRouter.post(ApiRoute.Export, async (req, res) => {
+  const { lineSegments, filename, format } = req.body;
+
+  try {
+    const { buffer, mimeType, filename: fullFilename } = await handleExport(lineSegments, filename, format);
+
+    res.setHeader('Content-Type', mimeType);
+    res.setHeader('Content-Disposition', `attachment; filename="${fullFilename}"`);
+    res.send(buffer);
+  } catch (err) {
+    console.error('Export error:', err);
+    res.status(500).send('Failed to generate export file');
+  }
+});
+
+apiRouter.post(ApiRoute.Save, (req, res) => {
+  const token = getAuthToken(req);
+  if (!token) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+  const saveOutput = req.body;
+  if (!saveOutput) {
+    res.status(400).json({ error: "Missing saveOutput" });
+    return;
+  }
+  (async () => {
+    try {
+      const result = await handlePostOutputData(req.body.saveData, req.body.imageId, req.body.outputId , token);
+      res.json(result);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  })(); 
+});
+
+
 
 export default apiRouter;
 
