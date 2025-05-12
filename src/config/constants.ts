@@ -67,6 +67,11 @@ export enum AppPages {
   Login = 'login',
   Register = 'register',
 }
+export enum ExportFormat {
+  JSON = 'json',
+  PLAIN_TXT = 'plain_txt',
+  PLAIN_PDF = 'plain_pdf',
+}
 
 /**
  * API routes for the application
@@ -80,4 +85,7 @@ export enum ApiRoute {
     PdfToImage = '/api/pdfToImage',
     Transcribe = '/api/transcribe',
     SelectedModels = '/api/selectedModels',
+    OutputData = '/api/outputdata',
+    Export = '/api/export',
+    Save = '/api/save',
   }

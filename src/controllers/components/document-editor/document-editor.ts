@@ -23,9 +23,15 @@ export class DocumentLineEditor {
       throw new Error(`Container element with ID "${containerId}" not found`);
     }
     this.imageContainer = imageContainer || null;
-    // Store line segments data
+
     this.documentManager = documentManager;
-    
+
+    // Load saved segments if available
+    const savedSegments = this.loadFromLocalStorage();
+    if (savedSegments) {
+      this.documentManager.setAllLineSegments(savedSegments);
+    }
+
     // Create editor structure
     this.createEditorStructure();
     
@@ -108,13 +114,10 @@ public setImageContainer(imageContainer: ImageContainer): void {
 }
 
   private handleLineChange(updatedSegment: LineSegment): void {
-    // Update the line segment in our array
-    this.documentManager.setLineSegment(updatedSegment);
-    
-    // Update revert button state
-    this.updateRevertButtonState();
+  this.documentManager.setLineSegment(updatedSegment);
+  this.saveToLocalStorage(); 
+  this.updateRevertButtonState();
   }
-  
   private updateRevertButtonState(): void {
     // Check if any lines are edited
     const hasEditedLines = this.documentManager.getAllLineSegments().some(segment => segment.edited);
@@ -122,20 +125,19 @@ public setImageContainer(imageContainer: ImageContainer): void {
   }
   
   private handleRevertAll(): void {
-    // Reset all line segments
     this.documentManager.getAllLineSegments().forEach(segment => {
       segment.editedContent = segment.textContent;
       segment.edited = false;
     });
-    
-    // Update all line items
+  
     this.lineItems.forEach((lineItem, index) => {
       return lineItem.updateSegment(this.documentManager.getLineSegment(index));
     });
-    
-    // Update revert button state
+  
+    localStorage.removeItem(`document_manager_${this.documentManager.getImageId()}_${this.documentManager.getOutputId()}`);
     this.updateRevertButtonState();
   }
+  
 
   
   // Get current line segments data
@@ -161,5 +163,24 @@ public setImageContainer(imageContainer: ImageContainer): void {
     this.updateRevertButtonState();
   }
   
+  private saveToLocalStorage(): void {
+    const segments = this.documentManager.getAllLineSegments();
+    localStorage.setItem(`document_manager_${this.documentManager.getImageId()}_${this.documentManager.getOutputId()}`, JSON.stringify(segments));
+  }
+
+  private loadFromLocalStorage(): LineSegment[] | null {
+    const saved = localStorage.getItem(`document_manager_${this.documentManager.getImageId()}_${this.documentManager.getOutputId()}`);
+    if (!saved) return null;
+  
+    try {
+      return JSON.parse(saved) as LineSegment[];
+    } catch (e) {
+      console.warn('Failed to parse saved segments:', e);
+      return null;
+    }
+  }
+
+  
  
 }
+

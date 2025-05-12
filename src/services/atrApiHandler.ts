@@ -1,7 +1,8 @@
 
 import { getImageByID, uploadImage } from '../services/atr-api/apiImageService.js'; 
 import { postATRRequest } from '../services/atr-api/apiATRService.js'; 
-import { getOutput, getOutputData } from './atr-api/apiOutputService.js';
+import { putOutput, getOutputData, getOutputs } from './atr-api/apiOutputService.js';
+import { ATRResult } from '../interfaces/atr-result.js';
 
 
 
@@ -65,4 +66,18 @@ async function hadleGetOutputData(imageId: string, outputId: string, token: stri
   return outputResponse;
 }
 
-export { handleTranscribe, handleGetImageFile, hadleGetOutputData };
+async function handlePostOutputData(SaveDate: any,imageId: string, outputId:string, token: string): Promise<{ json:any}> {
+  const outputResponse = await putOutput(imageId,  outputId, SaveDate, token);
+  return outputResponse;
+}
+
+async function handleGetOutputs( imageId: string, token: string): Promise<{ json:any}> {
+  const outputResponse = await getOutputs(imageId, token);
+  if (!outputResponse) {
+    throw new Error('Output not found or invalid response');
+  }
+
+  return outputResponse[0];
+}
+
+export { handleTranscribe, handleGetImageFile, hadleGetOutputData, handlePostOutputData, handleGetOutputs };
