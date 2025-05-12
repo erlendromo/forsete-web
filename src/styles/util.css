@@ -5,3 +5,27 @@
 .spinner-icon {
   @apply w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-red-600;
 }
+
+.submit-button {
+    @apply z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer;
+}
+
+.cancel-button {
+    @apply inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer;
+}
+
+.blue-button {
+  @apply relative flex items-center justify-center w-full
+         text-white bg-blue-600 hover:bg-blue-700
+         focus:ring-4 focus:outline-none focus:ring-blue-300
+         font-medium rounded-lg text-sm px-5 py-2.5 text-center
+         dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+         cursor-pointer;
+}
+
+.red-button {
+  @apply w-full inline-flex items-center justify-center gap-2 rounded-lg
+         px-4 py-2 text-sm font-medium text-white
+         bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-4
+         focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800 cursor-pointer;
+}
