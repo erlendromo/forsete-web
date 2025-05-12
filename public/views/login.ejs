@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="/styles/output.css" />
     <script type='module' src="../flowbite/flowbite.min.js" defer></script>
-    
+
 </head>
 
 
@@ -52,8 +52,16 @@
                                 password?</a>
                         </div>
                         <button type="submit" id="submit"
-                            class="cursor-pointer w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                            in</button>
+                            class="relative flex items-center justify-center w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+
+                            <!-- Spinner overlay -->
+                           <%- include('./partials/loader', { loaderId: 'loginLoader', position: 'absolute'}) %>
+
+
+                                <!-- Button text -->
+                                <span id="buttonText">Sign in</span>
+                        </button>
+
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Don’t have an account yet? <a href="/register"
                                 class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
@@ -65,3 +73,25 @@
             </div>
         </div>
     </body>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("loginForm");
+  const spinner = document.getElementById("loginLoader");
+  const button = document.getElementById("submit");
+  const text = document.getElementById("buttonText");
+
+  const hidden = "hidden";
+  const visible = "flex";
+  const invisible = "invisible";
+  form.addEventListener("submit", function (e) {
+    // Show the spinner
+    spinner.classList.replace(hidden, visible);
+    text.classList.add(invisible);
+    // Disable the button, to prevent additonal submissions
+    button.disabled = true;
+  });
+});
+
+</script>
+</html>

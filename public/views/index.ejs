@@ -43,7 +43,7 @@
         </label>
 
         <!-- Spinner (overlays upload area) -->
-        <%- include('./partials/loader'); %>
+        <%- include('./partials/loader', { loaderId: 'spinnerId', position:'absolute' }) %>
       </div>
 
       <script>
@@ -67,5 +67,4 @@
       </div>
     </main>
 </body>
-
 </html>
