@@ -7,4 +7,7 @@ export enum ApiRoute {
     Transcribe = '/api/transcribe',
     Images = '/api/images',
     Outputs = '/api/outputs',
+    OutputData = '/api/outputdata',
+    Export = '/api/export',
+    Save = '/api/save',
   }

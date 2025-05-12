@@ -45,7 +45,11 @@ export class LineEditorItem {
 
     this.textareaEl = document.createElement('textarea');
     this.textareaEl.className = 'editor-textarea';
-    this.textareaEl.value = segment.textContent;
+    if (segment.editedContent) {
+      this.textareaEl.value = segment.editedContent;
+    } else {
+      this.textareaEl.value = segment.textContent;
+    }
     this.textareaEl.addEventListener('input', this.handleTextChange.bind(this));
 
     this.textareaEl.addEventListener('focus', () => {

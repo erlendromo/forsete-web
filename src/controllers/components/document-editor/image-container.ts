@@ -70,52 +70,90 @@ export class ImageContainer {
     }
 
     private async loadUploadedImage(imageId: string): Promise<void> {
-        const controller = new AbortController();
-        const { signal } = controller;
+        const cacheKey = `imageBlob_${imageId}`;
+        const cachedBase64 = localStorage.getItem(cacheKey);
     
-        try {
+        let imageUrl: string;
+    
+        if (cachedBase64) {
+            // Convert base64 string back to Blob and create object URL
+            const blob = this.base64ToBlob(cachedBase64, 'image/jpeg'); // Change MIME if necessary
+            imageUrl = URL.createObjectURL(blob);
+            console.log("Loaded image from cache.");
+        } else {
             const response = await fetch(ApiRoute.Images, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ image_id: imageId }),
-                signal,
             });
-            console.log('Response received:', response);
+    
             if (!response.ok) {
                 throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
             }
     
             const blob = await response.blob();
-            console.log('Blob received:', blob);
-            const imageUrl = URL.createObjectURL(blob);
+            imageUrl = URL.createObjectURL(blob);
     
-            // Clean previous image URL if needed
-            if (this.imageElement.src.startsWith('blob:')) {
-                URL.revokeObjectURL(this.imageElement.src);
+            // Convert blob to Base64 and store
+            const base64 = await this.blobToBase64(blob);
+            localStorage.setItem(cacheKey, base64);
+            console.log("Fetched and cached image.");
+        }
+    
+        // Clean up old blob URL if needed
+        if (this.imageElement.src.startsWith('blob:')) {
+            URL.revokeObjectURL(this.imageElement.src);
+        }
+    
+        this.imageElement.src = imageUrl;
+    
+        await new Promise<void>((resolve, reject) => {
+            this.imageElement.onload = () => {
+                URL.revokeObjectURL(imageUrl); 
+                console.log('Image loaded successfully');
+                resolve();
+            };
+            this.imageElement.onerror = () => {
+                URL.revokeObjectURL(imageUrl);
+                reject(new Error('Failed to load image from blob'));
+            };
+        });
+    }
+
+    private async blobToBase64(blob: Blob): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64 = reader.result?.toString().split(',')[1];
+                if (base64) resolve(base64);
+                else reject(new Error("Failed to convert blob to base64"));
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
+    
+    private base64ToBlob(base64: string, mimeType: string): Blob {
+        const byteCharacters = atob(base64);
+        const byteArrays = [];
+    
+        for (let i = 0; i < byteCharacters.length; i += 512) {
+            const slice = byteCharacters.slice(i, i + 512);
+            const byteNumbers = new Array(slice.length);
+    
+            for (let j = 0; j < slice.length; j++) {
+                byteNumbers[j] = slice.charCodeAt(j);
             }
     
-            this.imageElement.src = imageUrl;
-    
-            await new Promise<void>((resolve, reject) => {
-                this.imageElement.onload = () => {
-                    URL.revokeObjectURL(imageUrl); 
-                    console.log('Image loaded successfully');
-                    resolve();
-                };
-                this.imageElement.onerror = () => {
-                    URL.revokeObjectURL(imageUrl);
-                    reject(new Error('Failed to load image from blob'));
-                };
-            });
-        } catch (error) {
-            console.error('Image load error:', error);
-            // Optional fallback image:
-            // this.imageElement.src = "/images/image-placeholder.jpg";
-            throw error;
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
         }
+    
+        return new Blob(byteArrays, { type: mimeType });
     }
+    
     
 
    

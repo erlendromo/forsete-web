@@ -104,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       const jsonData = await response.json();
-      console.log("API Response JSON:", jsonData);
       // Store the transcribed data in localStorage
       localStorage.setItem('transcribedData', JSON.stringify(jsonData));
       return jsonData
@@ -165,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
        
         console.log("Calling transcribeFile...");
         transcribeDoc = await transcribeFile(file);
-        console.log("Received transcription response:", transcribeDoc);
+      
       
         if (Array.isArray(transcribeDoc)) {
           if (!transcribeDoc[0]?.image_id) {

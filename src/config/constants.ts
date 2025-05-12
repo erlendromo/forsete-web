@@ -67,3 +67,8 @@ export enum AppPages {
   Login = 'login',
   Register = 'register',
 }
+export enum ExportFormat {
+  JSON = 'json',
+  PLAIN_TXT = 'plain_txt',
+  PLAIN_PDF = 'plain_pdf',
+}

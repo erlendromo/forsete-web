@@ -1,11 +1,16 @@
-
     // Main document interface
+
+    interface UpdatedATRResult {
+      connfirmed: boolean;
+      data: ATRResult;
+    }
+    
     interface ATRResult {
-      file_name: string;
-      image_name: string;
-      label: string;
+      file_name?: string;
+      image_name?: string;
+      label?: string;
       contains: TextElement[];
-      processing_steps: ProcessingStep[];
+      processing_steps?: ProcessingStep[];
     }
     
     // Text element interface representing recognized text segments
@@ -67,4 +72,4 @@
         processor_version?: string;
       };
     }
-export { ATRResult, TextElement, Segment, BoundingBox, Polygon, Point, TextResult, ProcessingStep };
+export { ATRResult, TextElement, Segment, BoundingBox, Polygon, Point, TextResult, ProcessingStep, UpdatedATRResult };
