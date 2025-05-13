@@ -1,4 +1,5 @@
 import { ApiRoute } from '../../config/constants.js';
+import { getSelectedModel } from "../settingsController.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // DOM elements
@@ -87,8 +88,38 @@ document.addEventListener("DOMContentLoaded", () => {
  
   // Request transcription using the uploaded file's filename
   const transcribeFile = async (file: File): Promise<any> => {
+    //Get the models
+    const textModelValue = getSelectedModel("textrecognition");
+    const lineModelValue = getSelectedModel("linesegmentation");
+
+  let fileToTranscribe: File = file;
+  // Check if the file is a pdf
+  if (file.name.toLowerCase().endsWith('.pdf')) {
+    const pdfForm = new FormData();
+    pdfForm.append('file', file);
+    // Convert pdf to image
+    const convertResp = await fetch(ApiRoute.PdfToImage, {
+      method: 'POST',
+      body: pdfForm,
+    });
+    if (!convertResp.ok) {
+      // If any errors occurs catches and returns an empty string
+      const msg = await convertResp.text().catch(() => '');
+
+      throw new Error(
+        `Failed to convert "PDF" to "png": ${convertResp.status} ${convertResp.statusText} ${msg}`
+      );
+    }
+    const pngBlob = await convertResp.blob();
+    // Store it and replace the file ending with .png
+    fileToTranscribe = new File([pngBlob],file.name.replace(/\.pdf$/i, '.png'),{ type: 'image/png' });
+  }
+
     const formData = new FormData();
-    formData.append("file", file, file.name);
+    // Try to transcribe
+    formData.append('file', fileToTranscribe, fileToTranscribe.name);
+    formData.append("textModel", textModelValue);
+    formData.append("lineModel", lineModelValue);
     try {
       const response = await fetch(ApiRoute.Transcribe, {
         method: "POST",

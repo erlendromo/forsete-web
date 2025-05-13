@@ -11,9 +11,11 @@ import { ATRResult } from '../interfaces/atr-result.js';
  * Handle the file transcribing process (e.g., image or PDF).
  * @param {Express.Multer.File} file - The uploaded file in memory
  * @param {string} token - The authentication token
+ * @param {string} textModel - The text recognition model to be used
+ * @param {string} lineModel - The line segmentation model to be used
  * @returns {Promise<{ message: string, atrResponse: any }>} - Response from ATR service
  */
-async function handleTranscribe(file: Express.Multer.File, token: string): Promise<{atrResponse: any }> {
+async function handleTranscribe(file: Express.Multer.File, token: string, textModel: string, lineModel: string): Promise<{atrResponse: any }> {
   try {
     const imageBuffer = file.buffer; // Get the image buffer from the memory storage
     const filename = file.originalname; // Get the original file name
@@ -34,8 +36,8 @@ async function handleTranscribe(file: Express.Multer.File, token: string): Promi
     // Prepare ATR request configuration
     const atrConfig = {
       image_ids: imageIDs,
-      line_segmentation_model: "yolov9-lines-within-regions-1",
-      text_recognition_model: "TrOCR-norhand-v3",
+      line_segmentation_model: lineModel,
+      text_recognition_model: textModel,
     };
     // Send the ATR processing request with token
     const atrResponse = await postATRRequest(atrConfig, token);

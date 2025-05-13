@@ -59,9 +59,10 @@ apiRouter.post(ApiRoute.Transcribe, requireAuth, uploadMemory.single('file'), (r
   (async () => {
     try {
       const imageFile = req.file as Express.Multer.File;
-
+      const textModel = req.body.textModel as string;
+      const lineModel = req.body.lineModel as string;
       // Calling the service to process the file and send to ATR
-      const result = await handleTranscribe(imageFile, token);
+      const result = await handleTranscribe(imageFile, token, textModel, lineModel);
 
       res.json(result); // Send the result back
     } catch (error: any) {
