@@ -3,14 +3,14 @@ steps:
   settings:
     model: yolo
     model_settings:
-      model: Riksarkivet/yolov9-lines-within-regions-1
+      model: /Users/arthurborgerthorkildsen/Downloads/Others/model-test/line_region_model.pt
 - step: TextRecognition
   settings:
     model: TrOCR
     model_settings:
-      model: Sprakbanken/TrOCR-norhand-v3
+      model: /Users/arthurborgerthorkildsen/Downloads/Others/pylaia-norhand-v3
 - step: OrderLines
 - step: Export
   settings:
-    format: json
+    format: txt
     dest: outputs

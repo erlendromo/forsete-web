@@ -5,3 +5,6 @@
 /.gradio
 /gradio-env
 /.cache
+__pycache__
+output.pdf
+outputs
