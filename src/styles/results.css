@@ -14,20 +14,26 @@ body {
   width: 100%;
   display: flex;
   flex-direction: row;
-  padding-top: 80px; /* Space for fixed navbar */
-  height: calc(100vh - 80px); /* Use viewport height minus navbar */
-  gap: 0; /* Remove default gap */
+  padding-top: 80px;
+  /* Space for fixed navbar */
+  height: calc(100vh - 80px);
+  /* Use viewport height minus navbar */
+  gap: 0;
+  /* Remove default gap */
   overflow: hidden;
   max-width: 100%;
   margin: 0;
-  padding-right: 0; /* Remove any right padding */
+  padding-right: 0;
+  /* Remove any right padding */
 }
 
 /* Image Container Styles */
 .image-container {
-  width: 50%; /* Fixed width for image container */
+  width: 50%;
+  /* Fixed width for image container */
   height: 100%;
-  padding: 20px 10px 20px 20px; /* Reduced right padding */
+  padding: 20px 10px 20px 20px;
+  /* Reduced right padding */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -43,7 +49,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.05); /* Very subtle background to see container boundaries */
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Very subtle background to see container boundaries */
   border-radius: 8px;
 }
 
@@ -54,17 +61,22 @@ body {
   align-items: center;
   height: 100%;
   width: 100%;
-  transform-origin: center center; /* Ensure zoom happens from center */
-  transition: transform 0.2s ease; /* Smooth zoom transition */
+  transform-origin: center center;
+  /* Ensure zoom happens from center */
+  transition: transform 0.2s ease;
+  /* Smooth zoom transition */
 }
 
 /* Image styling for perfect centering */
 #image-container img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Ensure the whole image is visible */
-  display: block; /* Remove any default spacing */
-  margin: auto; /* Center the image */
+  object-fit: contain;
+  /* Ensure the whole image is visible */
+  display: block;
+  /* Remove any default spacing */
+  margin: auto;
+  /* Center the image */
 }
 
 /* SVG and Canvas elements */
@@ -117,12 +129,14 @@ body {
 
 /* Zoomed state for cursor change */
 .zoomed {
-  cursor: move; /* Show move cursor when zoomed in */
+  cursor: move;
+  /* Show move cursor when zoomed in */
 }
 
 /* Panning state for smoother dragging */
 .panning {
-  transition: none !important; /* Disable transition during panning */
+  transition: none !important;
+  /* Disable transition during panning */
 }
 
 /* Optional: Add a subtle shadow when zoomed for depth */
@@ -132,23 +146,38 @@ body {
 
 /* Editor Wrapper - flex-grow to fill available space */
 .editor-wrapper {
-  flex-grow: 1; /* Fill remaining space */
-  width: 50%; /* Base width */
+  flex-grow: 1;
+  /* Fill remaining space */
+  width: 50%;
+  /* Base width */
   height: 100%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  margin-right: 0; /* Remove any right margin */
+  overflow: hidden;
+  margin-right: 0;
+  /* Remove any right margin */
 }
+
+
+
+
 
 /* Make editor container fill the wrapper */
 .editor-content {
+  flex: 1;
+  /* Take up remaining vertical space */
+  min-height: 0;
+  /* Allow proper scroll */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  padding-top: 10px;
+  padding-right: 5px;
   display: flex;
-  flex-direction: column;  
-  gap: 10px;               
-  overflow-y: auto;        
-  max-height: 100vh;       
+  flex-direction: column;
+  gap: 10px;
+  
 }
 
 /* Button container at bottom */
@@ -156,7 +185,8 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
+  /* Prevent shrinking */
 }
 
 /* Editor Container Styling */
@@ -174,7 +204,14 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden; /* Prevent overflow at container level */
+  flex: 1;
+  flex-grow: 1;
+  min-height: 0;
+   max-height: 700px;
+  /* Adjust depending on button section height */
+  overflow-y: auto;
+  overflow: hidden;
+  /* Prevent overflow at container level */
 }
 
 /* Editor Header */
@@ -194,12 +231,15 @@ body {
 .editor-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;  
+  gap: 10px;
   width: 100%;
   padding-top: 10px;
-  padding-right: 5px; /* Space for scrollbar */
-  overflow-y: auto; /* Enable vertical scrolling */
-  flex: 1; /* Take remaining height */
+  padding-right: 5px;
+  /* Space for scrollbar */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  flex: 1;
+  /* Take remaining height */
 }
 
 /* Custom scrollbar styling */
@@ -217,7 +257,8 @@ body {
 }
 
 /* Buttons */
-.revert-btn, .save-btn {
+.revert-btn,
+.save-btn {
   padding: 10px 18px;
   font-size: 16px;
   cursor: pointer;
@@ -226,14 +267,20 @@ body {
   transition: background 0.2s ease-in-out;
 }
 
+.button-section {
+  flex-shrink: 0;
+}
+
 /* Revert Button - Red */
 .revert-btn {
   background: #f44336;
   color: white;
 }
+
 .revert-btn:hover {
   background: #d32f2f;
 }
+
 .revert-btn:disabled {
   background: #666;
   cursor: not-allowed;
@@ -244,6 +291,7 @@ body {
   background: #4CAF50;
   color: white;
 }
+
 .save-btn:hover {
   background: #388E3C;
 }
@@ -251,12 +299,12 @@ body {
 /* Editor line item */
 .editor-line-item {
   display: flex;
-  flex-direction: row;      
-  align-items: center;       
-  padding: 10px;            
-  border-bottom: 1px solid #ccc;  
-  width: 100%;               
-  transition: all 0.3s ease; 
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  transition: all 0.3s ease;
   gap: 20px;
 }
 
@@ -273,11 +321,11 @@ body {
   height: 100%;
 }
 
-  .editor-line-item.selected {
-    border: 2px solid #3b82f6;
-    border-radius: 0.5rem;
-    background-color: #4b83a8;
-  }
+.editor-line-item.selected {
+  border: 2px solid #3b82f6;
+  border-radius: 0.5rem;
+  background-color: #4b83a8;
+}
 
 
 .line-number {
@@ -326,15 +374,17 @@ body {
 }
 
 .editor-textarea {
-  flex-grow: 1;            
-  resize: none;             
-  min-height: 60px;      
+  flex-grow: 1;
+  resize: none;
+  min-height: 60px;
 
-  background-color: #1e1e24; /* Dark background */
-  color: #ffffff; /* Light text */
-  
+  background-color: #1e1e24;
+  /* Dark background */
+  color: #ffffff;
+  /* Light text */
+
   border: 1px solid #444;
-border-radius: 4px;
+  border-radius: 4px;
 }
 
 
@@ -422,6 +472,7 @@ border-radius: 4px;
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
+
 /* Off-screen Menu */
 .off-screen-menu {
   position: fixed;
@@ -460,36 +511,39 @@ border-radius: 4px;
     overflow: auto;
     padding-right: 0;
   }
-    
-  .image-container, .editor-wrapper {
+
+  .image-container,
+  .editor-wrapper {
     width: 100%;
     height: auto;
     margin: 0;
   }
-  
+
   .image-container {
     height: 50vh;
   }
-  
-  #editor-container, .editor-container {
+
+  #editor-container,
+  .editor-container {
     height: 60vh;
     width: 100%;
   }
-  
+
   .editor-header {
     font-size: 16px;
   }
-  
-  .revert-btn, .save-btn {
+
+  .revert-btn,
+  .save-btn {
     font-size: 14px;
     padding: 8px 14px;
   }
-  
+
   .zoom-controls {
     bottom: 10px;
     right: 10px;
   }
-  
+
   .zoom-btn {
     width: 25px;
     height: 25px;

@@ -7,7 +7,7 @@ dotenv.config();
  * @type {Config}
  */
 export const config = {
-    urlBackend: process.env.URL_BACKEND || 'http://129.241.150.71:8080/',
+    urlBackend: process.env.URL_BACKEND || 'http://10.212.139.163:8080/',
     port: parseInt(process.env.PORT || "3000"),
     useMock: process.env.USE_MOCK === 'true'
 }

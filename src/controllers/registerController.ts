@@ -16,25 +16,23 @@ const form = document.querySelector<HTMLFormElement>('#registerForm')!;
 const alertContainer = document.getElementById('reg-alert-container');
 const endpoint = ApiRoute.Register;
 
-
-form.addEventListener('submit', async ev => {
+form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
 
   if (!form) {
-    console.error('registerController: #registerForm not found in DOM');
+    console.error("registerController: #registerForm not found in DOM");
     return;
   }
-  
 
   const { email, password } = Object.fromEntries(
-    new FormData(form).entries()
+    new FormData(form).entries(),
   ) as Record<string, string>;
   showSpinner(spinner, text, button);
   let response: Response;
   try {
     response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
   } catch {
@@ -63,6 +61,6 @@ function showError(message: string) {
 
   alertContainer.innerHTML = createAlert(message);
   alertContainer
-    .querySelector<HTMLButtonElement>('#close-alert-button')
-    ?.addEventListener('click', () => (alertContainer.innerHTML = ''));
+    .querySelector<HTMLButtonElement>("#close-alert-button")
+    ?.addEventListener("click", () => (alertContainer.innerHTML = ""));
 }
