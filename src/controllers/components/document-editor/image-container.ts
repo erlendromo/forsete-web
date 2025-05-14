@@ -70,57 +70,41 @@ export class ImageContainer {
     }
 
     private async loadUploadedImage(imageId: string): Promise<void> {
-        const cacheKey = `imageBlob_${imageId}`;
-        const cachedBase64 = localStorage.getItem(cacheKey);
-    
-        let imageUrl: string;
-    
-        if (cachedBase64) {
-            // Convert base64 string back to Blob and create object URL
-            const blob = this.base64ToBlob(cachedBase64, 'image/jpeg'); // Change MIME if necessary
-            imageUrl = URL.createObjectURL(blob);
-            console.log("Loaded image from cache.");
-        } else {
-            const response = await fetch(ApiRoute.Images, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image_id: imageId }),
-            });
-    
-            if (!response.ok) {
-                throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
-            }
-    
-            const blob = await response.blob();
-            imageUrl = URL.createObjectURL(blob);
-    
-            // Convert blob to Base64 and store
-            const base64 = await this.blobToBase64(blob);
-            localStorage.setItem(cacheKey, base64);
-            console.log("Fetched and cached image.");
-        }
-    
-        // Clean up old blob URL if needed
-        if (this.imageElement.src.startsWith('blob:')) {
-            URL.revokeObjectURL(this.imageElement.src);
-        }
-    
-        this.imageElement.src = imageUrl;
-    
-        await new Promise<void>((resolve, reject) => {
-            this.imageElement.onload = () => {
-                URL.revokeObjectURL(imageUrl); 
-                console.log('Image loaded successfully');
-                resolve();
-            };
-            this.imageElement.onerror = () => {
-                URL.revokeObjectURL(imageUrl);
-                reject(new Error('Failed to load image from blob'));
-            };
-        });
+    const response = await fetch(ApiRoute.Images, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image_id: imageId }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch image: ${response.status} ${response.statusText}`);
     }
+
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+
+    // Clean up old blob URL if needed
+    if (this.imageElement.src.startsWith('blob:')) {
+        URL.revokeObjectURL(this.imageElement.src);
+    }
+
+    this.imageElement.src = imageUrl;
+
+    await new Promise<void>((resolve, reject) => {
+        this.imageElement.onload = () => {
+            URL.revokeObjectURL(imageUrl); 
+            console.log('Image loaded successfully');
+            resolve();
+        };
+        this.imageElement.onerror = () => {
+            URL.revokeObjectURL(imageUrl);
+            reject(new Error('Failed to load image from blob'));
+        };
+    });
+}
+
 
     private async blobToBase64(blob: Blob): Promise<string> {
         return new Promise((resolve, reject) => {
