@@ -11,33 +11,12 @@ body {
 
 /* Layout Container Styles */
 .content-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  padding-top: 80px;
-  /* Space for fixed navbar */
-  height: calc(100vh - 80px);
-  /* Use viewport height minus navbar */
-  gap: 0;
-  /* Remove default gap */
-  overflow: hidden;
-  max-width: 100%;
-  margin: 0;
-  padding-right: 0;
-  /* Remove any right padding */
+  @apply w-full max-w-full flex flex-row pt-[80px] gap-0 overflow-hidden m-0 pr-0;
 }
 
 /* Image Container Styles */
 .image-container {
-  width: 50%;
-  /* Fixed width for image container */
-  height: 100%;
-  padding: 20px 10px 20px 20px;
-  /* Reduced right padding */
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  position: relative;
+  @apply w-1/2 aspect-[4/3] pt-[20px] pr-[10px] pb-[20px] pl-[20px] flex flex-col box-border relative;
 }
 
 /* Zoom wrapper contains both image and controls */
@@ -169,6 +148,7 @@ body {
   flex: 1;
   /* Take up remaining vertical space */
   min-height: 0;
+  max-height: 7em;
   /* Allow proper scroll */
   overflow-y: auto;
   /* Enable vertical scrolling */
