@@ -35,23 +35,30 @@ export class DocumentManager {
   private indexATRResult(atrResult: ATRResult): Map<number, LineSegment> {
     const LineSegmentMap = new Map<number, LineSegment>();
     let lineIndex = 0;
+  
+    if (!atrResult || !Array.isArray(atrResult.contains)) {
+      console.warn("Invalid ATR result format: missing or invalid 'contains' array", atrResult);
+      return LineSegmentMap;
+    }
 
     atrResult.contains.forEach((textElement) => {
-      if (!textElement.text_result) {
-        console.warn("contains element without text_result – skipping", textElement);
+      const result = textElement.text_result;
+  
+      if (!result || !Array.isArray(result.texts)) {
+        console.warn("Skipping element: missing or invalid text_result.texts", textElement);
         return;
       }
-      // For each text in the text_result.texts array
-      textElement.text_result.texts.forEach((text) => {
-
-        const conf = Number((Number(textElement.text_result.scores[0]) * 100).toFixed(2))
+  
+      const conf = Number((Number(result.scores?.[0] ?? 0) * 100).toFixed(2));
+  
+      result.texts.forEach((text) => {
         const textContent = typeof text === 'string'
           ? text
           : JSON.stringify(text);
-
+  
         LineSegmentMap.set(lineIndex, {
           originalIndex: lineIndex,
-          textContent: textContent, // This ensures it's a string
+          textContent,
           confidence: conf,
           edited: false,
           bbox: { ...textElement.segment.bbox },
@@ -59,10 +66,11 @@ export class DocumentManager {
             points: [...textElement.segment.polygon.points],
           }
         });
+  
         lineIndex++;
       });
     });
-
+  
     return LineSegmentMap;
   }
 
