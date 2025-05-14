@@ -1,38 +1,39 @@
 // src/controllers/loginController.ts
 import { ApiRoute } from "../config/constants.js";
+import { AppRoute } from "../config/constants.js";
 import { createAlert } from "./utils/ui/alert.js";
 /*
-* This script handles the login functionality for the application.
-* It listens for form submission, validates user credentials,
-* and manages the display of messages based on the login status.
-*
-* @module loginPage
-*/
-const form = document.querySelector<HTMLFormElement>('#loginForm')!;
-const alertContainer = document.getElementById('login-alert-container');
+ * This script handles the login functionality for the application.
+ * It listens for form submission, validates user credentials,
+ * and manages the display of messages based on the login status.
+ *
+ * @module loginPage
+ */
+const form = document.querySelector<HTMLFormElement>("#loginForm")!;
+const alertContainer = document.getElementById("login-alert-container");
 const endpoint = ApiRoute.Login;
 
-form.addEventListener('submit', async ev => {
+form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
 
   if (!form) {
-    console.error('loginController: #loginForm not found in DOM');
+    console.error("loginController: #loginForm not found in DOM");
     return;
   }
 
   const { email, password } = Object.fromEntries(
-    new FormData(form).entries()
+    new FormData(form).entries(),
   ) as Record<string, string>;
 
   let response: Response;
   try {
     response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
   } catch {
-    showError('Network error: check your connection and try again.');
+    showError("Network error: check your connection and try again.");
     return;
   }
 
@@ -41,7 +42,7 @@ form.addEventListener('submit', async ev => {
     showError(data.message ?? `Server returned: ${response.status}`);
     return;
   }
-  window.location.replace('/');
+  window.location.replace(AppRoute.Home);
 });
 
 /**
@@ -54,6 +55,6 @@ function showError(message: string) {
 
   alertContainer.innerHTML = createAlert(message);
   alertContainer
-    .querySelector<HTMLButtonElement>('#close-alert-button')
-    ?.addEventListener('click', () => (alertContainer.innerHTML = ''));
+    .querySelector<HTMLButtonElement>("#close-alert-button")
+    ?.addEventListener("click", () => (alertContainer.innerHTML = ""));
 }
