@@ -14,7 +14,6 @@
     },
     "include": [
       "src/**/*",
-      "mocks/**/*",
       "**/*.json"
   , "src/config"  ],
     "exclude": ["node_modules", "public/js", "src/mocks/**/*.json"],
