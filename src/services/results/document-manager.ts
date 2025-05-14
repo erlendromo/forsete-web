@@ -227,7 +227,7 @@ export class DocumentManager {
 
   confirmedATRResult(): UpdatedATRResult {
     return {
-      connfirmed: true,
+      confirmed: true,
       data: this.updateATRResult()
     };
   }

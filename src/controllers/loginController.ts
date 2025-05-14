@@ -1,6 +1,7 @@
 // src/controllers/loginController.ts
-import { ApiRoute } from "../config/constants.js";
+import { ApiRoute, AppRoute } from "../config/constants.js";
 import { createAlert } from "./utils/ui/alert.js";
+import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
 /*
 * This script handles the login functionality for the application.
 * It listens for form submission, validates user credentials,
@@ -8,15 +9,20 @@ import { createAlert } from "./utils/ui/alert.js";
 *
 * @module loginPage
 */
+const spinner = document.getElementById("loginLoader") as HTMLElement;
+const button = document.getElementById("submit") as HTMLButtonElement;
+const text = document.getElementById("buttonText") as HTMLElement;
 const form = document.querySelector<HTMLFormElement>('#loginForm')!;
 const alertContainer = document.getElementById('login-alert-container');
 const endpoint = ApiRoute.Login;
 
 form.addEventListener('submit', async ev => {
   ev.preventDefault();
+  showSpinner(spinner, text, button);
 
   if (!form) {
     console.error('loginController: #loginForm not found in DOM');
+    disableSpinner(spinner, text, button);
     return;
   }
 
@@ -32,6 +38,7 @@ form.addEventListener('submit', async ev => {
       body: JSON.stringify({ email, password }),
     });
   } catch {
+    disableSpinner(spinner, text, button);
     showError('Network error: check your connection and try again.');
     return;
   }
@@ -39,9 +46,11 @@ form.addEventListener('submit', async ev => {
   if (!response.ok) {
     const data = await response.json().catch(() => ({}));
     showError(data.message ?? `Server returned: ${response.status}`);
+    disableSpinner(spinner, text, button);
     return;
   }
-  window.location.replace('/');
+  disableSpinner(spinner, text, button);
+  window.location.replace(AppRoute.Home);
 });
 
 /**

@@ -11,11 +11,11 @@
 
 </head>
 
-    <body class="bg-gray-50 dark:bg-gray-900 text-white">
-        <header>
-            <%- include('./partials/header'); %>
-        </header>
-        <%- include('./partials/drawer/drawerLogin'); %>
+<body class="bg-gray-50 dark:bg-gray-900 text-white">
+    <header>
+        <%- include('./partials/header'); %>
+    </header>
+    <%- include('./partials/drawer/drawerLogin'); %>
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 <img class="w-8 h-8 mr-2" src="../images/favicon_io/favicon.ico" alt="logo">
@@ -49,11 +49,10 @@
                                 class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
                                 password?</a>
                         </div>
-                        <button type="submit" id="submit"
-                            class="blue-button">
+                        <button type="submit" id="submit" class="blue-button">
 
                             <!-- Spinner overlay -->
-                           <%- include('./partials/loader', { loaderId: 'loginLoader', position: 'absolute'}) %>
+                            <%- include('./partials/loader', { loaderId: 'loginLoader' , position: 'absolute' }) %>
 
 
                                 <!-- Button text -->
@@ -70,26 +69,8 @@
                 </div>
             </div>
         </div>
-    </body>
+</body>
 
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("loginForm");
-  const spinner = document.getElementById("loginLoader");
-  const button = document.getElementById("submit");
-  const text = document.getElementById("buttonText");
 
-  const hidden = "hidden";
-  const visible = "flex";
-  const invisible = "invisible";
-  form.addEventListener("submit", function (e) {
-    // Show the spinner
-    spinner.classList.replace(hidden, visible);
-    text.classList.add(invisible);
-    // Disable the button, to prevent additonal submissions
-    button.disabled = true;
-  });
-});
 
-</script>
 </html>
