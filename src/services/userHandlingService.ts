@@ -124,3 +124,15 @@ export async function handleLogin(username: string, password: string, res: Expre
       res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
     }
   }
+  /*
+  export async function handleRegister(username: string, password: string, res: ExpressResponse): Promise<boolean> {
+  const userData: Registration = { email: username, password: password };
+  try {
+    const { token } = await register(userData);
+    setAuthCookie(res, token);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+  */
