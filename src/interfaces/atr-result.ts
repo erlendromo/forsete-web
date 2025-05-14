@@ -1,7 +1,7 @@
     // Main document interface
 
     interface UpdatedATRResult {
-      connfirmed: boolean;
+      confirmed: boolean;
       data: ATRResult;
     }
     
