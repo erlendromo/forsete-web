@@ -1,6 +1,6 @@
 // src/routes/router.ts
 import { Router } from 'express';
-import { ApiRoute } from '../config/constants.js';
+import { ApiRoute, HTTP_STATUS } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
@@ -26,6 +26,14 @@ apiRouter.post(ApiRoute.Login, (req, res) => {
 apiRouter.post(ApiRoute.Register, (req, res) => {
   const { email, password } = req.body;
   return handleRegister(email, password, res);
+  /*
+  const registered = await handleRegister(email, password, res);
+  if (registered) {
+    res.render(AppPages.Login);
+  } else {
+    res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
+  }
+    */
 });
 
 // Logout route
