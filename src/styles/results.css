@@ -14,11 +14,6 @@ body {
   @apply w-full max-w-full flex flex-row pt-[80px] gap-0 overflow-hidden m-0 pr-0;
 }
 
-/* Image Container Styles */
-.image-container {
-  @apply w-1/2 aspect-[4/3] pt-[20px] pr-[10px] pb-[20px] pl-[20px] flex flex-col box-border relative;
-}
-
 /* Zoom wrapper contains both image and controls */
 .image-zoom-wrapper {
   width: 100%;
@@ -148,7 +143,7 @@ body {
   flex: 1;
   /* Take up remaining vertical space */
   min-height: 0;
-  max-height: 7em;
+  max-height: 14em;
   /* Allow proper scroll */
   overflow-y: auto;
   /* Enable vertical scrolling */
@@ -438,7 +433,6 @@ body {
     height: 50vh;
   }
 
-  #editor-container,
   .editor-container {
     height: 60vh;
     width: 100%;
