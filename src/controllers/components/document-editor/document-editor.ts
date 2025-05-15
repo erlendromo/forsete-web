@@ -38,11 +38,9 @@ export class DocumentLineEditor {
     // Initialize UI elements
     this.editorContentEl = document.getElementById(`${containerId}-editor-content`) as HTMLElement;
     this.revertAllBtn = document.getElementById(`${containerId}-revert-all`) as HTMLButtonElement;
-    //this.saveBtn = document.getElementById(`${containerId}-save`) as HTMLButtonElement;
     
     // Add event listeners
     this.revertAllBtn.addEventListener('click', this.handleRevertAll.bind(this));
-    //this.saveBtn.addEventListener('click', this.handleSave.bind(this));
     
     // Create line items
     this.createLineItems();
@@ -72,40 +70,48 @@ export class DocumentLineEditor {
   }
   
   private createLineItems(): void {
-    // Clear the editor content
-    this.editorContentEl.innerHTML = '';
-    this.lineItems = [];
-  
-    this.documentManager.getAllLineSegments().forEach((segment, index) => {
-      const lineItem = new LineEditorItem(
-        segment,
-        this.handleLineChange.bind(this),
-        (focusedSegment) => {
-          if (this.imageContainer) {
-            this.imageContainer.highlightLinePolygon(focusedSegment);
+  // Clear the editor content
+  this.editorContentEl.innerHTML = '';
+  this.lineItems = [];
+
+  const segments = this.documentManager.getAllLineSegments();
+
+  if (!segments || segments.length === 0) {
+    this.editorContentEl.innerHTML = `
+      <div class="empty-message">No lines found!.</div>
+    `;
+    return;
+  }
+
+  segments.forEach((segment, index) => {
+    const lineItem = new LineEditorItem(
+      segment,
+      this.handleLineChange.bind(this),
+      (focusedSegment) => {
+        if (this.imageContainer) {
+          this.imageContainer.highlightLinePolygon(focusedSegment);
+        }
+
+        const newlyFocusedItem = this.lineItems.find(item =>
+          item.getSegment().originalIndex === focusedSegment.originalIndex
+        );
+
+        if (newlyFocusedItem !== this.currentlyFocusedLine) {
+          if (this.currentlyFocusedLine) {
+            this.currentlyFocusedLine.setSelected(false);
           }
-  
-          const newlyFocusedItem = this.lineItems.find(item =>
-            item.getSegment().originalIndex === focusedSegment.originalIndex
-          );
-  
-          if (newlyFocusedItem !== this.currentlyFocusedLine) {
-            if (this.currentlyFocusedLine) {
-              this.currentlyFocusedLine.setSelected(false);
-            }
-            if (newlyFocusedItem) {
-              newlyFocusedItem.setSelected(true);
-              this.currentlyFocusedLine = newlyFocusedItem;
-            }
+          if (newlyFocusedItem) {
+            newlyFocusedItem.setSelected(true);
+            this.currentlyFocusedLine = newlyFocusedItem;
           }
         }
-      );
-  
-      this.lineItems.push(lineItem);
-      this.editorContentEl.appendChild(lineItem.getElement());
-    });
-  }
-  
+      }
+    );
+
+    this.lineItems.push(lineItem);
+    this.editorContentEl.appendChild(lineItem.getElement());
+  });
+}
 
 
 // Method to set the image container after initialization
