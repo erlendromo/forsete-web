@@ -31,11 +31,11 @@ export enum ApiEndpoints {
 }
 
 export function outputEndpointConstructor(imageID: string): string {
-  return  ApiEndpoints.VERSION_ATR + 'images/' + imageID + '/outputs/';
+  return ApiEndpoints.VERSION_ATR + 'images/' + imageID + '/outputs/';
 }
 
 export function outputDataEndpointConstructor(imageID: string, outputID: string): string {
-  return  outputEndpointConstructor(imageID) + outputID + '/data/';
+  return outputEndpointConstructor(imageID) + outputID + '/data/';
 }
 
 export enum tokenStorage {
@@ -76,16 +76,23 @@ export enum ExportFormat {
 /**
  * API routes for the application
  */
-export enum ApiRoute { 
-    Login = '/api/login',
-    Logout = '/api/logout',
-    Images = '/api/images',
-    Outputs = '/api/outputs',
-    Register = '/api/register',
-    PdfToImage = '/api/pdfToImage',
-    Transcribe = '/api/transcribe',
-    SelectedModels = '/api/selectedModels',
-    OutputData = '/api/outputdata',
-    Export = '/api/export',
-    Save = '/api/save',
-  }
+export enum ApiRoute {
+  Login = '/api/login',
+  Logout = '/api/logout',
+  Images = '/api/images',
+  Outputs = '/api/outputs',
+  Register = '/api/register',
+  PdfToImage = '/api/pdfToImage',
+  Transcribe = '/api/transcribe',
+  SelectedModels = '/api/selectedModels',
+  OutputData = '/api/outputdata',
+  Export = '/api/export',
+  Save = '/api/save',
+}
+
+export enum AllowedMimeType {
+  JPG = "image/jpeg",
+  PNG = "image/png",
+  TIFF = "image/tiff",
+  PDF = "application/pdf",
+}

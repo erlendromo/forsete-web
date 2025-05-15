@@ -1,295 +1,177 @@
-import { ApiRoute } from '../../config/constants.js';
-import { getSelectedModel } from "../settingsController.js";
+
+import { AllowedMimeType } from "../../config/constants.js";
+import { transcribe, ensurePng } from "../utils/transcribe.js";
+import { initDragAndDrop, enableElement, disableElement } from "../utils/ui/indexElements.js";
+
+const MAX_FILE_SIZE_BYTES = 32 * 1024 * 1024; // 32 MB
+
+export interface Elements {
+  submitBtn: HTMLButtonElement;
+  cancelBtn: HTMLButtonElement;
+  inputDoc: HTMLInputElement;
+  fileNameID: HTMLElement;
+  spinner: HTMLElement;
+  uploadArea: HTMLElement;
+  errorMessage: HTMLElement;
+}
+
+const htmlId = <T extends HTMLElement>(id: string) =>
+  document.getElementById(id) as T;
+
+const showError = (() => {
+  let timeout: number | undefined;
+  return (el: HTMLElement, msg: string, temporary = true) => {
+    el.textContent = msg;
+    el.classList.remove("hidden");
+
+    if (temporary) {
+      clearTimeout(timeout);
+      timeout = window.setTimeout(() => el.classList.add("hidden"), 5_000);
+    }
+    console.error(msg);
+  };
+})();
+
+const hideError = (el: HTMLElement) => el.classList.add("hidden");
+
+// Helper for validating file type
+const isAllowedType = (type: string): type is AllowedMimeType =>
+  Object.values(AllowedMimeType).includes(type as AllowedMimeType);
+
+const validateFile = (file: File, errEl: HTMLElement): boolean => {
+  if (!isAllowedType(file.type)) {
+    showError(errEl, `Invalid file type: ${file.type}`);
+    return false;
+  }
+
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    showError(
+      errEl, `File too large: (max ${(MAX_FILE_SIZE_BYTES / 1_048_576)}) MB)`
+    );
+    return false;
+  }
+  return true;
+};
+
 
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM elements
-  const elements = {
-    submitBtn: document.getElementById("submitBtn") as HTMLButtonElement,
-    cancelBtn: document.getElementById("cancelBtn") as HTMLButtonElement,
-    inputDoc: document.getElementById("inputDocument") as HTMLInputElement,
-    fileNameID: document.getElementById("fileName") as HTMLElement,
-    spinnerId: document.getElementById("spinnerId") as HTMLElement,
-    uploadArea: document.getElementById("uploadArea") as HTMLElement,
-    errorMessage: document.getElementById("errorMessage") as HTMLElement || createErrorElement()
+  // Grab UI elements once
+  const components: Elements = {
+    submitBtn: htmlId("submitBtn"),
+    cancelBtn: htmlId("cancelBtn"),
+    inputDoc: htmlId("inputDocument"),
+    fileNameID: htmlId("fileName"),
+    spinner: htmlId("spinnerId"),
+    uploadArea: htmlId("uploadArea"),
+    errorMessage: htmlId("errorMessage") ?? createErrorElement(),
   };
 
-  // Create error message element if it doesn't exist
-  function createErrorElement(): HTMLElement {
-    const errorEl = document.createElement("div");
-    errorEl.id = "errorMessage";
-    errorEl.className = "mt-2 text-red-600 text-sm hidden";
-    document.querySelector("form")?.appendChild(errorEl);
-    return errorEl;
-  }
-
-  // Display error message to the user
-  const showError = (message: string, isTemporary: boolean = true): void => {
-    if (!elements.errorMessage) return;
-    
-    elements.errorMessage.textContent = message;
-    elements.errorMessage.classList.remove("hidden");
-    
-    if (isTemporary) {
-      setTimeout(() => {
-        elements.errorMessage.classList.add("hidden");
-      }, 5000); // Hide after 5 seconds
-    }
-    
-    console.error(`Error: ${message}`);
-  };
-
-  // Hide error message
-  const hideError = (): void => {
-    if (!elements.errorMessage) return;
-    elements.errorMessage.classList.add("hidden");
-  };
-
-  // Hide spinner and remove blur effect
-  const initialLoad = (): void => {
-    elements.spinnerId.style.display = "none";
-    hideElement(elements.cancelBtn);
-    hideElement(elements.submitBtn);
-    enableElement(elements.uploadArea);
-    hideError();
-  };
-
-  // Generic function to add disabled styling
-  const hideElement = async (el: HTMLElement): Promise<void> => {
-    el.classList.add("pointer-events-none", "blur-sm");
-    // Only sets disabled if the element supports it
-    if (el instanceof HTMLButtonElement || el instanceof HTMLInputElement) {
-      el.disabled = true;
-    }
-  };
-
-  // Generic function to remove disabled styling
-  const enableElement = async (el: HTMLElement): Promise<void> => {
-    el.classList.remove("pointer-events-none", "blur-sm");
-    if (el instanceof HTMLButtonElement || el instanceof HTMLInputElement) {
-      el.disabled = false;
-    }
-  };
-
-  const enableLoading = async (): Promise<void> => {
-    // Disable the file area (uploadArea) and submit button,
-    // then enable the cancel button and show the spinner.
-    await hideElement(elements.uploadArea);
-    await hideElement(elements.submitBtn);
-    await enableElement(elements.cancelBtn);
-    elements.spinnerId.classList.remove("hidden");
-    elements.spinnerId.style.display = "flex";
-    hideError(); // Clear any previous errors
-  };
-
-  // Hide the loader on initial load
-  initialLoad();
-
-  // Upload file to the server
- 
-  // Request transcription using the uploaded file's filename
-  const transcribeFile = async (file: File): Promise<any> => {
-    //Get the models
-    const textModelValue = getSelectedModel("textrecognition");
-    const lineModelValue = getSelectedModel("linesegmentation");
-
-  let fileToTranscribe: File = file;
-  // Check if the file is a pdf
-  if (file.name.toLowerCase().endsWith('.pdf')) {
-    const pdfForm = new FormData();
-    pdfForm.append('file', file);
-    // Convert pdf to image
-    const convertResp = await fetch(ApiRoute.PdfToImage, {
-      method: 'POST',
-      body: pdfForm,
-    });
-    if (!convertResp.ok) {
-      // If any errors occurs catches and returns an empty string
-      const msg = await convertResp.text().catch(() => '');
-
-      throw new Error(
-        `Failed to convert "PDF" to "png": ${convertResp.status} ${convertResp.statusText} ${msg}`
-      );
-    }
-    const pngBlob = await convertResp.blob();
-    // Store it and replace the file ending with .png
-    fileToTranscribe = new File([pngBlob],file.name.replace(/\.pdf$/i, '.png'),{ type: 'image/png' });
-  }
-
-    const formData = new FormData();
-    // Try to transcribe
-    formData.append('file', fileToTranscribe, fileToTranscribe.name);
-    formData.append("textModel", textModelValue);
-    formData.append("lineModel", lineModelValue);
-    try {
-      const response = await fetch(ApiRoute.Transcribe, {
-        method: "POST",
-        body: formData,
-      });
-      // Handle HTTP errors
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        const statusText = response.statusText || "Unknown error";
-        const errorMessage = errorData?.error || 
-                             `Transcription failed: ${statusText} (${response.status})`;
-        throw new Error(errorMessage);
-      }
-  
-      const jsonData = await response.json();
-      // Store the transcribed data in localStorage
-      localStorage.setItem('transcribedData', JSON.stringify(jsonData));
-      return jsonData
-    } catch (error) {
-      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-        throw new Error("Network error: Unable to connect to the server. Please check your internet connection.");
-      }
-      throw error; // Re-throw other errors
-    }
-  };
-
-  // Validate file before submission
-  const validateFile = (file: File): boolean => {
-    // Check file size (e.g., 20MB limit)
-    const maxSize = 32 * 1024 * 1024; // 20MB
-    if (file.size > maxSize) {
-      showError(`File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is ${maxSize / 1024 / 1024}MB.`);
-      return false;
-    }
-
-    // Check file type (optional - adjust extensions as needed)
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/tiff', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
-      showError(`Invalid file type: ${file.type}. Please upload a JPG, PNG, TIFF, or PDF file.`);
-      return false;
-    }
-
-    return true;
-  };
-
-  // Handle the submit button click event
-  const handleUploadClick = async (): Promise<void> => {
-    hideError();
-    const file = elements.inputDoc.files ? elements.inputDoc.files[0] : null;
-    
-    if (!file) {
-      showError("Please select a file first.");
-      return;
-    }
-
-    // Validate file before proceeding
-    if (!validateFile(file)) {
-      return;
-    }
-
-    await enableLoading();
-
-
-    let transcribeDoc: any = null;
-    try {
-      // Upload the file
-      const file = elements.inputDoc.files ? elements.inputDoc.files[0] : null;
-      if (!file) {
-        throw new Error("No file selected.");
-      }
-      // Transcribe the file using the returned filename
-      try {
-       
-        console.log("Calling transcribeFile...");
-        transcribeDoc = await transcribeFile(file);
-      
-      
-        if (Array.isArray(transcribeDoc)) {
-          if (!transcribeDoc[0]?.image_id) {
-            throw new Error("Unexpected response format. Unable to find image_id.");
-          }
-          window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
-        } else if (transcribeDoc?.image_id) {
-          window.location.href = `results?file=${encodeURIComponent(transcribeDoc.image_id)}`;
-        } else {
-          throw new Error("Unexpected response format. No image_id found.");
-        }
-      } catch (transcribeError: any) {
-        // Handle transcription error but still allow seeing results if upload succeeded
-        console.error("Transcription error:", transcribeError);
-        
-        const confirmView = confirm(
-          `Transcription encountered an error: ${transcribeError.message}\n\n` +
-          `Would you still like to view the results page? (The file was uploaded successfully)`
-        );
-        
-        if (confirmView && transcribeDoc) {
-          window.location.href = `results?file=${encodeURIComponent(transcribeDoc[0].image_id)}`;
-        } else {
-          initialLoad();
-        }
-      }
-    } catch (error: any) {
-      console.error("Upload error:", error);
-      
-      // Handle specific errors
-      if (error.message.includes("Network error")) {
-        showError("Server connection failed. Please check your internet connection and try again.");
-      } else {
-        showError(`Error: ${error.message || "Unknown error occurred"}`);
-      }
-      
-      initialLoad();
-      // Don't clear the file input, so the user can retry
-    } 
-  };
-
-  // Monitor file selection
-  elements.inputDoc.addEventListener("change", () => {
-    hideError(); // Clear previous errors when a new file is selected
-    
-    if (elements.inputDoc.files && elements.inputDoc.files.length > 0) {
-      const file = elements.inputDoc.files[0];
-      
-      // Update filename display
-      elements.fileNameID.textContent = file.name;
-      
-      // Validate file immediately on selection
-      if (validateFile(file)) {
-        // A valid file has been selected; show the cancel and submit buttons
-        enableElement(elements.cancelBtn);
-        enableElement(elements.submitBtn);
-      } else {
-        // Invalid file; show cancel but not submit
-        enableElement(elements.cancelBtn);
-        hideElement(elements.submitBtn);
-      }
+  enum UiState { Idle, Loading, Submitting }
+  function setUi(state: UiState) {
+    if (state === UiState.Idle) {
+      components.spinner.classList.add("hidden");
+      enableElement(components.uploadArea);
+      disableElement(components.submitBtn);
+      disableElement(components.cancelBtn);
+    } else if (state === UiState.Loading) {
+      components.spinner.classList.remove("hidden");
+      disableElement(components.uploadArea);
+      disableElement(components.submitBtn);
+      enableElement(components.cancelBtn);
     } else {
-      // No file is selected; hide the cancel and submit buttons
-      hideElement(elements.cancelBtn);
-      hideElement(elements.submitBtn);
-      elements.fileNameID.textContent = "No file chosen";
+      components.spinner.classList.add("hidden");
+      enableElement(components.uploadArea);
+      enableElement(components.submitBtn);
+      enableElement(components.cancelBtn);
+    }
+  }
+
+
+  // Dynamic creation for error placeholder (if missing in markup)
+  function createErrorElement(): HTMLElement {
+    const div = document.createElement("div");
+    div.id = "errorMessage";
+    div.className = "mt-2 text-red-600 text-sm hidden";
+    document.querySelector("form")?.appendChild(div);
+    return div;
+  }
+  // Initial state
+  setUi(UiState.Idle);
+  initDragAndDrop(components.uploadArea, (droppedFiles: FileList) => {
+    const dt = new DataTransfer();
+    Array.from(droppedFiles).forEach(f => dt.items.add(f));
+    components.inputDoc.files = dt.files;
+    components.inputDoc.dispatchEvent(new Event("change"));
+    setUi(UiState.Submitting);
+  });
+
+  components.cancelBtn.addEventListener("click", () => handleCancel(components));
+
+  // file is selcted
+  components.inputDoc.addEventListener("change", () => {
+    hideError(components.errorMessage);
+
+    const file = components.inputDoc.files?.[0];
+    components.fileNameID.textContent = file?.name ?? "No file chosen";
+    // Validation
+    if (file && validateFile(file, components.errorMessage)) {
+      setUi(UiState.Submitting);
+    } else {
+      disableElement(components.submitBtn);
+      // Enable the cancel button only if a file is selected; otherwise, disable it
+      file ? enableElement(components.cancelBtn) : disableElement(components.cancelBtn);
     }
   });
 
-  // Handle the cancel button click event
-  const handleCancelClick = (): void => {
-    clearFileInput();
-    hideElement(elements.cancelBtn);
-    hideElement(elements.submitBtn);
-    elements.spinnerId.style.display = "none";
-    enableElement(elements.uploadArea);
-    hideError();
-    console.log("Cancel button clicked. File input reset.");
-  };
+  // Cancel button
+  function handleCancel(components: Elements): void {
+  components.inputDoc.value = "";
+  components.fileNameID.textContent = "No file chosen";
+  setUi(UiState.Idle);
+}
 
-  const clearFileInput = (): void => {
-    // Reset the file input and filename display
-    elements.inputDoc.value = "";
-    elements.fileNameID.textContent = "No file chosen";
-  };
+  // Submit button
+  components.submitBtn.addEventListener("click", async () => {
+    hideError(components.errorMessage);
 
-  // Add global error handler for promises
-  window.addEventListener("unhandledrejection", (event) => {
-    console.error("Unhandled promise rejection:", event.reason);
-    showError("An unexpected error occurred. Please try again later.");
-    initialLoad();
+    const originalFile = components.inputDoc.files?.[0];
+    if (!originalFile) {
+      showError(components.errorMessage, "Please select a file first.");
+      return;
+    }
+
+    if (!validateFile(originalFile, components.errorMessage)) return;
+
+    setUi(UiState.Loading);;
+
+    try {
+      const uploadFile = await ensurePng(originalFile);
+      const result = await transcribe(uploadFile);
+
+      // Save to localstorage
+      localStorage.setItem("transcribedData", JSON.stringify(result));
+    const imageId = Array.isArray(result)? result[0]?.image_id: result.image_id;
+      if (!imageId) throw new Error("Unexpected response format (no image_id)");
+
+      // Go to result page
+      handleCancel(components);
+      window.location.href = `results?file=${encodeURIComponent(imageId)}`;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.includes("Failed to fetch")) {
+        showError(components.errorMessage, "Network error: cannot reach server.");
+      } else {
+        showError(components.errorMessage, msg, false);
+      }
+      setUi(UiState.Idle);
+    }
   });
+  
 
-  // Attach event listeners
-  elements.submitBtn.addEventListener("click", handleUploadClick);
-  elements.cancelBtn.addEventListener("click", handleCancelClick);
+  // Global unhandled promise rejection fallback
+  window.addEventListener("unhandledrejection", (ev) => {
+    console.error("Unhandled promise:", ev.reason);
+    showError(components.errorMessage, "An unexpected error occurred.");
+    setUi(UiState.Idle);
+  });
 });
