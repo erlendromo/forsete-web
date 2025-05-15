@@ -30,3 +30,8 @@
          focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800 cursor-pointer;
 }
 
+.button {
+  @apply w-full inline-flex items-center justify-center gap-2 rounded-lg
+         px-4 py-2 text-sm font-medium
+         focus:outline-none cursor-pointer;
+}

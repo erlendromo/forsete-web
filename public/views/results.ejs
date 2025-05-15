@@ -48,31 +48,56 @@
           <div class="flex flex-col space-y-4 mt-2 max-h-120">
             <div class="mt-0">
               <button id="confirmBtn"
-                class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg cursor-pointer">
+                class="bg-green-500 hover:bg-green-700 w-full flex items-center justify-center gap-2 text-white font-bold py-3 px-6 rounded-lg cursor-pointer">
                 Confirm
+                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 11.917 9.724 16.5 19 7.5" />
+                </svg>
               </button>
+
             </div>
-            <div class="flex flex-col mt-10">
-              <label for="exportFormat" class="mb-2 font-semibold text-sm text-gray-200">Choose export format:</label>
+            <div class="grid grid-cols-2 gap-4 mt-10">
+              <!-- Empty placeholder for column 1 -->
+              <div></div>
+
+              <!-- Header in column 2 -->
+              <label for="exportFormat" class="text-white text-lg font-semibold">Export formats:</label>
+
+              <!-- Label in column 1 -->
+               <div></div>
+              <!-- Select in column 2 -->
               <select id="exportFormat" class="bg-gray-800 text-white p-2 rounded border border-gray-600">
                 <option value="plain_txt">TXT</option>
                 <option value="json">JSON</option>
                 <option value="plain_pdf">PDF</option>
               </select>
-            </div>
-            <div class="flex justify-between space-x-4">
-              <button id="cancelBtn"
-                class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-                Cancel
-              </button>
-              <button id="exportBtn"
-                class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full cursor-pointer">
-                Export
-              </button>
-            </div>
-
           </div>
+
+          <div class="flex justify-between space-x-4">
+            <button id="cancelBtn"
+              class="w-full flex items-center justify-center gap-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg cursor-pointer">
+              Cancel
+            </button>
+
+            <button id="exportBtn"
+              class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg cursor-pointer">
+              Export
+              <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                  d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                  clip-rule="evenodd" />
+                <path fill-rule="evenodd"
+                  d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
         </div>
+      </div>
       </div>
     </main>
 </body>
