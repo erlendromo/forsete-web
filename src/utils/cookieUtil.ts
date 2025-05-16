@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import {tokenStorage } from "../config/constants";
+import {tokenStorage } from "../config/constants.js";
 
 /**
  * Sets the authentication token in the response cookies.
