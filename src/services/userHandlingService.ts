@@ -131,7 +131,7 @@ export async function handleLogin(
   } catch (err) {
     res
       .status(HTTP_STATUS.UNAUTHORIZED)
-      .json({ success: false, message: "Login failed" });
+      .json({ success: false, message: "Login failed: Please check you email and password." });
   }
 }
 

@@ -1,4 +1,3 @@
-import {Elements} from "../../components/comp-index";
 
 /**
  * Function for initalizing drag and drop zone.

@@ -42,6 +42,9 @@ form.addEventListener("submit", async (ev) => {
     const errorMessage = data.error as string;
     if (topLevelAlertContainer) {
       topLevelAlertContainer.innerHTML = createDangerAlert(errorMessage);
+      document.getElementById("close-alert-button")?.addEventListener("click", () => {
+      topLevelAlertContainer.innerHTML = "";
+    });
     }
 
     //.catch(() => ({}));
@@ -67,7 +70,7 @@ function showError(message: string) {
   if (!alertContainer) return;
 
   alertContainer.innerHTML = createDangerAlert(message);
-  alertContainer
-    .querySelector<HTMLButtonElement>("#close-alert-button")
-    ?.addEventListener("click", () => (alertContainer.innerHTML = ""));
+  document.getElementById("close-alert-button")?.addEventListener("click", () => {
+      alertContainer.innerHTML = "";
+    });
 }

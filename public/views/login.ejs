@@ -14,6 +14,7 @@
     <header>
         <%- include('./partials/header'); %>
     </header>
+             <div id="login-alert-container" class="fixed inset-x-0 top-[75px] z-50"></div>
     <%- include('./partials/drawer/drawerLogin'); %>
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -31,7 +32,6 @@
                         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Sign in to your account
                     </h1>
-                    <div id="login-alert-container"></div>
                     <form class="space-y-4 md:space-y-6" method=post id="loginForm">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
