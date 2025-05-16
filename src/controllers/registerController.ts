@@ -14,6 +14,7 @@ const button = document.getElementById("submitBtn") as HTMLButtonElement;
 const text = document.getElementById("buttonText") as HTMLElement;
 const form = document.querySelector<HTMLFormElement>('#registerForm')!;
 const alertContainer = document.getElementById('reg-alert-container');
+const topLevelAlertContainer = document.getElementById("alert-container");
 const endpoint = ApiRoute.Register;
 
 form.addEventListener("submit", async (ev) => {
@@ -35,15 +36,21 @@ form.addEventListener("submit", async (ev) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-  } catch {
-    showError('Network error: check your connection and try again.');
+    const data = await response.json();
+    console.log("API error payload:", data);
+    if (!data.ok) {
+    const errorMessage = data.error as string;
+    if (topLevelAlertContainer) {
+      topLevelAlertContainer.innerHTML = createDangerAlert(errorMessage);
+    }
+
+    //.catch(() => ({}));
+    //showError(data.message ?? `Server returned: ${response.status}`);
     disableSpinner(spinner, text, button);
     return;
   }
-
-  if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
-    showError(data.message ?? `Server returned: ${response.status}`);
+  } catch {
+    showError('Network error: check your connection and try again.');
     disableSpinner(spinner, text, button);
     return;
   }

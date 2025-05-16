@@ -66,22 +66,37 @@ export async function register(
   userData: Registration,
   endpoint = url + ApiEndpoints.REGISTER_ENDPOINT,
 ): Promise<LoginSuccess> {
-  let res: Response;
+  let res: Response
+
   try {
-    // config.urlBackend + endpoint
     res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
-    });
-  } catch (err) {
-    throw new LoginError("Network unreachable");
+    })
+  } catch (networkErr) {
+    // failed to even reach the server
+    throw new LoginError("Network unreachable")
   }
+
+  // parse the JSON exactly once
+  let body: any
+  try {
+    body = await res.json()
+  } catch (parseErr) {
+    // server replied with non‐JSON or empty body
+    throw new LoginError("Registration failed")
+  }
+
+  // now check the status code
   if (!res.ok) {
-    throw new LoginError("Error during registration: ", res.status);
+    // extract server’s “error” field (falling back to a generic message)
+    const serverMessage = body.error ?? "Registration failed"
+    throw new LoginError(serverMessage)
   }
-  const data = await res.json();
-  return data as LoginSuccess;
+
+  // success path
+  return body as LoginSuccess
 }
 
 /**
@@ -126,28 +141,18 @@ export async function handleRegister(
   password: string,
   res: ExpressResponse,
 ): Promise<void> {
-  const userData: Registration = {
-    email: username,
-    password: password,
-  };
+  const userData: Registration = { email: username, password };
   try {
     await register(userData);
     res
       .status(HTTP_STATUS.CREATED)
-      .json({ success: true, message: "Registration successful" });
+      .json({message: "Registration successful" });
   } catch (err) {
-    res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false });
+    const msg = err instanceof Error
+      ? err.message
+      : "Registration failed";
+    res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .json({error: msg });
   }
 }
-/*
-  export async function handleRegister(username: string, password: string, res: ExpressResponse): Promise<boolean> {
-  const userData: Registration = { email: username, password: password };
-  try {
-    const { token } = await register(userData);
-    setAuthCookie(res, token);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-  */
