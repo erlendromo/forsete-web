@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
 
                     data = await response.json();
-                    console.log("Fetched new data:", data);
                     localStorage.setItem(cacheKey, JSON.stringify(data));
                     console.log("Fetched and cached new data.");
                 }
