@@ -46,7 +46,6 @@ export async function login(
 ): Promise<LoginSuccess> {
   let res: Response;
   try {
-    // config.urlBackend + endpoint
     res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
