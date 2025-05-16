@@ -18,6 +18,7 @@
   <header>
     <%- include('./partials/header'); %>
   </header>
+  <div id="alert-container" class="fixed inset-x-0 top-[75px] z-50"></div>
   <!-- drawer init and toggle -->
   <%- include('./partials/drawer/drawer'); %>
     <main class="min-h-screen">
@@ -63,7 +64,7 @@
               <div></div>
 
               <!-- Header in column 2 -->
-              <label for="exportFormat" class="text-white text-lg font-semibold">Export formats:</label>
+              <label for="exportFormat" class="text-gray-800 dark:text-white text-lg font-semibold">Export formats:</label>
 
               <!-- Label in column 1 -->
                <div></div>
@@ -83,7 +84,7 @@
 
             <button id="exportBtn"
               class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg cursor-pointer">
-              Export
+              Download
               <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                 viewBox="0 0 24 24">
                 <path fill-rule="evenodd"

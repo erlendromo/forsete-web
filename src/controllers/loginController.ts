@@ -1,6 +1,6 @@
 // src/controllers/loginController.ts
 import { ApiRoute, AppRoute } from "../config/constants.js";
-import { createAlert } from "./utils/ui/alert.js";
+import { createDangerAlert } from "./utils/ui/alert.js";
 import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
 
 /*
@@ -62,7 +62,7 @@ form.addEventListener("submit", async (ev) => {
 function showError(message: string) {
   if (!alertContainer) return;
 
-  alertContainer.innerHTML = createAlert(message);
+  alertContainer.innerHTML = createDangerAlert(message);
   alertContainer
     .querySelector<HTMLButtonElement>("#close-alert-button")
     ?.addEventListener("click", () => (alertContainer.innerHTML = ""));

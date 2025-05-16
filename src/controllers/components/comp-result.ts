@@ -4,12 +4,14 @@ import { DocumentLineEditor } from './document-editor/document-editor.js';
 import { ImageContainer } from './document-editor/image-container.js';
 import { initializeImageZoom } from './zoom-image.js';
 import { ApiRoute } from '../../config/constants.js';
+import { createSuccessAlert } from '../utils/ui/alert.js';
 
 
 // components for result page
 document.addEventListener("DOMContentLoaded", async () => {
     // DOM elements
     const elements = {
+        alertContainer: document.getElementById("alert-container") as HTMLAreaElement,
         confirmBtn: document.getElementById("confirmBtn") as HTMLButtonElement,
         cancelBtn: document.getElementById("cancelBtn") as HTMLInputElement,
         exportBtn: document.getElementById("exportBtn") as HTMLElement,
@@ -209,6 +211,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const cacheKey = `outputData_${documentInstance.getImageId()}_${documentInstance.getOutputId()}`;
                 localStorage.removeItem(cacheKey);
                 console.log("Data saved successfully.");
+                elements.alertContainer.innerHTML = createSuccessAlert("File is successfully confirmed!")
+                document.getElementById("close-alert-button")?.addEventListener("click", () => {
+                    elements.alertContainer.innerHTML = "";
+                });
             }
             else {
                 const errorData = await response.json();
