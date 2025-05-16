@@ -1,4 +1,3 @@
-// src/controllers/loginController.ts
 import { ApiRoute, AppRoute } from "../config/constants.js";
 import { createDangerAlert, makeShowStatus } from "./utils/ui/alert.js";
 import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
