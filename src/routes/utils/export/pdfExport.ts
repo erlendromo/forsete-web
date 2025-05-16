@@ -1,6 +1,20 @@
-import { LineSegment } from '../../interfaces/line-segment';
+import { LineSegment } from '../../../interfaces/lineSegment.types';
 import PDFDocument from 'pdfkit';
 
+/**
+ * Generates a plain text PDF from an array of line segments.
+ *
+ * Each line segment is filtered to exclude empty or whitespace-only content,
+ * and sorted by their vertical position (`bbox.ymin`). The resulting PDF
+ * contains each segment's text, using the 'Helvetica' font at size 12,
+ * with a paragraph gap between lines.
+ *
+ * @param lineSegments - An array of `LineSegment` objects, each representing a line of text with bounding box and optional edited content.
+ * @returns A Promise that resolves to an object containing:
+ *   - `buffer`: The generated PDF as a Buffer.
+ *   - `mimeType`: The MIME type of the PDF ('application/pdf').
+ *   - `extension`: The file extension ('pdf').
+ */
 export function generatePlainTextPdf(lineSegments: LineSegment[]): Promise<{ buffer: Buffer, mimeType: string, extension: string }> {
   return new Promise((resolve, reject) => {
     try {

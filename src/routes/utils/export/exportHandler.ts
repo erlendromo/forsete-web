@@ -1,9 +1,22 @@
-import { ExportFormat } from "../../config/constants.js";
-import { LineSegment } from "../../interfaces/line-segment.js";
+import { ExportFormat } from "../../../config/constants.js";
+import { LineSegment } from "../../../interfaces/lineSegment.types.js";
 import { generateJsonFile } from "./jsonExport.js";
 import { generatePlainTextPdf } from "./pdfExport.js";
 import { generatePlainTextFile } from "./txtExport.js";
 
+/**
+ * Handles the export of line segments into various file formats.
+ *
+ * Depending on the specified export format, this function generates a file
+ * (plain text, JSON, or plain PDF) containing the provided line segments,
+ * and returns the file buffer, MIME type, and the generated filename.
+ *
+ * @param lineSegments - The array of line segments to export.
+ * @param filename - The base name for the exported file (without extension).
+ * @param format - The desired export format (plain text, JSON, or plain PDF).
+ * @returns An object containing the file buffer, MIME type, and the full filename.
+ * @throws {Error} If the specified export format is not supported.
+ */
 export async function handleExport(
     lineSegments: LineSegment[], 
     filename: string, 
