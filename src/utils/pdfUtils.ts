@@ -1,4 +1,3 @@
-// utils/pdfUtils.ts
 import { fromBuffer } from "pdf2pic";
 import { PDFDocument } from 'pdf-lib';
 

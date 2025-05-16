@@ -1,11 +1,7 @@
 import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
-import {
-  User,
-  LoginSuccess,
-  Registration,
-} from "../interfaces/userInterface.js";
+import {User,LoginSuccess,Registration,} from "../interfaces/userInterface.types.js";
 import { Response as ExpressResponse } from "express";
 
 const url = config.urlBackend;
@@ -61,6 +57,15 @@ export async function login(
   return data as LoginSuccess;
 }
 
+/**
+ * Registers a new user by sending their registration data to the specified endpoint.
+ *
+ * @param userData - The registration data for the new user.
+ * @param endpoint - The API endpoint to send the registration request to. Defaults to the REGISTER_ENDPOINT.
+ * @returns A promise that resolves to a {@link LoginSuccess} object on successful registration.
+ * @throws {LoginError} If the network is unreachable, the server response cannot be parsed as JSON,
+ *         or the server returns an error status code. The error message will reflect the specific failure.
+ */
 export async function register(
   userData: Registration,
   endpoint = url + ApiEndpoints.REGISTER_ENDPOINT,
@@ -135,6 +140,15 @@ export async function handleLogin(
   }
 }
 
+/**
+ * Handles user registration by creating a new user with the provided username and password.
+ * Sends an appropriate HTTP response based on the registration outcome.
+ *
+ * @param username - The email or username of the user to register.
+ * @param password - The password for the new user.
+ * @param res - The Express response object used to send HTTP responses.
+ * @returns A promise that resolves when the registration process is complete.
+ */
 export async function handleRegister(
   username: string,
   password: string,

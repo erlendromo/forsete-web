@@ -29,6 +29,13 @@ export const uploadImage = async (buffer: Buffer, filename: string,token :string
   return responseData;
 };
 
+/**
+ * Retrieves an image by its ID from the backend API.
+ *
+ * @param imageID - The unique identifier of the image to retrieve.
+ * @param token - The authentication token to be included in the request header.
+ * @returns A promise that resolves to a Blob containing the image data.
+ */
 export const getImageByID = async (imageID: string, token: string): Promise<any> => {
   const url = config.urlBackend + ApiEndpoints.IMAGE_LIST_ENDPOINT + imageID + '/data/';
   const response = await fetch(url , {
@@ -42,6 +49,12 @@ export const getImageByID = async (imageID: string, token: string): Promise<any>
   return responseData;
 };
 
+/**
+ * Fetches a list of images from the backend API.
+ *
+ * @param token - The Bearer token used for authentication in the request header.
+ * @returns A promise that resolves to the response data containing the list of images.
+ */
 export const getImages = async (token: string): Promise<any> => {
   const response = await fetch(config.urlBackend + ApiEndpoints.IMAGE_LIST_ENDPOINT, {
     method: 'GET',

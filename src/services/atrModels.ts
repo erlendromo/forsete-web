@@ -1,6 +1,4 @@
-import {
-        BaseModel, LineSegmentationModel, TextRecognitionModel
-} from '../interfaces/modelInterface'
+import {BaseModel, LineSegmentationModel, TextRecognitionModel} from '../interfaces/modelInterface.types'
 import { ApiEndpoints } from '../config/constants.js';
 import atrApi from '../config/apiConfig.js';
 

@@ -1,5 +1,5 @@
-import { BaseModel, AllModels } from '../interfaces/modelInterface.js';
-import { AppConfig } from '../interfaces/configInterface.js';
+import { BaseModel, AllModels } from '../interfaces/modelInterface.types.js';
+import { AppConfig } from '../interfaces/config.types.js';
 import axios from 'axios';
 import { ApiEndpoints } from '../config/constants.js';
 
@@ -41,6 +41,12 @@ export class MenuService {
   };
   }
 
+  /**
+   * Fetches models from a specified endpoint.
+   * @param modelEndpoint - The API endpoint path to fetch models from
+   * @returns Promise containing an array of BaseModel objects
+   * @throws Will throw an error if the API request fails
+   */
   private async getModels(modelEndpoint: string): Promise<BaseModel[]> {
     const url = this.backendUrl + modelEndpoint;
     try {

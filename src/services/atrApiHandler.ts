@@ -1,8 +1,8 @@
 
-import { getImageByID, uploadImage } from '../services/atr-api/apiImageService.js'; 
-import { postATRRequest } from '../services/atr-api/apiATRService.js'; 
-import { putOutput, getOutputData, getOutputs } from './atr-api/apiOutputService.js';
-import { ATRResult } from '../interfaces/atr-result.js';
+import { getImageByID, uploadImage } from './atrApi/apiImageService.js'; 
+import { postATRRequest } from './atrApi/apiATRService.js'; 
+import { putOutput, getOutputData, getOutputs } from './atrApi/apiOutputService.js';
+import { ATRResult } from '../interfaces/atrResult.types.js';
 
 
 

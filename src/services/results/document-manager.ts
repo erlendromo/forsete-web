@@ -4,8 +4,8 @@
  */
 
 import { ensureDefined } from "../../utils/error-handling.js";
-import { ATRResult, Polygon, UpdatedATRResult } from "../../interfaces/atr-result.js";
-import { LineSegment } from "../../interfaces/line-segment.js";
+import { ATRResult, Polygon, UpdatedATRResult } from "../../interfaces/atrResult.types.js";
+import { LineSegment } from "../../interfaces/lineSegment.types.js";
 
 
 type editedAndOriginal = { original: string; edited: string };

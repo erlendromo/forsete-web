@@ -1,7 +1,6 @@
 import { loadTestFile } from '../mocks/mockutil.js';
 import { ApiEndpoints } from '../config/constants.js';
-import { BaseModel } from '../interfaces/modelInterface.js';
-import { ImageData } from '../interfaces/htrInterface.js';
+import { BaseModel } from '../interfaces/modelInterface.types.js';
 import axios from 'axios';
 
 /**

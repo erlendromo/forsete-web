@@ -1,6 +1,5 @@
-// src/routes/router.ts
 import { Router } from 'express';
-import { ApiRoute, HTTP_STATUS } from '../config/constants.js';
+import { ApiRoute } from '../config/constants.js';
 import { requireAuth } from '../middleware/requireAuth.js';
 import { clearAuthCookie } from "../utils/cookieUtil.js";
 import { handleLogin, handleRegister } from '../services/userHandlingService.js';
@@ -9,11 +8,10 @@ import { handlePdfToImage } from '../services/index/handlepdfToImageService.js';
 import { AppPages } from '../config/constants.js';
 import multer from 'multer';
 import { getAuthToken } from '../utils/cookieUtil.js';
-import { handleExport } from '../utils/export/exportHandler.js';
+import { handleExport } from './utils/export/exportHandler.js';
 
 const storage = multer.memoryStorage();
 const uploadMemory = multer({ storage });
-
 const apiRouter = Router();
 
 // Login route
@@ -26,14 +24,6 @@ apiRouter.post(ApiRoute.Login, (req, res) => {
 apiRouter.post(ApiRoute.Register, (req, res) => {
   const { email, password } = req.body;
   return handleRegister(email, password, res);
-  /*
-  const registered = await handleRegister(email, password, res);
-  if (registered) {
-    res.render(AppPages.Login);
-  } else {
-    res.status(HTTP_STATUS.BAD_REQUEST).json({ success: false});
-  }
-    */
 });
 
 // Logout route
@@ -41,6 +31,7 @@ apiRouter.post(ApiRoute.Logout, requireAuth, (req, res) => {
   clearAuthCookie(res);
   res.render(AppPages.Login);
 });
+
 // PDF to Image route
 apiRouter.post(ApiRoute.PdfToImage, requireAuth, uploadMemory.single("file"), async (req, res) => {
   try {
@@ -79,6 +70,7 @@ apiRouter.post(ApiRoute.Transcribe, requireAuth, uploadMemory.single('file'), (r
   })();
 });
 
+// Image route
 apiRouter.post(ApiRoute.Images, requireAuth, async (req, res) => {
   const token = getAuthToken(req);
   
@@ -96,6 +88,7 @@ apiRouter.post(ApiRoute.Images, requireAuth, async (req, res) => {
   }
 });
 
+// Output route
 apiRouter.post(ApiRoute.Outputs, async (req, res) => {
   const token = getAuthToken(req);
   if (!token) {
@@ -114,6 +107,7 @@ apiRouter.post(ApiRoute.Outputs, async (req, res) => {
   }
 });
 
+// Output data route
 apiRouter.post(ApiRoute.OutputData, (req, res) => {
   const token = getAuthToken(req);
   if (!token) {
@@ -139,7 +133,7 @@ apiRouter.post(ApiRoute.OutputData, (req, res) => {
   })();
 });
 
-
+// Export route
 apiRouter.post(ApiRoute.Export, async (req, res) => {
   const { lineSegments, filename, format } = req.body;
 
@@ -155,6 +149,7 @@ apiRouter.post(ApiRoute.Export, async (req, res) => {
   }
 });
 
+// Save route
 apiRouter.post(ApiRoute.Save, (req, res) => {
   const token = getAuthToken(req);
   if (!token) {

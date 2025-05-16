@@ -1,10 +1,4 @@
-const MAX_MB =  32*1024**2; // 32MB
-const ALLOWED = [
-  "image/jpeg",
-  "image/png",
-  "image/tiff",
-  "application/pdf"
-] as const;
+import {AllowedMimeType,MAX_FILE_SIZE} from "../../config/constants.js"
 
 /**
  * Validates the file size, within the threshold set by "MAX_MB" or checks if the file 
@@ -14,7 +8,7 @@ const ALLOWED = [
  */
 export function validateFileSize(fileSize: number): boolean {
     // Check if the file size is greater than 0 and less than or equal to MAX_MB
-  if (fileSize > MAX_MB || fileSize <= 0) {
+  if (fileSize > MAX_FILE_SIZE || fileSize <= 0) {
     return false;
   }
   return true;
@@ -27,8 +21,5 @@ export function validateFileSize(fileSize: number): boolean {
  * @returns True if the file type is valid, false otherwise.
  */
 export function validateFileType(fileType: string): boolean {
-  if (!ALLOWED.includes(fileType as typeof ALLOWED[number])) {
-    return false;
-  }
-  return true;
+   return (Object.values(AllowedMimeType) as string[]).includes(fileType);
 }

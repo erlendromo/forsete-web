@@ -1,13 +1,8 @@
-//src/model/server.ts
 import { config } from '../config/config.js';
 import express from "express";
 import path from "path";
 import cookieParser from 'cookie-parser';
-// Services
-import uploadRouter from "../services/index/uploadService.js";
 import { MenuService } from '../services/menuService.js';
-// Config
-import { ApiEndpoints } from "../config/constants.js";
 import apiRouter from "../routes/apiRoutes.js";
 import renderRouter from "../routes/renderingRoutes.js";
 import { ModelsSingelton } from "../services/atrModels.js";
@@ -32,9 +27,8 @@ const configureMiddlewares = () => {
   app.use(express.json());
   app.use(apiRouter);
   app.use(renderRouter);
-  app.use(uploadRouter);
 };
-
+// Loads the models
 const loadModels = async () => {
   const menuService = new MenuService(config);
   try {
@@ -47,10 +41,8 @@ const loadModels = async () => {
 };
 
 const startServer = () => {
-  const documentation = 'forsete-atr/v2/swaggo/index.html';
   app.listen(config.port, () => {
     console.log(`Server running: http://localhost:${config.port}`);
-    console.log(`Backend documentation: ${config.urlBackend}${documentation}`);
   });
 };
 
