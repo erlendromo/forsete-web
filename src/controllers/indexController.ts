@@ -1,9 +1,7 @@
-import { AllowedMimeType } from "../../config/constants.js";
-import { transcribe, ensurePng } from "../utils/transcribeHelper.js";
-import { initDragAndDrop, enableElement, disableElement } from "../utils/ui/indexElements.js";
-import { createDangerAlert, createSuccessAlert } from '../utils/ui/alert.js';
-
-const MAX_FILE_SIZE_BYTES = 32 * 1024 * 1024; // 32 MB
+import { AllowedMimeType, MAX_FILE_SIZE } from "../config/constants.js";
+import { transcribe, ensurePng } from "./utils/transcribeHelper.js";
+import { initDragAndDrop, enableElement, disableElement } from "./utils/ui/indexElements.js";
+import { createDangerAlert, createSuccessAlert } from './utils/ui/alert.js';
 
 export interface Elements {
   submitBtn: HTMLButtonElement;
@@ -42,8 +40,8 @@ const validateFile = (file: File, errEl: HTMLElement): boolean => {
     showError(errEl, `Invalid file type: ${file.type}`);
     return false;
   }
-  if (file.size > MAX_FILE_SIZE_BYTES) {
-    showError(errEl, `File too large (max ${MAX_FILE_SIZE_BYTES / 1_048_576} MB)`);
+  if (file.size > MAX_FILE_SIZE) {
+    showError(errEl, `File too large (max ${MAX_FILE_SIZE / 1_048_576} MB)`);
     return false;
   }
   return true;
@@ -123,14 +121,14 @@ class FileUploader {
   private setupDragAndDrop(): void {
     initDragAndDrop(this.elements.uploadArea, (files) => {
       const dataTransfer = new DataTransfer();
-      const firstFile = Array.from(files)[0]; 
+      const firstFile = Array.from(files)[0];
       if (!firstFile) return;
       dataTransfer.items.add(firstFile);
       this.elements.inputDoc.files = dataTransfer.files;
       this.onFileSelected();
       this.setUiState(UiState.Submitting);
     });
-}
+  }
 
   /**
    * Attach all DOM event listeners.
@@ -138,10 +136,10 @@ class FileUploader {
    * @returns {void}
    */
   private bindEvents(): void {
-  this.elements.inputDoc.addEventListener("change", () => this.onFileSelected());
-  this.elements.cancelBtn.addEventListener("click", () => this.onCancel());
-  this.elements.submitBtn.addEventListener("click", () => this.onSubmit());
-}
+    this.elements.inputDoc.addEventListener("change", () => this.onFileSelected());
+    this.elements.cancelBtn.addEventListener("click", () => this.onCancel());
+    this.elements.submitBtn.addEventListener("click", () => this.onSubmit());
+  }
 
   /**
    * Update the UI controls (spinner, buttons, drop-area) based on the current state.
@@ -151,25 +149,25 @@ class FileUploader {
    * @returns {void}
    */
   private setUiState(newState: UiState): void {
-  const { spinner, uploadArea, submitBtn, cancelBtn } = this.elements;
+    const { spinner, uploadArea, submitBtn, cancelBtn } = this.elements;
 
-  // show spinner only when loading
-  spinner.classList.toggle("hidden", newState !== UiState.Loading);
+    // show spinner only when loading
+    spinner.classList.toggle("hidden", newState !== UiState.Loading);
 
-  if(newState === UiState.Idle) {
-  enableElement(uploadArea);
-  disableElement(submitBtn);
-  disableElement(cancelBtn);
-} else if (newState === UiState.Loading) {
-  disableElement(uploadArea);
-  disableElement(submitBtn);
-  enableElement(cancelBtn);
-} else {
-  // Submitting state
-  enableElement(uploadArea);
-  enableElement(submitBtn);
-  enableElement(cancelBtn);
-}
+    if (newState === UiState.Idle) {
+      enableElement(uploadArea);
+      disableElement(submitBtn);
+      disableElement(cancelBtn);
+    } else if (newState === UiState.Loading) {
+      disableElement(uploadArea);
+      disableElement(submitBtn);
+      enableElement(cancelBtn);
+    } else {
+      // Submitting state
+      enableElement(uploadArea);
+      enableElement(submitBtn);
+      enableElement(cancelBtn);
+    }
   }
 
   /**
@@ -183,18 +181,18 @@ class FileUploader {
    * @returns {void}
    */
   private onFileSelected(): void {
-  const { inputDoc, fileNameID, errorMessage, submitBtn, cancelBtn } = this.elements;
-  hideError(errorMessage);
+    const { inputDoc, fileNameID, errorMessage, submitBtn, cancelBtn } = this.elements;
+    hideError(errorMessage);
 
     const file = inputDoc.files?.[0];
-  fileNameID.textContent = file?.name ?? "No file chosen";
+    fileNameID.textContent = file?.name ?? "No file chosen";
 
-  if(file && validateFile(file, errorMessage)) {
-  this.setUiState(UiState.Submitting);
-} else {
-  disableElement(submitBtn);
-  file ? enableElement(cancelBtn) : disableElement(cancelBtn);
-}
+    if (file && validateFile(file, errorMessage)) {
+      this.setUiState(UiState.Submitting);
+    } else {
+      disableElement(submitBtn);
+      file ? enableElement(cancelBtn) : disableElement(cancelBtn);
+    }
   }
 
   /**
@@ -207,11 +205,11 @@ class FileUploader {
    * @returns {void}
    */
   private onCancel(): void {
-  const { inputDoc, fileNameID } = this.elements;
-  inputDoc.value = "";
-  fileNameID.textContent = "No file chosen";
-  this.setUiState(UiState.Idle);
-}
+    const { inputDoc, fileNameID } = this.elements;
+    inputDoc.value = "";
+    fileNameID.textContent = "No file chosen";
+    this.setUiState(UiState.Idle);
+  }
 
   /**
    * Handle the file if the user presses submit.
@@ -220,30 +218,30 @@ class FileUploader {
    * @async
    * @returns {Promise<void>}
    */
-  private async onSubmit(): Promise < void> {
-  const { inputDoc, errorMessage } = this.elements;
-  hideError(errorMessage);
+  private async onSubmit(): Promise<void> {
+    const { inputDoc, errorMessage } = this.elements;
+    hideError(errorMessage);
 
     const file = inputDoc.files?.[0];
     // Check if its a file
-  if(!file) {
-    showError(errorMessage, "Please select a file first.");
-    return;
-  }
-  // Validate file
-    if(!validateFile(file, errorMessage)) return;
-// Set ui state to loading
-this.setUiState(UiState.Loading);
+    if (!file) {
+      showError(errorMessage, "Please select a file first.");
+      return;
+    }
+    // Validate file
+    if (!validateFile(file, errorMessage)) return;
+    // Set ui state to loading
+    this.setUiState(UiState.Loading);
 
-try {
-  await this.uploadAndTranscribe(file);
-} catch (err: any) {
-  const msg = err.message?.includes("Failed to fetch")
-    ? "Network error: cannot reach server."
-    : err.message || String(err);
-  showError(errorMessage, msg, false);
-  this.setUiState(UiState.Idle);
-}
+    try {
+      await this.uploadAndTranscribe(file);
+    } catch (err: any) {
+      const msg = err.message?.includes("Failed to fetch")
+        ? "Network error: cannot reach server."
+        : err.message || String(err);
+      showError(errorMessage, msg, false);
+      this.setUiState(UiState.Idle);
+    }
   }
 
   /**
@@ -256,44 +254,44 @@ try {
    * @returns {Promise<void>} Resolves once the PNG conversion and alert setup are complete.
    */
   private async uploadAndTranscribe(originalFile: File) {
-  const container = document.getElementById("alert-container");
-  // Ensures that the file is an actual png
-  const pngFile = await ensurePng(originalFile);
-  // Creates an success alert.
-  if (container) {
-    container.innerHTML = createSuccessAlert(
-      "Successfully uploaded the file. Transcription in progress…"
-    );
-    document.getElementById("close-alert-button")?.addEventListener("click", () => {
-      container.innerHTML = "";
-    });
+    const container = document.getElementById("alert-container");
+    // Ensures that the file is an actual png
+    const pngFile = await ensurePng(originalFile);
+    // Creates an success alert.
+    if (container) {
+      container.innerHTML = createSuccessAlert(
+        "Successfully uploaded the file. Transcription in progress…"
+      );
+      document.getElementById("close-alert-button")?.addEventListener("click", () => {
+        container.innerHTML = "";
+      });
+    }
+
+    const result = await transcribe(pngFile);
+    localStorage.setItem("transcribedData", JSON.stringify(result));
+
+    const imageId = Array.isArray(result) ? result[0]?.image_id : result.image_id;
+    if (!imageId) throw new Error("Unexpected response format (no image_id)");
+    const resetUi = this.onCancel();
+    resetUi;
+    window.location.href = `results?file=${encodeURIComponent(imageId)}`;
   }
-
-  const result = await transcribe(pngFile);
-  localStorage.setItem("transcribedData", JSON.stringify(result));
-
-  const imageId = Array.isArray(result) ? result[0]?.image_id : result.image_id;
-  if (!imageId) throw new Error("Unexpected response format (no image_id)");
-  const resetUi = this.onCancel();
-  resetUi;
-  window.location.href = `results?file=${encodeURIComponent(imageId)}`;
-}
-/**
- * Global handler for any unhandled promise rejections.
- *
- * Logs the rejection reason to the console, displays a generic error alert,
- * and resets the UI back to the Idle state.
- *
- * @private
- * @function onUnhandledRejection
- * @param {PromiseRejectionEvent} event - The unhandledrejection event with the rejection reason.
- * @returns {void}
- */
+  /**
+   * Global handler for any unhandled promise rejections.
+   *
+   * Logs the rejection reason to the console, displays a generic error alert,
+   * and resets the UI back to the Idle state.
+   *
+   * @private
+   * @function onUnhandledRejection
+   * @param {PromiseRejectionEvent} event - The unhandledrejection event with the rejection reason.
+   * @returns {void}
+   */
   private onUnhandledRejection = (event: PromiseRejectionEvent) => {
-  console.error("Unhandled promise:", event.reason);
-  showError(this.elements.errorMessage, "An unexpected error occurred.");
-  this.setUiState(UiState.Idle);
-};
+    console.error("Unhandled promise:", event.reason);
+    showError(this.elements.errorMessage, "An unexpected error occurred.");
+    this.setUiState(UiState.Idle);
+  };
 }
 
 document.addEventListener("DOMContentLoaded", () => {

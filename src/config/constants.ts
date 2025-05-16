@@ -86,3 +86,5 @@ export enum AllowedMimeType {
   TIFF = "image/tiff",
   PDF = "application/pdf",
 }
+// 32 mb
+export const MAX_FILE_SIZE =  32 * 1024 ** 2;

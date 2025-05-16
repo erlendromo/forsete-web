@@ -1,4 +1,4 @@
-import { ApiEndpoints } from "./constants";
+import { ApiEndpoints } from "./constants.js";
 
 /**
  * Constructs the endpoint URL for accessing outputs of a specific image.

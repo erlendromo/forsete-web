@@ -76,10 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
+/**
+ * Retrieves a model type value from the session storage.
+ * @param modelType - The key to retrieve the model type from session storage
+ * @returns The value associated with the modelType key in session storage, or null if not found
+ */
 export function getModelType(modelType: string): string | null {
     return sessionStorage.getItem(modelType);
 }
 
+/**
+ * Stores a key-value pair in the browser's session storage.
+ * 
+ * @param keyModelType - The key to identify the stored item
+ * @param valueModelName - The value to be stored
+ * @returns void
+ */
 function setSessionItem(keyModelType:string, valueModelName:string): void {
     sessionStorage.setItem(keyModelType, valueModelName);
 }

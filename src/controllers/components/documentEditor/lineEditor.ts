@@ -1,5 +1,21 @@
-import { LineSegment } from "../../../interfaces/line-segment";
+import { LineSegment } from "../../../interfaces/lineSegment.types";
 
+/**
+ * Represents an editable line item in a document editor.
+ * This class manages the UI components and interactions for a single line of text,
+ * including line numbers, confidence scores, and editing capabilities.
+ * 
+ * @class
+ * @property {HTMLElement} container - The main container element for the line item
+ * @property {LineSegment} segment - The line segment object
+ * @property {HTMLElement} lineNumberEl - Element displaying the line number
+ * @property {HTMLElement | null} confidenceEl - Optional element showing confidence score
+ * @property {HTMLTextAreaElement} textareaEl - The editable text area element
+ * @property {HTMLButtonElement} resetBtnEl - Button to reset edits
+ * @property {(segment: LineSegment) => void} onChange - Callback function when content changes
+ * @property {((segment: LineSegment) => void) | null} onFocus - Optional callback for focus events
+ * 
+ */
 export class LineEditorItem {
   private container: HTMLElement;
   private segment: LineSegment;

@@ -1,8 +1,8 @@
 
 import { DocumentManager } from '../../services/results/document-manager.js';
-import { DocumentLineEditor } from './document-editor/document-editor.js';
-import { ImageContainer } from './document-editor/image-container.js';
-import { initializeImageZoom } from './zoom-image.js';
+import { DocumentLineEditor } from './documentEditor/documentEditor.js';
+import { ImageContainer } from './documentEditor/imageContainer.js';
+import { initializeImageZoom } from './zoomImage.js';
 import { ApiRoute } from '../../config/constants.js';
 import { createSuccessAlert } from '../utils/ui/alert.js';
 

@@ -1,10 +1,35 @@
 
-import { LineSegment } from "../../../interfaces/line-segment.js";
+import { LineSegment } from "../../../interfaces/lineSegment.types.js";
 import { DocumentManager } from "../../../services/results/document-manager.js";
-import { LineEditorItem } from "./line-editor.js";
-import { ImageContainer } from "./image-container.js";
+import { LineEditorItem } from "./lineEditor.js";
+import { ImageContainer } from "./imageContainer.js";
 
 
+/**
+ * A class that manages the editing of document lines in a web interface.
+ * 
+ * @class DocumentLineEditor
+ * 
+ * @property {HTMLElement} container - The main container element for the editor
+ * @property {LineEditorItem[]} lineItems - Array of line editor items
+ * @property {LineEditorItem | null} currentlyFocusedLine - Currently focused line in the editor
+ * @property {DocumentManager} documentManager - Manager for document-related operations
+ * @property {HTMLElement} editorContentEl - Container element for editor content
+ * @property {HTMLButtonElement} revertAllBtn - Button to revert all changes
+ * @property {ImageContainer | null} imageContainer - Optional container for image-related operations
+ * 
+ * @description
+ * The DocumentLineEditor provides functionality to:
+ * - Edit individual lines of text
+ * - Revert changes made to the document
+ * - Save changes to localStorage
+ * - Highlight corresponding line polygons in an associated image
+ * - Manage the state of edited lines
+ * 
+ * The editor maintains synchronization between the visual representation and the underlying data model,
+ * and provides persistence through localStorage.
+ * 
+ */
 export class DocumentLineEditor {
   private container: HTMLElement;
   private lineItems: LineEditorItem[] = [];

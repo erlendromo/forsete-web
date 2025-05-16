@@ -1,7 +1,23 @@
-import { LineSegment } from "../../../interfaces/line-segment.js";
-import { Polygon, Point } from "../../../interfaces/atr-result.js";
+import { LineSegment } from "../../../interfaces/lineSegment.types.js";
+import { Polygon, Point } from "../../../interfaces/atrResult.types.js";
 import { ApiRoute } from "../../../config/constants.js";
 
+/**
+ * A class that manages and renders image and polygon overlays on a canvas element.
+ * 
+ * @class ImageContainer
+ * 
+ * @property {HTMLElement} container - The container element that holds the canvas
+ * @property {HTMLImageElement} imageElement - The image element to be displayed
+ * @property {HTMLCanvasElement} canvas - The canvas element where image and polygons are rendered
+ * @property {CanvasRenderingContext2D} ctx - The 2D rendering context for the canvas
+ * @property {(polygon: Polygon) => void} onChange - Callback function triggered when polygon changes
+ * @property {Polygon[]} polygons - Array of polygons to be rendered on the canvas
+ * @property {LineSegment | null} selectedLineSegment - Currently selected line segment for highlighting
+ * 
+ * @throws {Error} Throws if container element is not found or canvas context cannot be obtained
+ * 
+ */
 export class ImageContainer {
     private container: HTMLElement;
     private imageElement: HTMLImageElement;
