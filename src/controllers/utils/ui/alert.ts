@@ -1,3 +1,6 @@
+
+type AlertFactory = (message: string) => string;
+
 /**
  * 
  * @param message - The message to be displayed in the alert.
@@ -26,7 +29,16 @@ export function createDangerAlert(message: string): string {
       </div>
     `;
 }
-
+/**
+ * 
+ * @param message - The message to be displayed in the alert.
+ * @description This function creates an alert box with a message and a close button.
+ * The alert is green for indicating an success.
+ * The alert box is styled with Tailwind CSS classes for a consistent look and feel.
+ * The alert box includes an icon, a message, and a close button.
+ * The close button has an event listener that removes the alert box when clicked.
+ * @returns 
+ */
 export function createSuccessAlert(message: string): string {
   return `
     <div
@@ -64,4 +76,35 @@ export function createSuccessAlert(message: string): string {
       </button>
     </div>
   `;
+}
+
+/**
+ * Creates a reusable status‐display function that injects alert HTML into a container
+ * and wires up its close button.
+ *
+ * @param {AlertFactory} alertFactory
+ *   A factory function that takes a message string and returns an HTML string
+ *   representing the alert (example: createSuccessAlert or createDangerAlert)
+ *
+ * @param {() => HTMLElement | null} getContainer
+ *   A zero‐argument function which returns the target container element
+ *   (or `null` if not found) into which the alert HTML will be injected.
+ *
+* @returns {(message: string) => void}
+*   A function which, when called with a `statusMessage`, injects an alert
+*   into the container and wires up its close button.
+ */
+
+export function makeShowStatus(alertFactory: AlertFactory, getContainer: () => HTMLElement | null) {
+  return function showStatus(statusMessage: string) {
+    const alertContainer = getContainer();
+    if (!alertContainer) return;
+
+    alertContainer.innerHTML = alertFactory(statusMessage);
+    document
+      .getElementById("close-alert-button")
+      ?.addEventListener("click", () => {
+        alertContainer.innerHTML = "";
+      });
+  };
 }

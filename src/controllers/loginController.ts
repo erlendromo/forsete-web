@@ -1,6 +1,6 @@
 // src/controllers/loginController.ts
 import { ApiRoute, AppRoute } from "../config/constants.js";
-import { createDangerAlert } from "./utils/ui/alert.js";
+import { createDangerAlert, makeShowStatus } from "./utils/ui/alert.js";
 import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
 
 /*
@@ -8,14 +8,16 @@ import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
 * It listens for form submission, validates user credentials,
 * and manages the display of messages based on the login status.
 *
-* @module loginPage
+* @module loginController
 */
+
+const endpoint = ApiRoute.Login;
 const spinner = document.getElementById("loginLoader") as HTMLElement;
 const button = document.getElementById("submit") as HTMLButtonElement;
 const text = document.getElementById("buttonText") as HTMLElement;
 const form = document.querySelector<HTMLFormElement>('#loginForm')!;
 const alertContainer = document.getElementById('login-alert-container');
-const endpoint = ApiRoute.Login;
+const showError = makeShowStatus(createDangerAlert, () => alertContainer);
 
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
@@ -45,7 +47,7 @@ form.addEventListener("submit", async (ev) => {
   }
 
   if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
+    const data = await response.json();
     showError(data.message ?? `Server returned: ${response.status}`);
     disableSpinner(spinner, text, button);
     return;
@@ -54,16 +56,3 @@ form.addEventListener("submit", async (ev) => {
   window.location.replace(AppRoute.Home);
 });
 
-/**
- * Displays an error message in the alert container.
- *
- * @param {string} message - The error message to display.
- */
-function showError(message: string) {
-  if (!alertContainer) return;
-
-  alertContainer.innerHTML = createDangerAlert(message);
-  alertContainer
-    .querySelector<HTMLButtonElement>("#close-alert-button")
-    ?.addEventListener("click", () => (alertContainer.innerHTML = ""));
-}

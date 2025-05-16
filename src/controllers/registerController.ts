@@ -1,21 +1,23 @@
 // src/controllers/registerController.ts
 import { ApiRoute, AppRoute } from "../config/constants.js";
-import { createDangerAlert } from "./utils/ui/alert.js";
+import { createDangerAlert, makeShowStatus } from "./utils/ui/alert.js";
 import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
+
 /*
 * This script handles the register functionality for the application.
 * It listens for form submission, validates user credentials,
 * and manages the display of messages based on the registration status.
 *
-* @module loginPage
+* @module registerController
 */
+
+const endpoint = ApiRoute.Register;
 const spinner = document.getElementById("loginLoader") as HTMLElement;
 const button = document.getElementById("submitBtn") as HTMLButtonElement;
 const text = document.getElementById("buttonText") as HTMLElement;
 const form = document.querySelector<HTMLFormElement>('#registerForm')!;
-const alertContainer = document.getElementById('reg-alert-container');
 const topLevelAlertContainer = document.getElementById("alert-container");
-const endpoint = ApiRoute.Register;
+const showError = makeShowStatus(createDangerAlert, () => topLevelAlertContainer);
 
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
@@ -37,18 +39,9 @@ form.addEventListener("submit", async (ev) => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("API error payload:", data);
     if (!data.ok) {
     const errorMessage = data.error as string;
-    if (topLevelAlertContainer) {
-      topLevelAlertContainer.innerHTML = createDangerAlert(errorMessage);
-      document.getElementById("close-alert-button")?.addEventListener("click", () => {
-      topLevelAlertContainer.innerHTML = "";
-    });
-    }
-
-    //.catch(() => ({}));
-    //showError(data.message ?? `Server returned: ${response.status}`);
+    showError(errorMessage);
     disableSpinner(spinner, text, button);
     return;
   }
@@ -60,17 +53,3 @@ form.addEventListener("submit", async (ev) => {
   disableSpinner(spinner, text, button);
   window.location.replace(AppRoute.Login);
 });
-
-/**
- * Displays an error message in the alert container.
- *
- * @param {string} message - The error message to display.
- */
-function showError(message: string) {
-  if (!alertContainer) return;
-
-  alertContainer.innerHTML = createDangerAlert(message);
-  document.getElementById("close-alert-button")?.addEventListener("click", () => {
-      alertContainer.innerHTML = "";
-    });
-}
