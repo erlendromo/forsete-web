@@ -1,8 +1,13 @@
 import { config } from "../config/config.js";
 import { setAuthCookie } from "../utils/cookieUtil.js";
 import { HTTP_STATUS, ApiEndpoints } from "../config/constants.js";
-import {User,LoginSuccess,Registration,} from "../interfaces/userInterface.types.js";
+import {
+  User,
+  LoginSuccess,
+  Registration,
+} from "../interfaces/userInterface.types.js";
 import { Response as ExpressResponse } from "express";
+import { stringify } from "querystring";
 
 const url = config.urlBackend;
 
@@ -70,37 +75,41 @@ export async function register(
   userData: Registration,
   endpoint = url + ApiEndpoints.REGISTER_ENDPOINT,
 ): Promise<LoginSuccess> {
-  let res: Response
+  let res: Response;
 
   try {
     res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
-    })
+    });
   } catch (networkErr) {
     // failed to even reach the server
-    throw new LoginError("Network unreachable")
+    throw new LoginError("Network unreachable");
+  }
+
+  if (res.status === HTTP_STATUS.NO_CONTENT) {
+    return { token: "Ok" } as LoginSuccess;
   }
 
   // parse the JSON exactly once
-  let body: any
+  let body: any;
   try {
-    body = await res.json()
+    body = await res.json();
   } catch (parseErr) {
     // server replied with non‐JSON or empty body
-    throw new LoginError("Registration failed")
+    throw new LoginError("Registration failed");
   }
 
   // now check the status code
   if (!res.ok) {
     // extract server’s “error” field (falling back to a generic message)
-    const serverMessage = body.error ?? "Registration failed"
-    throw new LoginError(serverMessage)
+    const serverMessage = body.error ?? "Registration failed";
+    throw new LoginError(serverMessage);
   }
 
-  // success path
-  return body as LoginSuccess
+  // success path (will not happen)
+  return body as LoginSuccess;
 }
 
 /**
@@ -134,9 +143,10 @@ export async function handleLogin(
       .status(HTTP_STATUS.SUCCESS)
       .json({ success: true, message: "Login successful" });
   } catch (err) {
-    res
-      .status(HTTP_STATUS.UNAUTHORIZED)
-      .json({ success: false, message: "Login failed: Please check you email and password." });
+    res.status(HTTP_STATUS.UNAUTHORIZED).json({
+      success: false,
+      message: "Login failed: Please check you email and password.",
+    });
   }
 }
 
@@ -159,13 +169,9 @@ export async function handleRegister(
     await register(userData);
     res
       .status(HTTP_STATUS.CREATED)
-      .json({message: "Registration successful" });
+      .json({ message: "Registration successful" });
   } catch (err) {
-    const msg = err instanceof Error
-      ? err.message
-      : "Registration failed";
-    res
-      .status(HTTP_STATUS.BAD_REQUEST)
-      .json({error: msg });
+    const msg = err instanceof Error ? err.message : "Registration failed";
+    res.status(HTTP_STATUS.BAD_REQUEST).json({ error: msg });
   }
 }

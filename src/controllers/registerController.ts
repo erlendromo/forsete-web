@@ -3,20 +3,23 @@ import { createDangerAlert, makeShowStatus } from "./utils/ui/alert.js";
 import { showSpinner, disableSpinner } from "./utils/ui/spinner.js";
 
 /*
-* This script handles the register functionality for the application.
-* It listens for form submission, validates user credentials,
-* and manages the display of messages based on the registration status.
-*
-* @module registerController
-*/
+ * This script handles the register functionality for the application.
+ * It listens for form submission, validates user credentials,
+ * and manages the display of messages based on the registration status.
+ *
+ * @module registerController
+ */
 
 const endpoint = ApiRoute.Register;
 const spinner = document.getElementById("loginLoader") as HTMLElement;
 const button = document.getElementById("submitBtn") as HTMLButtonElement;
 const text = document.getElementById("buttonText") as HTMLElement;
-const form = document.querySelector<HTMLFormElement>('#registerForm')!;
+const form = document.querySelector<HTMLFormElement>("#registerForm")!;
 const topLevelAlertContainer = document.getElementById("alert-container");
-const showError = makeShowStatus(createDangerAlert, () => topLevelAlertContainer);
+const showError = makeShowStatus(
+  createDangerAlert,
+  () => topLevelAlertContainer,
+);
 
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
@@ -37,15 +40,15 @@ form.addEventListener("submit", async (ev) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    const data = await response.json();
-    if (!data.ok) {
-    const errorMessage = data.error as string;
-    showError(errorMessage);
-    disableSpinner(spinner, text, button);
-    return;
-  }
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      const errorMessage = data.error ?? "Registration failed";
+      showError(errorMessage);
+      disableSpinner(spinner, text, button);
+      return;
+    }
   } catch {
-    showError('Network error: check your connection and try again.');
+    showError("Network error: check your connection and try again.");
     disableSpinner(spinner, text, button);
     return;
   }
