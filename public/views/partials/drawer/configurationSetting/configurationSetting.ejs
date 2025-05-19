@@ -1,0 +1,109 @@
+<!-- Configuration settings-->
+<li>
+  <ul>
+  <button type="button"
+    class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+    aria-controls="dropdown-configuration" data-collapse-toggle="dropdown-configuration">
+    <!-- Server Icon -->
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+      height="24" fill="currentColor" viewBox="0 0 24 24">
+      <path fill-rule="evenodd"
+        d="M5 5a2 2 0 0 0-2 2v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2H5Zm9 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H14Zm3 0a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17ZM3 17v-3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm11-2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H14Zm3 0a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+        clip-rule="evenodd" />
+    </svg>
+    <!-- Configuration text -->
+    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Configuration</span>
+    <!-- Chevron Icon indicating dropdown -->
+    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+    </svg>
+  </button>
+  </ul>
+  <!-- Dropdown Submenu: Hidden by default -->
+  <ul id="dropdown-configuration" class="hidden py-2 space-y-2">
+    <!-- Divider -->
+    <li>
+      <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+    </li>
+    <!-- Model configuration area -->
+    <!-- Loop over each model to render its configuration area -->
+     <li>
+    <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 text-center">
+      Model Overview
+    </h2>
+    </li>
+    <li>
+    <div class="grid grid-cols-3 gap-4 items-center">
+      <!-- Header Row -->
+      <p class="font-bold dark:text-white text-gray-700">Model Type</p>
+      <p class="font-bold dark:text-white text-gray-700">Model Name</p>
+      <p class="font-bold dark:text-white text-gray-700">Status</p>
+    </div>
+    </li>
+    <li>
+    <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
+      Text Recognition Models
+    </p>
+    </li>
+    <!-- Divider -->
+    <li>
+      <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+    </li>
+    <li>
+    <%- include('modelArea', {models: textModels}) %>
+
+      <div class="divide-y divide-gray-300 dark:divide-gray-700"></div>
+      <!-- Divider -->
+      <li>
+        <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+      </li>
+      </li>
+    <li>
+      <p class="text-sm font-bold text-gray-800 dark:text-white mb-2 text-left">
+        Line Recognition Models
+      </p>
+      <!-- Divider -->
+      <li>
+        <hr class="w-full my-4 border-t border-gray-300 dark:border-gray-700">
+      </li>
+
+      <%- include('modelArea', {models: lineModels}) %>
+    </li>
+  </ul>
+  </ul>
+</li>
+<script>
+  /*
+document.addEventListener('DOMContentLoaded', () => {
+  // Function to get the selected models
+ const getSelectedModels = () => {
+  let selectedModels = {};
+
+  // Select all radio buttons
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  // Store the model types in a Set, this is to avoid duplicates
+  const modelTypes = new Set(Array.from(radioButtons).map(radioButton => radioButton.name));
+
+  modelTypes.forEach(modelType => {
+    const checkedRadio = document.querySelector(`input[name="${modelType}"]:checked`);
+    if (checkedRadio) {
+      selectedModels[modelType] = checkedRadio.id;
+      console.log(`Name: ${checkedRadio.id}, Type: ${checkedRadio.name}`);
+    }
+  });
+  return selectedModels;
+};
+
+  // Run once on load
+  selectedModels = getSelectedModels();
+  console.log('Selected models:', selectedModels);
+
+  // Add event listeners to update log on change
+  document.querySelectorAll('input[type="radio"]').forEach(radioButton => {
+    radioButton.addEventListener('change', () => {
+      selectedModels = getSelectedModels();
+    });
+  });
+});
+*/
+</script>

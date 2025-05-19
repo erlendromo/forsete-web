@@ -1,0 +1,461 @@
+@import "tailwindcss";
+
+/* Base body styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Layout Container Styles */
+.content-container {
+  @apply w-full max-w-full flex flex-row pt-[80px] gap-0 overflow-hidden m-0 pr-0;
+}
+
+/* Zoom wrapper contains both image and controls */
+.image-zoom-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Very subtle background to see container boundaries */
+  border-radius: 8px;
+}
+
+/* The actual image container that will be zoomed */
+#image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  transform-origin: center center;
+  /* Ensure zoom happens from center */
+  transition: transform 0.2s ease;
+  /* Smooth zoom transition */
+}
+
+/* Image styling for perfect centering */
+#image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* Ensure the whole image is visible */
+  display: block;
+  /* Remove any default spacing */
+  margin: auto;
+  /* Center the image */
+}
+
+/* SVG and Canvas elements */
+#image-container svg,
+#image-container canvas {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+
+/* Zoom controls container */
+.zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 5px 10px;
+  z-index: 10;
+}
+
+/* Zoom buttons */
+.zoom-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.zoom-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.zoom-level {
+  color: white;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+/* Zoomed state for cursor change */
+.zoomed {
+  cursor: move;
+  /* Show move cursor when zoomed in */
+}
+
+/* Panning state for smoother dragging */
+.panning {
+  transition: none !important;
+  /* Disable transition during panning */
+}
+
+/* Optional: Add a subtle shadow when zoomed for depth */
+.zoomed img {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Editor Wrapper - flex-grow to fill available space */
+.editor-wrapper {
+  flex-grow: 1;
+  /* Fill remaining space */
+  width: 50%;
+  /* Base width */
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-right: 0;
+  /* Remove any right margin */
+}
+
+
+
+
+
+/* Make editor container fill the wrapper */
+.editor-content {
+  flex: 1;
+  /* Take up remaining vertical space */
+  min-height: 0;
+  max-height: 14em;
+  /* Allow proper scroll */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  padding-top: 10px;
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+/* Button container at bottom */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  flex-shrink: 0;
+  /* Prevent shrinking */
+}
+
+/* Editor Container Styling */
+.editor-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #333;
+  background: #2d3142;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  flex-grow: 1;
+  min-height: 0;
+   max-height: 700px;
+  /* Adjust depending on button section height */
+  overflow-y: auto;
+  overflow: hidden;
+  /* Prevent overflow at container level */
+}
+
+/* Editor Header */
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #444;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  flex-shrink: 0;
+}
+
+/* Editor Content */
+.editor-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-top: 10px;
+  padding-right: 5px;
+  /* Space for scrollbar */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  flex: 1;
+  /* Take remaining height */
+}
+
+/* Custom scrollbar styling */
+.editor-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-content::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+.editor-content::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+/* Buttons */
+.revert-btn,
+.save-btn {
+  padding: 10px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.2s ease-in-out;
+}
+
+.button-section {
+  flex-shrink: 0;
+}
+
+/* Revert Button - Red */
+.revert-btn {
+  background: #f44336;
+  color: white;
+}
+
+.revert-btn:hover {
+  background: #d32f2f;
+}
+
+.revert-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+/* Save Button - Green */
+.save-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #388E3C;
+}
+
+/* Editor line item */
+.editor-line-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  transition: all 0.3s ease;
+  gap: 20px;
+}
+
+
+
+/* Line number container */
+.line-number-container {
+  display: flex;
+  align-items: center;
+  background-color: #223a4a;
+  width: 100px;
+  flex-shrink: 0;
+  padding-left: 0;
+  height: 100%;
+}
+
+.editor-line-item.selected {
+  border: 2px solid #3b82f6;
+  border-radius: 0.5rem;
+  background-color: #4b83a8;
+}
+
+
+.line-number {
+  width: 40px;
+  text-align: right;
+  padding-right: 8px;
+  color: #dbc9c9;
+}
+
+.confidence-score {
+  font-size: 11px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.confidence-high {
+  background-color: #c6f6d5;
+  color: #49715e;
+}
+
+.confidence-good {
+  background-color: #bee3f8;
+  color: #2c5282;
+}
+
+.confidence-medium {
+  background-color: #fefcbf;
+  color: #744210;
+}
+
+.confidence-low {
+  background-color: #fed7d7;
+  color: #822727;
+}
+
+/* Text container */
+.editor-text-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.editor-line-item.expanded .editor-text-container {
+  align-items: flex-start;
+}
+
+.editor-textarea {
+  flex-grow: 1;
+  resize: none;
+  min-height: 60px;
+
+  background-color: #1e1e24;
+  /* Dark background */
+  color: #ffffff;
+  /* Light text */
+
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+
+.editor-line-item.expanded .editor-textarea {
+  min-height: 60px;
+}
+
+.editor-textarea:focus {
+  outline: none;
+}
+
+
+
+.edited {
+  background-color: #304a66;
+}
+
+/* Reset button container */
+.reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  background-color: #223a4a;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.editor-line-item.expanded .reset-container {
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.reset-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.reset-active {
+  color: #e53e3e;
+}
+
+.reset-inactive {
+  color: #cbd5e0;
+}
+
+.reset-btn:disabled {
+  cursor: default;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .content-container {
+    flex-direction: column;
+    height: auto;
+    overflow: auto;
+    padding-right: 0;
+  }
+
+  .image-container,
+  .editor-wrapper {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .image-container {
+    height: 50vh;
+  }
+
+  .editor-container {
+    height: 60vh;
+    width: 100%;
+  }
+
+  .editor-header {
+    font-size: 16px;
+  }
+
+  .revert-btn,
+  .save-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .zoom-controls {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .zoom-btn {
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+  }
+}

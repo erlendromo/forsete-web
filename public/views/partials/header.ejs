@@ -1,0 +1,60 @@
+<script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    document.addEventListener('DOMContentLoaded', function () {
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkMode = "dark";
+        const lightMode = 'light';
+        const themeToggleId = 'theme-toggle';
+        const hidden = 'hidden';
+
+        function checkLocalTheme() {
+            return localStorage.getItem('color-theme') === darkMode ||
+                (!localStorage.getItem('color-theme') &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches)
+        }
+        // Show dark icon, hide light icon
+        function showDarkIcon() {
+            document.documentElement.classList.add(darkMode);
+            darkIcon.classList.remove(hidden);
+            lightIcon.classList.add(hidden);
+        }
+        // Show light icon, hide dark icon
+        function showLightIcon() {
+            document.documentElement.classList.remove(darkMode);
+            lightIcon.classList.remove(hidden);
+            darkIcon.classList.add(hidden);
+        }
+
+        // On page load, set the theme and icons based on localStorage or system preference
+        if (checkLocalTheme()) {
+            showDarkIcon();
+        } else {
+            showLightIcon();
+        }
+
+        // Toggle function for the button
+        document.getElementById(themeToggleId).addEventListener('click', function () {
+            if (document.documentElement.classList.contains(darkMode)) {
+                showLightIcon();
+                localStorage.setItem('color-theme', lightMode);
+            } else {
+                showDarkIcon();
+                localStorage.setItem('color-theme', darkMode);
+            }
+        });
+    });
+</script>
+
+<nav class="navbar fixed top-0 left-0 w-full bg-gray-400 dark:bg-gray-800 py-4 px-8 shadow-md z-30 flex items-center justify-between">
+    <a href="/">
+        <h1 class="text-4xl font-bold">FORSETE</h1>
+    </a>
+    <svg class="w-[40px] h-[50px] ml-auto relative flex z-[4] cursor-pointer text-white"
+        role="button" tabindex="0" data-drawer-target="drawer-right"
+        data-drawer-show="drawer-right" data-drawer-placement="right"
+        aria-controls="drawer-right" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
+    </svg>
+</nav>
